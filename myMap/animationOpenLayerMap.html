@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display a map</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+  <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+  </style>
+</head>
+<body>
+    <div id="map"></div>
+</body>
+<script>
+    var markers = [];
+    var marker2;
+    var time = 0;
+    var locationS;
+    var locationE;
+    var rotationA;
+    var markerCar;
+    var markerIcon;
+    var dr = true;
+    var pracaNoronhaSantos = ol.proj.fromLonLat([-43.19848881797589, -22.906644586771165]);
+    var pracaDeodoro = ol.proj.fromLonLat([-43.17509995536603, -22.91395763413628]);
+    var listLonLat = [
+    [-43.19821603433218, -22.906235579377366],
+        [-43.19787271157827, -22.90637393840575],
+        [-43.1976795925292, -22.906907607621335],
+        [-43.197228981414696, -22.906966904071183],
+        [-43.19664962426748, -22.906729718116182],
+        [-43.1962204708251, -22.906630890512474],
+        [-43.19564111367788, -22.906433235088983],
+        [-43.19529779092398, -22.906413469530776],
+        [-43.19480426446524, -22.90625534496148],
+        [-43.1942034496459, -22.906097220207812],
+        [-43.1936455501708, -22.905978626521517],
+        [-43.19330222741689, -22.905860032731525],
+        [-43.19295890466299, -22.90576120449397],
+        [-43.1926370395812, -22.905642610513823],
+        [-43.192207886138824, -22.905464719349112],
+        [-43.191478325286774, -22.90528682795103],
+        [-43.19031961099233, -22.904950810229067],
+        [-43.18984754220571, -22.904713620747557],
+        [-43.18909652368154, -22.904515962529388],
+        [-43.18832404748526, -22.904259006415046],
+        [-43.18789489404287, -22.904140411121148],
+        [-43.187530113616845, -22.904061347534252],
+        [-43.187165333190826, -22.903903220222162],
+        [-43.186779095092675, -22.903863688365334],
+        [-43.186457230010895, -22.903745092725714],
+        [-43.18617828027334, -22.903606731015074],
+        [-43.18585641519156, -22.903448603172905],
+        [-43.185556007781884, -22.903468369163264],
+        [-43.185277058044335, -22.903290475146378],
+        [-43.18510539666738, -22.903250943110933],
+        [-43.18493373529043, -22.90319164503616],
+        [-43.184676243225, -22.90319164503616],
+        [-43.18452603952017, -22.903112580896135],
+        [-43.18437583581534, -22.903033516709996],
+        [-43.1841183437499, -22.902954452477786],
+        [-43.18388230935659, -22.90289515427338],
+        [-43.183796478668114, -22.903132346935465],
+        [-43.183667732635406, -22.903428837179675],
+        [-43.183517528930565, -22.903745092725714],
+        [-43.18343169824209, -22.904061347534252],
+        [-43.18330295220938, -22.904259006415046],
+        [-43.1832171215209, -22.904476430851176],
+        [-43.18313129083243, -22.904654323312357],
+        [-43.1831098331603, -22.904792683954156],
+        [-43.18295962945547, -22.905049639057253],
+        [-43.182916714111236, -22.90518799929572],
+        [-43.18280942575064, -22.905444953649734],
+        [-43.1826592220458, -22.905682141852054],
+        [-43.18261630670157, -22.905899564006376],
+        [-43.182530476013085, -22.90611698581209],
+        [-43.18238027230825, -22.90637393840575],
+        [-43.18214423791494, -22.906532062836746],
+        [-43.182015491882225, -22.906887842132278],
+        [-43.181800915161034, -22.907026200495096],
+        [-43.18143613473501, -22.906927373107493],
+        [-43.181243015685936, -22.906828545647855],
+        [-43.18102843896475, -22.90686807664035],
+        [-43.18092115060415, -22.90712502781068],
+        [-43.1808567775878, -22.907421509325246],
+        [-43.180770946899315, -22.907698224820592],
+        [-43.180706573882965, -22.90789587840007],
+        [-43.18062074319448, -22.908133062315116],
+        [-43.180513454833886, -22.908409776358283],
+        [-43.180449081817535, -22.90868648983667],
+        [-43.18034179345694, -22.908943437560936],
+        [-43.18021304742422, -22.90920038479821],
+        [-43.18012721673574, -22.909398036187838],
+        [-43.180041386047264, -22.909654982563566],
+        [-43.17993409768667, -22.90991192845233],
+        [-43.17986972467031, -22.910109578804608],
+        [-43.179762436309716, -22.910366523831797],
+        [-43.17965514794912, -22.91062346837198],
+        [-43.17959077493277, -22.910840882602542],
+        [-43.179504944244286, -22.911097826243633],
+        [-43.17939765588369, -22.91149312320212],
+        [-43.17924745217886, -22.911769830387215],
+        [-43.17911870614615, -22.912026772267637],
+        [-43.179011417785546, -22.912244184247584],
+        [-43.178968502441315, -22.912540654567422],
+        [-43.17888267175283, -22.912916182708386],
+        [-43.178732468048004, -22.913232416125425],
+        [-43.17860372201529, -22.913509119760164],
+        [-43.178303314605614, -22.913667235869255],
+        [-43.17815311090078, -22.91386488074626],
+        [-43.177809788146874, -22.913983467534138],
+        [-43.17744500772085, -22.914082289778108],
+        [-43.177058769622704, -22.9141613475214],
+        [-43.176758362213036, -22.91420087637576],
+        [-43.17641503945914, -22.914299698461235],
+        [-43.17611463204946, -22.914299698461235],
+        [-43.17577130929556, -22.9141415830899],
+        [-43.1755996479186, -22.913924174153166],
+        [-43.17540652886953, -22.913746293854643],
+    ];
+    const key = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
+    const source = new ol.source.TileJSON({
+        url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
+        tileSize: 512,
+        crossOrigin: 'anonymous'
+    });
+
+    const attribution = new ol.control.Attribution({
+        collapsible: false,
+    });
+
+    const map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+            source: source
+            })
+        ],
+        controls: ol.control.defaults.defaults({attribution: false}).extend([attribution]),
+        target: 'map',
+        view: new ol.View({
+            constrainResolution: true,
+            center: ol.proj.fromLonLat([-43.206091, -22.920387]),
+            zoom: 14
+        })
+    });
+
+    function DeleteMarkers() {
+        //Loop through all the markers and remove
+        for (var i = 0; i < markers.length - 1; i++) {
+            map.removeLayer(markers[i]);
+            markers.unshift();
+        }
+    };
+
+    const marker = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(
+                        ol.proj.fromLonLat([-43.206091, -22.920387])
+                    )
+                })
+            ],
+        }),
+
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+                
+            })
+        })
+    })
+
+    map.addLayer(marker);
+
+    function SetRotation(locationS, locationE) {
+        if(Math.abs(locationS[0] - locationE[0]) < 0.0000000000000000000000001){
+            return 90;
+        } else{
+            return Math.atan2((locationE[0] - locationS[0]), (locationE[1] - locationS[1]));
+        }
+    };
+
+    function AddMarker(locationS, rotationA) {
+
+        marker2 = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point(
+                            locationS
+                        )
+                    })
+                ],
+            }),
+        
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [15, 15],
+                    anchorXUnits: 'pixels',
+                    anchorYUnits: 'pixels',
+                    crossOrigin: 'anonymous',
+                    src: 'car_topview.svg',
+                    rotation: rotationA,
+                })
+            })
+        })
+
+        markers.push(marker2);
+
+        if(markers.length > 0){
+            DeleteMarkers();
+        }
+
+        map.addLayer(marker2);
+    }
+
+    function setPosition() {
+
+        //let num = Math.floor(Math.random() * 93);
+
+        if(time <= 0){
+            dr = true;
+        }
+          
+        if(time >= listLonLat.length - 1){
+            dr = false;
+        }
+        
+        if(dr == true){
+            locationS = [listLonLat[time][0], listLonLat[time][1]];
+            locationE = [listLonLat[time + 1][0], listLonLat[time + 1][1]];
+            rotationA = SetRotation(locationS, locationE);
+            console.log(rotationA);
+            time ++;
+        }
+        else{
+            locationS = [listLonLat[time][0], listLonLat[time][1]];
+            locationE = [listLonLat[time - 1][0], listLonLat[time - 1][1]];
+            rotationA = SetRotation(locationS, locationE);
+            console.log(rotationA);
+            time --;
+        }
+
+        locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
+        AddMarker(locationS, rotationA);
+    }
+
+    setInterval(setPosition, 300);
+
+    map.on('click', function (evt) {
+        // console.log(evt);
+        // console.info(evt.pixel);
+        // console.info(map.getPixelFromCoordinate(evt.coordinate));
+        // console.info(ol.proj.toLonLat(evt.coordinate));
+        var coords = ol.proj.toLonLat(evt.coordinate);
+        var lat = coords[1];
+        var lon = coords[0];
+        console.log(`[${lon}, ${lat}],`);
+    });
+</script>
+</html>

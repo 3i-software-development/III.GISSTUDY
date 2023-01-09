@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display a map</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+  <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+  </style>
+</head>
+<body>
+    <div id="map"></div>
+</body>
+<script>
+    const key = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
+    const source = new ol.source.TileJSON({
+    url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
+    tileSize: 512,
+    crossOrigin: 'anonymous'
+    });
+
+    const attribution = new ol.control.Attribution({
+    collapsible: false,
+    });
+
+    const map = new ol.Map({
+    layers: [
+        new ol.layer.Tile({
+        source: source
+        })
+    ],
+    controls: ol.control.defaults.defaults({attribution: false}).extend([attribution]),
+    target: 'map',
+    view: new ol.View({
+        constrainResolution: true,
+        center: ol.proj.fromLonLat([-43.206091, -22.920387]),
+        zoom: 14
+    })
+    });
+
+    const marker = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(
+                        ol.proj.fromLonLat([-43.206091, -22.920387])
+                    )
+                })
+            ],
+        }),
+
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+                
+            })
+        })
+    })
+
+    map.addLayer(marker);
+
+    var rotationA = Math.atan2((-43.206091 - -43.1), (-22.920387 - -22.9));
+
+
+    const marker1 = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(
+                        ol.proj.fromLonLat([-43.1, -22.9])
+                    )
+                })
+            ],
+        }),
+
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0, 15],
+                anchorXUnits: 'pixels',
+                anchorYUnits: 'pixels',
+                crossOrigin: 'anonymous',
+                src: 'car_topview.svg',
+                rotation: rotationA,
+            })
+        })
+    })
+
+    map.addLayer(marker1);
+</script>
+</html>
