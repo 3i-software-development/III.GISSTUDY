@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Input Range with Dynamic Label</title>
+</head>
+<body>
+  <div>
+    <input id="range" type="range" min="200" max="800" value="200" step="1">
+  </div>
+</body>
+<script>
+    const
+        range = document.getElementById('range'),
+        rangeV = document.getElementById('rangeV'),
+        setValue = ()=>{
+            const
+            newValue = Number( (range.value - range.min) * 100 / (range.max - range.min) ),
+            newPosition = 10 - (newValue * 0.2);
+            console.log(range.value);
+        };
+        range.addEventListener('input', setValue);
+</script>
+</html>
