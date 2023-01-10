@@ -1,0 +1,103 @@
+<!DOCTYPE html xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
+  <script>
+    var map;
+    var markers = [];
+    var carIcon = {
+      path: "M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z",
+      //path: "M171.3 96H224v96H111.3l30.4-75.9C146.5 104 158.2 96 171.3 96zM272 192V96h81.2c9.7 0 18.9 4.4 25 12l67.2 84H272zm256.2 1L428.2 68c-18.2-22.8-45.8-36-75-36H171.3c-39.3 0-74.6 23.9-89.1 60.3L40.6 196.4C16.8 205.8 0 228.9 0 256V368c0 17.7 14.3 32 32 32H65.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80H385.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80H608c17.7 0 32-14.3 32-32V320c0-65.2-48.8-119-111.8-127zm-2.9 207c-6.6 18.6-24.4 32-45.3 32s-38.7-13.4-45.3-32c-1.8-5-2.7-10.4-2.7-16c0-26.5 21.5-48 48-48s48 21.5 48 48c0 5.6-1 11-2.7 16zM160 432c-20.9 0-38.7-13.4-45.3-32c-1.8-5-2.7-10.4-2.7-16c0-26.5 21.5-48 48-48s48 21.5 48 48c0 5.6-1 11-2.7 16c-6.6 18.6-24.4 32-45.3 32z",
+      scale: .7,
+      strokeColor: '#9c9c9c',
+      strokeWeight: .10,
+      fillOpacity: 1,
+      fillColor: '#C21F25',
+      offset: '100%',
+      rotation: 0,
+      anchor: new google.maps.Point(10, 10) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
+    };
+
+    function initialize() {
+      var losAngeles = new google.maps.LatLng(34.0500, -118.2500);
+      var pasadena = new google.maps.LatLng(34.14778, -118.14452);
+      var pasadena = new google.maps.LatLng(-34.14778, 108.14452);
+      var lCoordinate0 = [475734.5094184014, 475944.71124618564, 476021.1482744708, 
+        476097.585302756, 476231.35010225506, 476422.442672968, 476479.77044418186, 
+        476651.75375782355, 476766.4093002513, 476900.17409975035, 477053.0481563207, 
+        477225.0314699623, 477339.6870123901, 477454.3425548179, 477588.1073543169, 
+        477721.872153816, 477855.63695331506, 477951.1832386715, 478142.2758093845, 
+        478333.3683800974, 478562.67946495296, 478772.88129273715, 478925.7553493075, 
+        479040.4108917353, 479193.28494830563, 479441.70529023244, 479690.1256321593, 
+        479842.99968872964, 480072.31077358517, 480225.1848301555];
+
+      var lCoordinate1 = [6599439.257342619, 6599496.585113833, 6599611.24065626, 
+        6599668.568427474, 6599821.4424840445, 6599955.207283543, 6600088.972083042, 
+        6600203.627625471, 6600318.283167899, 6600490.26648154, 6600643.14053811, 
+        6600910.670137108, 6601025.325679536, 6601178.199736106, 6601350.183049749, 
+        6601464.838592176, 6601579.494134604, 6601713.258934103, 6601866.132990673, 
+        6602019.007047243, 6602114.5533326, 6602171.881103814, 6602229.2088750275, 
+        6602305.645903313, 6602343.864417455, 6602477.629216954, 6602592.284759383, 
+        6602687.831044739, 6602745.158815953, 6602821.595844238];
+
+    var centerPoint = new google.maps.LatLng(475734.5094184014, 6599439.257342619);
+      var mapOptions = {
+        zoom: 10,
+        center: losAngeles,
+        disableDefaultUI: true,
+        mapTypeControlOptions: google.maps.MapTypeId.SATELLITE
+      };
+      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      addMarker(losAngeles);
+      var heading = google.maps.geometry.spherical.computeHeading(pasadena, losAngeles);
+      addCarIcon(pasadena, heading)
+    }
+
+    function addMarker(location) {
+      var markerOptions = {
+        position: location,
+        map: map
+      };
+      var marker = new google.maps.Marker(markerOptions);
+    }
+
+    function addCarIcon(location, heading) {
+      console.log(heading)
+      carIcon.rotation = heading;
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        draggable: false,
+        icon: carIcon
+      });
+    }
+
+    function setPositionPopup() {
+          if(time <= 0){
+            dr = true;
+          }
+          
+          if(time >= lCoordinate0.length - 1){
+            dr = false;
+          }
+
+          content.innerHTML = '<img src = "garbage-truck-svgrepo-com.svg"><br />';
+          overlay.setPosition([lCoordinate0[time], lCoordinate1[time]]);
+          if(dr == true)
+            time ++;
+          else
+            time --;
+
+          map.addOverlay(overlay);
+        }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+</head>
+
+<body>
+  <div id="map-canvas" style="width:100%;height:400px"></div>
+</body>
+
+</html>

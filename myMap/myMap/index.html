@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div style="width: 100%; height: 80%;">
+        <div id="map" style="width: 100%; height: 80%;"></div>
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
+    </div>
+    <button id="stop">Stop</button>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
+    <script>
+        let animating = false;
+        let distance = 0;
+        let lastTime;
+
+        var attribution = new ol.control.Attribution({
+            collapsible: false
+        });
+
+        var map = new ol.Map({
+            controls: ol.control.defaults({attribution: false}).extend([attribution]),
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        url: 'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+                        attributions: [ ol.source.OSM.ATTRIBUTION, 'Tiles courtesy of <a href="https://geo6.be/">GEO-6</a>' ],
+                        maxZoom: 18
+                    })
+                })
+            ],
+            target: 'map',
+            view: new ol.View({
+                center: ol.proj.fromLonLat([4.35247, 50.84673]),
+                maxZoom: 18,
+                zoom: 12
+            })
+        });
+
+        var layer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))
+                    })
+                ]
+            })
+        });
+
+        map.addLayer(layer);
+
+        var container = document.getElementById('popup');
+        var content = document.getElementById('popup-content');
+        var closer = document.getElementById('popup-closer');
+        var time = 0;
+        var dr = true;
+
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250
+            }
+        });
+        map.addOverlay(overlay);
+        
+        var lCoordinate0 = [475734.5094184014, 475944.71124618564, 476021.1482744708, 
+        476097.585302756, 476231.35010225506, 476422.442672968, 476479.77044418186, 
+        476651.75375782355, 476766.4093002513, 476900.17409975035, 477053.0481563207, 
+        477225.0314699623, 477339.6870123901, 477454.3425548179, 477588.1073543169, 
+        477721.872153816, 477855.63695331506, 477951.1832386715, 478142.2758093845, 
+        478333.3683800974, 478562.67946495296, 478772.88129273715, 478925.7553493075, 
+        479040.4108917353, 479193.28494830563, 479441.70529023244, 479690.1256321593, 
+        479842.99968872964, 480072.31077358517, 480225.1848301555];
+        var lCoordinate1 = [6599439.257342619, 6599496.585113833, 6599611.24065626, 
+        6599668.568427474, 6599821.4424840445, 6599955.207283543, 6600088.972083042, 
+        6600203.627625471, 6600318.283167899, 6600490.26648154, 6600643.14053811, 
+        6600910.670137108, 6601025.325679536, 6601178.199736106, 6601350.183049749, 
+        6601464.838592176, 6601579.494134604, 6601713.258934103, 6601866.132990673, 
+        6602019.007047243, 6602114.5533326, 6602171.881103814, 6602229.2088750275, 
+        6602305.645903313, 6602343.864417455, 6602477.629216954, 6602592.284759383, 
+        6602687.831044739, 6602745.158815953, 6602821.595844238];
+        closer.onclick = function() {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+        };
+
+        function setPositionPopup() {
+          if(time <= 0){
+            dr = true;
+          }
+          
+          if(time >= lCoordinate0.length - 1){
+            dr = false;
+          }
+
+          content.innerHTML = '<img src = "garbage-truck-svgrepo-com.svg"><br />';
+          overlay.setPosition([lCoordinate0[time], lCoordinate1[time]]);
+          if(dr == true)
+            time ++;
+          else
+            time --;
+
+          map.addOverlay(overlay);
+        }
+
+        var setP;
+        
+        map.on('click', function (event) {
+          console.log(event);
+          //map.hasFeatureAtPixel(event.pixel) === true kiểm tra xem điểm đó có nằm trong layer hay không
+            // if (event != null) {
+            //     var coordinate = event.coordinate;
+            //     console.log(event.coordinate);
+            //     content.innerHTML = '<img src = "shop-solid.svg"><br />I am a popup.';
+            //     setTimeout(setPositionPopup, 500);
+            // } else {
+            //     overlay.setPosition(undefined);
+            //     closer.blur();
+            // }
+            //setInterval(setPositionPopup, 1500);
+            setP = setInterval(setPositionPopup, 500);
+        });
+
+        const stopAnimation = document.getElementById('stop');
+        stopAnimation.addEventListener('click', function () {
+          if (setP != null || setP != undefined) {
+            clearTimeout(setP)
+          }
+          
+        });
+        // content.innerHTML = '<b>Hello world!</b><br />I am a popup.';
+        // overlay.setPosition(ol.proj.fromLonLat([4.35247, 50.84673]));
+    </script>
+</body>
+</html>
