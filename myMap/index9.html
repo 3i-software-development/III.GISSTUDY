@@ -6,6 +6,7 @@
   <title>Display a map</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
   <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+
   <style>
     #map {
         position: absolute;
@@ -29,6 +30,7 @@
     </div>
 </body>
 <script>
+    
     var markers = [];
     var marker2;
     var time = 0;
@@ -138,6 +140,25 @@
         [-43.1755996479186, -22.913924174153166],
         [-43.17540652886953, -22.913746293854643],
     ];
+    drawPoint: () =>  {
+            $('#drawPoint').click(function () {
+                debugger
+                //xóa polygon cũ
+                var features = parkSourceVector.getSource().getFeatures();
+                if (features != null && features.length > 0) {
+
+                    parkSourceVector.getSource().removeFeature(features[features.length - 1]);
+
+                }
+                ol.Observable.unByKey(eventCircleDraw); 
+                typeDraw = "Polygon";
+                draw = new ol.interaction.Draw({
+                    source: parkSources,
+                    type: typeDraw
+                });               
+                map.addInteraction(draw);
+            });
+        }
 
     var parkSources = new ol.source.Vector({
         features: [
@@ -195,6 +216,7 @@
             ],
         }),
 
+
         style: new ol.style.Style({
             image: new ol.style.Icon({
                 anchor: [0.5, 1],
@@ -206,6 +228,15 @@
     })
 
     map.addLayer(marker);
+
+
+    // const exampleLayer = new layer.VecterImage({
+    //     source: new ol.source.Vector({
+    //     url:"./an_giang/geojson",
+    //     format : new ol.format.GeoJSON()
+    // })
+    // })
+
 
     function SetRotation(locationS, locationE) {
         if(Math.abs(locationS[0] - locationE[0]) < 0.0000000000000000000000001){
@@ -316,7 +347,7 @@
                 console.log("listCo");
                 for (let i = 0; i < listCo.length; i++) {
                     for (let j = 0; j < listCo[i].length; j++) {
-                        console.log(listCo[k]);
+                        console.log(listCo[i]);
                     }
                 }
                 data = {
@@ -328,7 +359,7 @@
                     }
                 };
                 var a = JSON.stringify(data);
-
+                console.log(a)
                 polygonArea = polygonArea + data;
             }
             else {
@@ -350,4 +381,5 @@
     //     console.log(`[${lon}, ${lat}],`);
     // });
 </script>
+
 </html>

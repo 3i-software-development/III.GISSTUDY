@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Display a map</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
-  <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-    #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display a map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+
+        }
+
+        #remove-polygon-btn {
+            height: 10%;
+            position: absolute;
+            top: 580px;
+            color: rgb(0, 0, 0);
+            background-color: red;
+
+        }
+    </style>
 </head>
+
 <body>
     <div id="map"></div>
+    <div><button id="remove-polygon-btn" onclick="removePolygon()">Remove Polygon</button></div>
+
 </body>
 <script>
     var markers = [];
@@ -35,7 +50,7 @@
     var pracaNoronhaSantos = ol.proj.fromLonLat([-43.19848881797589, -22.906644586771165]);
     var pracaDeodoro = ol.proj.fromLonLat([-43.17509995536603, -22.91395763413628]);
     var listLonLat = [
-    [-43.19821603433218, -22.906235579377366],
+        [-43.19821603433218, -22.906235579377366],
         [-43.19787271157827, -22.90637393840575],
         [-43.1976795925292, -22.906907607621335],
         [-43.197228981414696, -22.906966904071183],
@@ -143,133 +158,934 @@
     const map = new ol.Map({
         layers: [
             new ol.layer.Tile({
-            source: source
+                source: source
             })
         ],
-        controls: ol.control.defaults.defaults({attribution: false}).extend([attribution]),
+        controls: ol.control.defaults.defaults({ attribution: false }).extend([attribution]),
         target: 'map',
         view: new ol.View({
             constrainResolution: true,
-            center: ol.proj.fromLonLat([-43.206091, -22.920387]),
-            zoom: 14
+            center: ol.proj.fromLonLat([108.75364417480614,
+                15.115861484391274]),
+            zoom: 7
         })
     });
+    const polygonCoords = [
+        [
+            105.617,
+            20.9304
+        ],
+        [
+            105.6146,
+            20.9333
+        ],
+        [
+            105.6125,
+            20.9318
+        ],
+        [
+            105.6153,
+            20.9285
+        ],
+        [
+            105.6148,
+            20.9261
+        ],
+        [
+            105.602,
+            20.9227
+        ],
+        [
+            105.601,
+            20.921
+        ],
+        [
+            105.6022,
+            20.9186
+        ],
+        [
+            105.5976,
+            20.9182
+        ],
+        [
+            105.5973,
+            20.913
+        ],
+        [
+            105.5936,
+            20.9137
+        ],
+        [
+            105.5926,
+            20.9112
+        ],
+        [
+            105.5911,
+            20.9115
+        ],
+        [
+            105.5916,
+            20.9131
+        ],
+        [
+            105.5884,
+            20.9131
+        ],
+        [
+            105.5874,
+            20.9113
+        ],
+        [
+            105.5818,
+            20.91
+        ],
+        [
+            105.5821,
+            20.9122
+        ],
+        [
+            105.5789,
+            20.916
+        ],
+        [
+            105.5811,
+            20.918
+        ],
+        [
+            105.5791,
+            20.9207
+        ],
+        [
+            105.5822,
+            20.9199
+        ],
+        [
+            105.5848,
+            20.9226
+        ],
+        [
+            105.5813,
+            20.9236
+        ],
+        [
+            105.5805,
+            20.9287
+        ],
+        [
+            105.5744,
+            20.9299
+        ],
+        [
+            105.5713,
+            20.9271
+        ],
+        [
+            105.566,
+            20.9272
+        ],
+        [
+            105.5608,
+            20.9246
+        ],
+        [
+            105.5529,
+            20.9271
+        ],
+        [
+            105.5465,
+            20.9217
+        ],
+        [
+            105.5385,
+            20.9276
+        ],
+        [
+            105.5251,
+            20.9188
+        ],
+        [
+            105.5218,
+            20.9218
+        ],
+        [
+            105.5125,
+            20.9223
+        ],
+        [
+            105.5059,
+            20.9262
+        ],
+        [
+            105.5024,
+            20.931
+        ],
+        [
+            105.4996,
+            20.9303
+        ],
+        [
+            105.4905,
+            20.9341
+        ],
+        [
+            105.4796,
+            20.9478
+        ],
+        [
+            105.4859,
+            20.9475
+        ],
+        [
+            105.487,
+            20.9518
+        ],
+        [
+            105.492,
+            20.9565
+        ],
+        [
+            105.4914,
+            20.9619
+        ],
+        [
+            105.5027,
+            20.9693
+        ],
+        [
+            105.5039,
+            20.9797
+        ],
+        [
+            105.5122,
+            20.9802
+        ],
+        [
+            105.5141,
+            20.9786
+        ],
+        [
+            105.5118,
+            20.9774
+        ],
+        [
+            105.5196,
+            20.9738
+        ],
+        [
+            105.5242,
+            20.9695
+        ],
+        [
+            105.5235,
+            20.9731
+        ],
+        [
+            105.5268,
+            20.9737
+        ],
+        [
+            105.5305,
+            20.9798
+        ],
+        [
+            105.5341,
+            20.9777
+        ],
+        [
+            105.5358,
+            20.9785
+        ],
+        [
+            105.5355,
+            20.9798
+        ],
+        [
+            105.5416,
+            20.9789
+        ],
+        [
+            105.5487,
+            20.9838
+        ],
+        [
+            105.549,
+            20.9869
+        ],
+        [
+            105.5516,
+            20.9857
+        ],
+        [
+            105.5517,
+            20.9879
+        ],
+        [
+            105.5561,
+            20.9908
+        ],
+        [
+            105.5544,
+            20.9834
+        ],
+        [
+            105.5618,
+            20.9826
+        ],
+        [
+            105.5668,
+            20.9791
+        ],
+        [
+            105.5654,
+            20.9776
+        ],
+        [
+            105.5695,
+            20.9771
+        ],
+        [
+            105.5722,
+            20.9745
+        ],
+        [
+            105.5742,
+            20.9751
+        ],
+        [
+            105.5734,
+            20.9776
+        ],
+        [
+            105.5762,
+            20.978
+        ],
+        [
+            105.5747,
+            20.9828
+        ],
+        [
+            105.5759,
+            20.9856
+        ],
+        [
+            105.578,
+            20.9858
+        ],
+        [
+            105.5769,
+            20.9828
+        ],
+        [
+            105.578,
+            20.9819
+        ],
+        [
+            105.581,
+            20.983
+        ],
+        [
+            105.5802,
+            20.9854
+        ],
+        [
+            105.5825,
+            20.9904
+        ],
+        [
+            105.5795,
+            20.9922
+        ],
+        [
+            105.582,
+            20.9961
+        ],
+        [
+            105.5804,
+            20.9968
+        ],
+        [
+            105.5807,
+            21.0012
+        ],
+        [
+            105.5841,
+            21.0042
+        ],
+        [
+            105.5856,
+            21.0028
+        ],
+        [
+            105.5926,
+            21.0038
+        ],
+        [
+            105.5907,
+            21.005
+        ],
+        [
+            105.5938,
+            21.0093
+        ],
+        [
+            105.5938,
+            21.0127
+        ],
+        [
+            105.5955,
+            21.0132
+        ],
+        [
+            105.5973,
+            21.0095
+        ],
+        [
+            105.596,
+            21.0087
+        ],
+        [
+            105.6015,
+            21.0029
+        ],
+        [
+            105.6067,
+            21.0045
+        ],
+        [
+            105.6079,
+            21.0034
+        ],
+        [
+            105.6079,
+            21.0048
+        ],
+        [
+            105.6151,
+            21.007
+        ],
+        [
+            105.6172,
+            21.0046
+        ],
+        [
+            105.6236,
+            21.0071
+        ],
+        [
+            105.6272,
+            21.0033
+        ],
+        [
+            105.6312,
+            21.0097
+        ],
+        [
+            105.6343,
+            21.0078
+        ],
+        [
+            105.6365,
+            21.0111
+        ],
+        [
+            105.6397,
+            21.0096
+        ],
+        [
+            105.6397,
+            21.0119
+        ],
+        [
+            105.6358,
+            21.0153
+        ],
+        [
+            105.6331,
+            21.0132
+        ],
+        [
+            105.6291,
+            21.0167
+        ],
+        [
+            105.6342,
+            21.0252
+        ],
+        [
+            105.6307,
+            21.027
+        ],
+        [
+            105.6334,
+            21.035
+        ],
+        [
+            105.6324,
+            21.0369
+        ],
+        [
+            105.6349,
+            21.0366
+        ],
+        [
+            105.6349,
+            21.0443
+        ],
+        [
+            105.6428,
+            21.0439
+        ],
+        [
+            105.6431,
+            21.0408
+        ],
+        [
+            105.6478,
+            21.0461
+        ],
+        [
+            105.6471,
+            21.0405
+        ],
+        [
+            105.6508,
+            21.044
+        ],
+        [
+            105.6533,
+            21.0394
+        ],
+        [
+            105.6552,
+            21.0394
+        ],
+        [
+            105.6545,
+            21.0375
+        ],
+        [
+            105.6651,
+            21.0333
+        ],
+        [
+            105.665,
+            21.0315
+        ],
+        [
+            105.6673,
+            21.0305
+        ],
+        [
+            105.6686,
+            21.0239
+        ],
+        [
+            105.6771,
+            21.019
+        ],
+        [
+            105.6766,
+            21.0092
+        ],
+        [
+            105.6663,
+            21.0092
+        ],
+        [
+            105.663,
+            21.0062
+        ],
+        [
+            105.6673,
+            20.995
+        ],
+        [
+            105.6649,
+            20.983
+        ],
+        [
+            105.6677,
+            20.9821
+        ],
+        [
+            105.6744,
+            20.9866
+        ],
+        [
+            105.6758,
+            20.9861
+        ],
+        [
+            105.6867,
+            20.9748
+        ],
+        [
+            105.6838,
+            20.9704
+        ],
+        [
+            105.6847,
+            20.9696
+        ],
+        [
+            105.687,
+            20.9697
+        ],
+        [
+            105.6891,
+            20.9744
+        ],
+        [
+            105.6953,
+            20.9785
+        ],
+        [
+            105.6991,
+            20.978
+        ],
+        [
+            105.7053,
+            20.9736
+        ],
+        [
+            105.7093,
+            20.9727
+        ],
+        [
+            105.713,
+            20.969
+        ],
+        [
+            105.715,
+            20.9631
+        ],
+        [
+            105.7249,
+            20.9554
+        ],
+        [
+            105.7253,
+            20.9515
+        ],
+        [
+            105.716,
+            20.9557
+        ],
+        [
+            105.7121,
+            20.9553
+        ],
+        [
+            105.7092,
+            20.9579
+        ],
+        [
+            105.7072,
+            20.9563
+        ],
+        [
+            105.7046,
+            20.9578
+        ],
+        [
+            105.6944,
+            20.9553
+        ],
+        [
+            105.6935,
+            20.9571
+        ],
+        [
+            105.6951,
+            20.9647
+        ],
+        [
+            105.6923,
+            20.9616
+        ],
+        [
+            105.6862,
+            20.9612
+        ],
+        [
+            105.6865,
+            20.9586
+        ],
+        [
+            105.6827,
+            20.9579
+        ],
+        [
+            105.6831,
+            20.9553
+        ],
+        [
+            105.6799,
+            20.9541
+        ],
+        [
+            105.6785,
+            20.9507
+        ],
+        [
+            105.6628,
+            20.9489
+        ],
+        [
+            105.6523,
+            20.9515
+        ],
+        [
+            105.6451,
+            20.951
+        ],
+        [
+            105.6427,
+            20.9541
+        ],
+        [
+            105.6383,
+            20.9529
+        ],
+        [
+            105.6385,
+            20.9541
+        ],
+        [
+            105.6337,
+            20.9549
+        ],
+        [
+            105.6327,
+            20.9497
+        ],
+        [
+            105.6259,
+            20.9411
+        ],
+        [
+            105.6222,
+            20.9398
+        ],
+        [
+            105.6234,
+            20.9383
+        ],
+        [
+            105.618,
+            20.9364
+        ],
+        [
+            105.6202,
+            20.9329
+        ],
+        [
+            105.617,
+            20.9304
+        ]
 
-    function DeleteMarkers() {
-        //Loop through all the markers and remove
-        for (var i = 0; i < markers.length - 1; i++) {
-            map.removeLayer(markers[i]);
-            markers.unshift();
-        }
-    };
+    ];
 
-    const marker = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            features: [
-                new ol.Feature({
-                    geometry: new ol.geom.Point(
-                        ol.proj.fromLonLat([-43.206091, -22.920387])
-                    )
-                })
-            ],
-        }),
+    const polygonCoordsProjected = polygonCoords.map(coord => ol.proj.fromLonLat(coord));
+    const polygon = new ol.geom.Polygon([polygonCoordsProjected]);
 
-        style: new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 1],
-                crossOrigin: 'anonymous',
-                src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
-                
-            })
-        })
-    })
-
-    map.addLayer(marker);
-
-    function SetRotation(locationS, locationE) {
-        if(Math.abs(locationS[0] - locationE[0]) < 0.0000000000000000000000001){
-            return 90;
-        } else{
-            return Math.atan2((locationE[0] - locationS[0]), (locationE[1] - locationS[1]));
-        }
-    };
-
-    function AddMarker(locationS, rotationA) {
-
-        marker2 = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: [
-                    new ol.Feature({
-                        geometry: new ol.geom.Point(
-                            locationS
-                        )
-                    })
-                ],
-            }),
-        
-            style: new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [15, 15],
-                    anchorXUnits: 'pixels',
-                    anchorYUnits: 'pixels',
-                    crossOrigin: 'anonymous',
-                    src: 'car_topview.svg',
-                    rotation: rotationA,
-                })
-            })
-        })
-
-        markers.push(marker2);
-
-        if(markers.length > 0){
-            DeleteMarkers();
-        }
-
-        map.addLayer(marker2);
-    }
-
-    function setPosition() {
-
-        //let num = Math.floor(Math.random() * 93);
-
-        if(time <= 0){
-            dr = true;
-        }
-          
-        if(time >= listLonLat.length - 1){
-            dr = false;
-        }
-        
-        if(dr == true){
-            locationS = [listLonLat[time][0], listLonLat[time][1]];
-            locationE = [listLonLat[time + 1][0], listLonLat[time + 1][1]];
-            rotationA = SetRotation(locationS, locationE);
-            console.log(rotationA);
-            time ++;
-        }
-        else{
-            locationS = [listLonLat[time][0], listLonLat[time][1]];
-            locationE = [listLonLat[time - 1][0], listLonLat[time - 1][1]];
-            rotationA = SetRotation(locationS, locationE);
-            console.log(rotationA);
-            time --;
-        }
-
-        locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
-        AddMarker(locationS, rotationA);
-    }
-
-    setInterval(setPosition, 300);
-
-    map.on('click', function (evt) {
-        // console.log(evt);
-        // console.info(evt.pixel);
-        // console.info(map.getPixelFromCoordinate(evt.coordinate));
-        // console.info(ol.proj.toLonLat(evt.coordinate));
-        var coords = ol.proj.toLonLat(evt.coordinate);
-        var lat = coords[1];
-        var lon = coords[0];
-        console.log(`[${lon}, ${lat}],`);
+    const feature = new ol.Feature({
+        geometry: polygon
     });
+
+    const vectorSource = new ol.source.Vector({
+        features: [feature]
+    });
+
+    const vectorLayer = new ol.layer.Vector({
+        source: vectorSource
+    });
+    const style = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'red',
+            width: 6
+        })
+    });
+    vectorLayer.setStyle(style);
+    const point = new ol.geom.Point(ol.proj.fromLonLat([ 105.64086695012486,
+          20.99023516629913]));
+    const result = polygon.intersectsCoordinate(point.getCoordinates());
+    console.log(result);
+
+   
+    map.addLayer(vectorLayer);
+ //Save 
+ const mysql = require('mysql2');
+
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'polygon'
+});
+
+// Connect to the database
+connection.connect();
+
+// Prepare the data for insertion into the database
+const coordinates = JSON.stringify(polygonCoords);
+
+// Insert the data into the database
+const sql = `INSERT INTO polygons (coordinates) VALUES ('${coordinates}')`;
+connection.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log('Data inserted into the database');
+});
+
+// Close the connection to the database
+connection.end();
+
+
+    ///////////////////////////////////////////////////////////
+    // let vectorLayer = null;
+    // let vectorSource = new ol.source.Vector();
+
+    // var draw = new ol.interaction.Draw({
+    //     type: 'Polygon',
+    //     source: vectorSource
+    // });
+    // map.addInteraction(draw);
+
+    // draw.on('drawend', function (event) {
+    //     var feature = event.feature;
+    //     vectorSource.addFeature(feature);
+    //     vectorLayer = new ol.layer.Vector({
+    //         source: vectorSource
+    //     });
+    //     map.addLayer(vectorLayer);
+    // });
+
+    // function removePolygon() {
+    //     console.log("removePolygon called");
+    //     if (vectorLayer !== null) {
+    //         vectorLayer.getSource().clear();
+    //         map.removeLayer(vectorLayer);
+    //         vectorLayer = null;
+    //     }
+    // }
+
+    // function DeleteMarkers() {
+    //     //Loop through all the markers and remove
+    //     for (var i = 0; i < markers.length - 1; i++) {
+    //         map.removeLayer(markers[i]);
+    //         markers.unshift();
+    //     }
+    // };
+
+    // const marker = new ol.layer.Vector({
+    //     source: new ol.source.Vector({
+    //         features: [
+    //             new ol.Feature({
+    //                 geometry: new ol.geom.Point(
+    //                     ol.proj.fromLonLat([-43.206091, -22.920387])
+    //                 )
+    //             })
+    //         ],
+    //     }),
+
+    //     style: new ol.style.Style({
+    //         image: new ol.style.Icon({
+    //             anchor: [0.5, 1],
+    //             crossOrigin: 'anonymous',
+    //             src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+
+    //         })
+    //     })
+    // })
+
+    // map.addLayer(marker);
+
+    // function SetRotation(locationS, locationE) {
+    //     if (Math.abs(locationS[0] - locationE[0]) < 0.0000000000000000000000001) {
+    //         return 90;
+    //     } else {
+    //         return Math.atan2((locationE[0] - locationS[0]), (locationE[1] - locationS[1]));
+    //     }
+    // };
+
+    // function AddMarker(locationS, rotationA) {
+
+    //     marker2 = new ol.layer.Vector({
+    //         source: new ol.source.Vector({
+    //             features: [
+    //                 new ol.Feature({
+    //                     geometry: new ol.geom.Point(
+    //                         locationS
+    //                     )
+    //                 })
+    //             ],
+    //         }),
+
+    //         style: new ol.style.Style({
+    //             image: new ol.style.Icon({
+    //                 anchor: [15, 15],
+    //                 anchorXUnits: 'pixels',
+    //                 anchorYUnits: 'pixels',
+    //                 crossOrigin: 'anonymous',
+    //                 src: 'car_topview.svg',
+    //                 rotation: rotationA,
+    //             })
+    //         })
+    //     })
+
+    //     markers.push(marker2);
+
+    //     if (markers.length > 0) {
+    //         DeleteMarkers();
+    //     }
+
+    //     map.addLayer(marker2);
+    // }
+
+    // function setPosition() {
+
+    //     //let num = Math.floor(Math.random() * 93);
+
+    //     if (time <= 0) {
+    //         dr = true;
+    //     }
+
+    //     if (time >= listLonLat.length - 1) {
+    //         dr = false;
+    //     }
+
+    //     if (dr == true) {
+    //         locationS = [listLonLat[time][0], listLonLat[time][1]];
+    //         locationE = [listLonLat[time + 1][0], listLonLat[time + 1][1]];
+    //         rotationA = SetRotation(locationS, locationE);
+    //         console.log(rotationA);
+    //         time++;
+    //     }
+    //     else {
+    //         locationS = [listLonLat[time][0], listLonLat[time][1]];
+    //         locationE = [listLonLat[time - 1][0], listLonLat[time - 1][1]];
+    //         rotationA = SetRotation(locationS, locationE);
+    //         console.log(rotationA);
+    //         time--;
+    //     }
+
+    //     locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
+    //     AddMarker(locationS, rotationA);
+    // }
+
+    // setInterval(setPosition, 300);
+
+    // map.on('click', function (evt) {
+    //     // console.log(evt);
+    //     // console.info(evt.pixel);
+    //     // console.info(map.getPixelFromCoordinate(evt.coordinate));
+    //     // console.info(ol.proj.toLonLat(evt.coordinate));
+    //     var coords = ol.proj.toLonLat(evt.coordinate);
+    //     var lat = coords[1];
+    //     var lon = coords[0];
+    //     console.log(`[${lon}, ${lat}],`);
+    // });
 </script>
+
 </html>
