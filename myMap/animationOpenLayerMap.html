@@ -244,14 +244,12 @@
             locationS = [listLonLat[time][0], listLonLat[time][1]];
             locationE = [listLonLat[time + 1][0], listLonLat[time + 1][1]];
             rotationA = SetRotation(locationS, locationE);
-            console.log(rotationA);
             time ++;
         }
         else{
             locationS = [listLonLat[time][0], listLonLat[time][1]];
             locationE = [listLonLat[time - 1][0], listLonLat[time - 1][1]];
             rotationA = SetRotation(locationS, locationE);
-            console.log(rotationA);
             time --;
         }
 
@@ -271,5 +269,15 @@
         var lon = coords[0];
         console.log(`[${lon}, ${lat}],`);
     });
+
+    var polygon = new ol.geom.Polygon([[
+        [-43.23398597375488, -22.91904307382933],
+        [-43.196392132202156, -22.916908575457995],
+        [-43.20823676721192, -22.92449775024923],
+        [-43.23398597375488, -22.91904307382933]
+        ]]);
+      var point = new ol.geom.Point([-43.206091, -22.920387]);
+      var isInside = polygon.intersectsCoordinate(point.getCoordinates());
+      console.log(isInside);
 </script>
 </html>
