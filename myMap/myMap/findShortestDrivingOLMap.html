@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shortest Driving Route</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+        <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" style="height: 600px; width: 100%;"></div>
+    <script>
+      // Create the OpenLayers map
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([0, 0]),
+          zoom: 2
+        })
+      });
+      
+      // Define start and end coordinates
+      var start = [13.388860, 52.517037];
+      var end = [13.397634, 52.529407];
+      
+      // Make a request to the OSRM API to get the shortest driving route
+      var request = new XMLHttpRequest();
+      request.open('GET', 'http://router.project-osrm.org/route/v1/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1]);
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          // Parse the JSON response
+          var data = JSON.parse(request.responseText);
+          
+          // Extract the coordinates of the route
+          var routeCoords = data.routes[0].geometry.coordinates;
+          
+          // Transform the coordinates to the map's projection
+          routeCoords = routeCoords.map(function(coord) {
+            return ol.proj.fromLonLat(coord);
+          });
+          
+          // Create a new feature for the route
+          var routeFeature = new ol.Feature({
+            geometry: new ol.geom.LineString(routeCoords)
+          });
+          
+          // Create a new vector layer for the
+          // Create a new vector layer for the route
+          var routeLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+              features: [routeFeature]
+            }),
+            style: new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: '#ffcc33',
+                width: 3
+              })
+            })
+          });
+          
+          // Add the route layer to the map
+          map.addLayer(routeLayer);
+          
+          // Zoom the map to fit the route
+          map.getView().fit(routeFeature.getGeometry(), { padding: [10, 10, 10, 10] });
+        } else {
+          console.log('Error getting route');
+        }
+      };
+      request.send();
+    </script>
+  </body>
+</html>
