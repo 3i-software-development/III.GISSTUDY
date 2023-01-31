@@ -65,6 +65,41 @@
     </select>
     </div>
     <div id="map"></div>
+    // Đánh dấu 1 điểm
+    <script>
+      React.useEffect(() => {
+  if (map) {
+    ["click", "idle"].forEach((eventName) =>
+      google.maps.event.clearListeners(map, eventName)
+    );
+    if (onClick) {
+      map.addListener("click", onClick);
+    }
+
+    if (onIdle) {
+      map.addListener("idle", () => onIdle(map));
+    }
+  }
+}, [map, onClick, onIdle]);
+    </script> 
+    <script>
+      const vectorLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [routeFeature, geoMarker, startMarker, endMarker],
+      }),
+      style: function (feature) {
+        return styles[feature.get('type')];
+      },
+    });
+
+    map.addLayer(vectorLayer);
+
+    const speedInput = document.getElementById('speed');
+    const startButton = document.getElementById('start-animation');
+    let animating = false;
+    let distance = 0;
+    let lastTime;
+    </script>
     
     <script>
     
@@ -84,7 +119,7 @@
         document.getElementById('start').addEventListener('change', onChangeHandler);
         document.getElementById('end').addEventListener('change', onChangeHandler);
       }
-
+      
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         console.log(directionsService);
         console.log(directionsDisplay);

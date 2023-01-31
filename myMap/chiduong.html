@@ -1,0 +1,36 @@
+
+<script>
+var markerslist =<?php echo json_encode(getpost_maps_home(5)); ?> ;
+	function initMap() {
+	    var myLatLng = {lat: 16.0566682, lng: 108.1733446};
+	    var map = new google.maps.Map(document.getElementById('maps-home'), {
+	      	zoom: 12,
+	      	center: myLatLng
+	    });
+	    for (i = 0; i < markerslist.length; i++) {
+			add_marker(markerslist[i], i, map);
+		}
+	}
+	function add_marker(markers, iter, map){
+		var infowindow = new google.maps.InfoWindow({
+			content: ''
+		});
+		var pos = new google.maps.LatLng(Number(markers.lat), Number(markers.lng));
+		var content = '<h4>'+markers.title+'</h4>';
+		marker = new google.maps.Marker({
+	      	position: pos,
+	      	map: map,
+	      	iter: iter,
+	      	content: content,
+	      	title: markerslist.title
+	    });
+	    google.maps.event.addListener(marker, 'click', (function (marker, content) {
+			return function () {
+				infowindow.setContent(content);
+				infowindow.open(map, marker);
+				map.setZoom(13);
+				map.panTo(this.getPosition());
+			}
+		})(marker, content));
+	}
+</script>
