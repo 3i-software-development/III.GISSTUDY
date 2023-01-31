@@ -82,9 +82,10 @@
           calculateAndDisplayRoute(directionsService, directionsDisplay);
         };
         directionsDisplay.setMap(map);
+        
         var icon = {
-            //url: 'https://cdn-icons-png.flaticon.com/512/1048/1048315.png', // url
-            url:'car-top.svg',
+            url: 'https://cdn-icons-png.flaticon.com/512/1048/1048315.png', // url
+            //url:'car-top.svg',
             scaledSize: new google.maps.Size(15, 15), // scaled size
             origin: new google.maps.Point(0,0), // origin
             anchor: new google.maps.Point(0, 0) // anchor
