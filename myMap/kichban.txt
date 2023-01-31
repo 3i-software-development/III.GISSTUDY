@@ -1,0 +1,38 @@
+1. Thành viên nhóm tiến hành đăng ký tài khoản trên github.
+2. Nhóm trưởng tiến hành tạo Reposity đặt tên là tên của nhóm mình. Lưu ý tên được
+đặt không dấu và các từ cách nhau bằng dấu dạch dưới, viết thường (ví dụ:
+ten_nhom_ne)
+3. Nhóm trưởng thêm các thành viên (collabrator) vào Reposity trên, tạo các Branch
+cho các thành viên (kể cả nhóm trưởng cũng có 1 Branch), lưu ý Brach
+master/main là để quản lý chung các user không dùng được, chỉ có nhóm trưởng sử
+dụng. Giả sử các branch lần lượt là us01 (nhóm trưởng), us02, us03 ứng với 3
+thành viên trong nhóm.
+4. Nhóm trưởng tiến hành clone thùng chứa về, khởi tạo các tập tin, thư mục cho dự
+án
+5. Nhóm trưởng tiến hành họp các thành viên, tiến hành merge branch của mình và
+master/main. Phân công nhiệm vụ cho các thành viên:
+- us01: thêm nội dung u01_01 vào tập tin us01.txt
+- us02: thêm nội dung u02_01 vào tập tin us02.txt
+- us03: thêm nội dung u03_01 vào tập tin us03.txt
+6. Các thành viên clone thùng chứa về, tiến hành thực hiện theo nhiệm vụ và tiến
+hành push thông tin lên branch cá nhân.
+7. Nhóm trưởng vừa hoàn thành công việc vừa theo dõi công việc cá thành viên
+thông qua lịch sử các nhánh được hiển thị trên trang github.
+8. Sau khi tất cả đều hoàn thành, nhóm trưởng họp nhóm và tiến hành merge lần lượt
+các phần của các thành viên vào branch master/main. Các thành viên cùng merge
+từ branch master/main về branch của mình. Phân công nhiệm vụ cho các thành
+viên:
+- us01: thêm nội dung u01_02 vào tập tin us01.txt
+- us02: thêm nội dung u02_02 vào tập tin us02.txt
+- us03: thêm nội dung u03_02 vào tập tin us03.txt
+9. Thành viên us02 hoàn thành nhiệm vụ sớm hơn và liên hệ với nhóm trưởng để
+merge với branch chính, nhóm trưởng tiến hành họp nhóm merge chức năng với
+us02. Trong lúc đó các thành viên us01 (nhóm trưởng) và us03 cũng đã sửa nội
+dung của mình nhưng chưa hoàn thành, us01 chỉ mới thêm được nội dung là u01
+vào tập tin us01.txt (thiếu nội dung), còn us03 thêm được nội dung us03_02 vào
+us03.txt (dư nội dung). Các thành viên us01, us03 tiến hành lấy phiên bản mới
+nhất vừa thống nhất về và merge lại với phiên bản đang làm hiện tại của mình và
+tiếp tục hoàn thành.
+10.Sau khi các thành viên đều hoàn thành, nhóm trưởng tiến hành merge lần cuối
+trên branch chính sai đó các thành viên tiến hành kéo phiên bản mới nhất về
+branch của mình.
