@@ -35,12 +35,12 @@
     <div id="floating-panel">
     <b>Start: </b>
     <select id="start">
-      <option value="chicago, il">Chicago</option>
-      <option value="st louis, mo">St Louis</option>
-      <option value="joplin, mo">Joplin, MO</option>
-      <option value="oklahoma city, ok">Oklahoma City</option>
-      <option value="amarillo, tx">Amarillo</option>
-      <option value="gallup, nm">Gallup, NM</option>
+      <option value="Hà Nội">Hà Nội</option>
+      <option value="TP.HCM">TP.HCM</option>
+      <option value="Nha Trang">Nha Trang</option>
+      <option value="Vũng Tàu">Vũng Tàu</option>
+      <option value="Cần Thơ">Cần Thơ</option>
+      <option value="Tây Ninh">Tây Ninh</option>
       <option value="flagstaff, az">Flagstaff, AZ</option>
       <option value="winona, az">Winona</option>
       <option value="kingman, az">Kingman</option>
@@ -50,12 +50,12 @@
     </select>
     <b>End: </b>
     <select id="end">
-      <option value="chicago, il">Chicago</option>
-      <option value="st louis, mo">St Louis</option>
-      <option value="joplin, mo">Joplin, MO</option>
-      <option value="oklahoma city, ok">Oklahoma City</option>
-      <option value="amarillo, tx">Amarillo</option>
-      <option value="gallup, nm">Gallup, NM</option>
+      <option value="TP.HCM ">TP.HCM</option>
+      <option value="Hà Nội">Hà Nội</option>
+      <option value="Nha Trang">Nha Trang</option>
+      <option value="Vũng Tàu">Vũng Tàu</option>
+      <option value="Cần Thơ">Cần Thơ</option>
+      <option value="Tây Ninh">Tây Ninh</option>
       <option value="flagstaff, az">Flagstaff, AZ</option>
       <option value="winona, az">Winona</option>
       <option value="kingman, az">Kingman</option>
@@ -81,6 +81,25 @@
         var onChangeHandler = function() {
           calculateAndDisplayRoute(directionsService, directionsDisplay);
         };
+        directionsDisplay.setMap(map);
+        var icon = {
+            //url: 'https://cdn-icons-png.flaticon.com/512/1048/1048315.png', // url
+            url:'car-top.svg',
+            scaledSize: new google.maps.Size(15, 15), // scaled size
+            origin: new google.maps.Point(0,0), // origin
+            anchor: new google.maps.Point(0, 0) // anchor
+        };
+        // add maker
+        var marker = new google.maps.Marker({
+          position:{lat: 10.8230989, lng: 106.6296638}, // Tọa độ Brooklyn
+          map:map, //Bản đồ mà chúng ta cần thêm
+          icon:icon, // url
+          
+          // thêm các biểu tượng tùy chỉnh (Ở đây tôi đã sử dụng trình tạo logo Flash)
+          draggarble: false// Nếu được đặt thành true, bạn có thể kéo điểm đánh dấu
+        });
+        
+
         document.getElementById('start').addEventListener('change', onChangeHandler);
         document.getElementById('end').addEventListener('change', onChangeHandler);
       }
