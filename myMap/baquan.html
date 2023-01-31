@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display a map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+</body>
+
+
+
+
+<script>
+    var markers = [];
+    var marker2;
+    var time = 0;
+    var locationS;
+    var locationE;
+    var rotationA;
+    var markerCar;
+    var markerIcon;
+    var dr = true;
+    var pracaNoronhaSantos = ol.proj.fromLonLat([-43.19848881797589, -22.906644586771165]);
+    var pracaDeodoro = ol.proj.fromLonLat([-43.17509995536603, -22.91395763413628]);
+    var listLonLat = [
+    
+    [
+            105.20546131294395,
+            10.183881785303868
+          ],
+          [
+            105.21258546018157,
+            10.432473118765301
+          ],
+    ];
+    const key = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
+    const source = new ol.source.TileJSON({
+        url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
+        tileSize: 512,
+        crossOrigin: 'anonymous'
+    });
+
+    const attribution = new ol.control.Attribution({
+        collapsible: false,
+    });
+
+    const map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+                source: source
+            })
+        ],
+        controls: ol.control.defaults.defaults({ attribution: false }).extend([attribution]),
+        target: 'map',
+        view: new ol.View({
+            constrainResolution: true,
+            center: ol.proj.fromLonLat([105.0756, 10.4393]),
+            zoom: 10
+        })
+    });
+
+    function DeleteMarkers() {
+        //Loop through all the markers and remove
+        for (var i = 0; i < markers.length - 1; i++) {
+            map.removeLayer(markers[i]);
+            markers.unshift();
+        }
+    };
+
+    const marker = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(
+                        ol.proj.fromLonLat([105.0756, 10.4393])
+                    )
+                })
+            ],
+        }),
+
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+
+            })
+        })
+    })
+
+    map.addLayer(marker);
+
+    function SetRotation(locationS, locationE) {
+        if (Math.abs(locationS[0] - locationE[0]) < 0.0000000000000000000000001) {
+            return 90;
+        } else {
+            return Math.atan2((locationE[0] - locationS[0]), (locationE[1] - locationS[1]));
+        }
+    };
+
+    function AddMarker(locationS, rotationA) {
+
+        marker2 = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point(
+                            locationS
+                        )
+                    })
+                ],
+            }),
+
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [15, 15],
+                    anchorXUnits: 'pixels',
+                    anchorYUnits: 'pixels',
+                    crossOrigin: 'anonymous',
+                    src: 'car_topview.svg',
+                    rotation: rotationA,
+                })
+            })
+        })
+
+        markers.push(marker2);
+
+        if (markers.length > 0) {
+            DeleteMarkers();
+        }
+
+        map.addLayer(marker2);
+    }
+
+    function setPosition() {
+
+        //let num = Math.floor(Math.random() * 93);
+
+        if (time <= 0) {
+            dr = true;
+        }
+
+        if (time >= listLonLat.length - 1) {
+            dr = false;
+        }
+
+        if (dr == true) {
+            locationS = [listLonLat[time][0], listLonLat[time][1]];
+            locationE = [listLonLat[time + 1][0], listLonLat[time + 1][1]];
+            rotationA = SetRotation(locationS, locationE);
+            console.log(rotationA);
+            time++;
+        }
+        else {
+            locationS = [listLonLat[time][0], listLonLat[time][1]];
+            locationE = [listLonLat[time - 1][0], listLonLat[time - 1][1]];
+            rotationA = SetRotation(locationS, locationE);
+            console.log(rotationA);
+            time--;
+        }
+
+        locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
+        AddMarker(locationS, rotationA);
+
+
+        if(rotationA == polygonCoords){
+            console.log("Quận");
+        }
+        else{
+            console.log("Tỉnh");
+        }
+
+
+
+    }
+
+    setInterval(setPosition, 300);
+
+    map.on('click', function (evt) {
+        // console.log(evt);
+        // console.info(evt.pixel);
+        // console.info(map.getPixelFromCoordinate(evt.coordinate));
+        // console.info(ol.proj.toLonLat(evt.coordinate));
+        var coords = ol.proj.toLonLat(evt.coordinate);
+        var lat = coords[1];
+        var lon = coords[0];
+        console.log(`[${lon}, ${lat}],`);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const polygonCoords = [
+        [
+            105.5486,
+            10.4295
+        ],
+        [
+            105.5495,
+            10.4252
+        ],
+        [
+            105.5465,
+            10.4205
+        ],
+        [
+            105.5523,
+            10.4188
+        ],
+        [
+            105.5522,
+            10.4165
+        ],
+        [
+            105.5453,
+            10.4129
+        ],
+        [
+            105.5396,
+            10.4132
+        ],
+        [
+            105.5366,
+            10.4098
+        ],
+        [
+            105.5318,
+            10.4082
+        ],
+        [
+            105.5297,
+            10.4004
+        ],
+        [
+            105.5238,
+            10.4001
+        ],
+        [
+            105.529,
+            10.3771
+        ],
+        [
+            105.5279,
+            10.3744
+        ],
+        [
+            105.5206,
+            10.3695
+        ],
+        [
+            105.521,
+            10.3634
+        ],
+        [
+            105.5142,
+            10.3619
+        ],
+        [
+            105.5084,
+            10.3561
+        ],
+        [
+            105.5011,
+            10.3549
+        ],
+        [
+            105.4976,
+            10.3501
+        ],
+        [
+            105.4911,
+            10.3455
+        ],
+        [
+            105.4915,
+            10.3384
+        ],
+        [
+            105.4877,
+            10.3346
+        ],
+        [
+            105.4954,
+            10.3253
+        ],
+        [
+            105.4873,
+            10.3239
+        ],
+        [
+            105.4846,
+            10.3164
+        ],
+        [
+            105.4771,
+            10.3106
+        ],
+        [
+            105.4514,
+            10.308
+        ],
+        [
+            105.4478,
+            10.3047
+        ],
+        [
+            105.4433,
+            10.3062
+        ],
+        [
+            105.4267,
+            10.303
+        ],
+        [
+            105.4415,
+            10.2697
+        ],
+        [
+            105.3972,
+            10.2528
+        ],
+        [
+            105.3362,
+            10.2344
+        ],
+        [
+            105.312,
+            10.2739
+        ],
+        [
+            105.3065,
+            10.2689
+        ],
+        [
+            105.3013,
+            10.277
+        ],
+        [
+            105.2875,
+            10.2621
+        ],
+        [
+            105.2889,
+            10.2599
+        ],
+        [
+            105.2671,
+            10.2389
+        ],
+        [
+            105.261,
+            10.2459
+        ],
+        [
+            105.2532,
+            10.2385
+        ],
+        [
+            105.2313,
+            10.2088
+        ],
+        [
+            105.2276,
+            10.213
+        ],
+        [
+            105.2061,
+            10.1836
+        ],
+        [
+            105.1464,
+            10.2352
+        ],
+        [
+            105.1468,
+            10.2369
+        ],
+        [
+            105.1415,
+            10.2385
+        ],
+        [
+            105.1256,
+            10.2535
+        ],
+        [
+            105.0172,
+            10.316
+        ],
+        [
+            105.0191,
+            10.3187
+        ],
+        [
+            104.8683,
+            10.3535
+        ],
+        [
+            104.8647,
+            10.3556
+        ],
+        [
+            104.8279,
+            10.4035
+        ],
+        [
+            104.8297,
+            10.406
+        ],
+        [
+            104.8046,
+            10.4488
+        ],
+        [
+            104.7978,
+            10.466
+        ],
+        [
+            104.7784,
+            10.4874
+        ],
+        [
+            104.7828,
+            10.5035
+        ],
+        [
+            104.7794,
+            10.5099
+        ],
+        [
+            104.7787,
+            10.5184
+        ],
+        [
+            104.8691,
+            10.5222
+        ],
+        [
+            104.8969,
+            10.5471
+        ],
+        [
+            104.9341,
+            10.6108
+        ],
+        [
+            104.9569,
+            10.6378
+        ],
+        [
+            104.995,
+            10.6619
+        ],
+        [
+            105.0983,
+            10.721
+        ],
+        [
+            105.092,
+            10.756
+        ],
+        [
+            105.0775,
+            10.775
+        ],
+        [
+            105.0643,
+            10.7813
+        ],
+        [
+            105.0613,
+            10.7986
+        ],
+        [
+            105.0569,
+            10.8016
+        ],
+        [
+            105.0586,
+            10.8191
+        ],
+        [
+            105.0357,
+            10.8675
+        ],
+        [
+            105.0294,
+            10.8924
+        ],
+        [
+            105.045,
+            10.9016
+        ],
+        [
+            105.0418,
+            10.9113
+        ],
+        [
+            105.0449,
+            10.9144
+        ],
+        [
+            105.0533,
+            10.9165
+        ],
+        [
+            105.0533,
+            10.9219
+        ],
+        [
+            105.0508,
+            10.925
+        ],
+        [
+            105.0538,
+            10.9304
+        ],
+        [
+            105.067,
+            10.9388
+        ],
+        [
+            105.071,
+            10.9394
+        ],
+        [
+            105.0791,
+            10.9364
+        ],
+        [
+            105.0784,
+            10.9424
+        ],
+        [
+            105.0802,
+            10.9546
+        ],
+        [
+            105.0835,
+            10.9571
+        ],
+        [
+            105.0957,
+            10.9567
+        ],
+        [
+            105.1123,
+            10.9621
+        ],
+        [
+            105.1166,
+            10.9606
+        ],
+        [
+            105.1178,
+            10.9474
+        ],
+        [
+            105.1149,
+            10.9409
+        ],
+        [
+            105.1037,
+            10.9276
+        ],
+        [
+            105.1022,
+            10.9227
+        ],
+        [
+            105.1035,
+            10.9205
+        ],
+        [
+            105.1083,
+            10.9192
+        ],
+        [
+            105.1427,
+            10.9233
+        ],
+        [
+            105.155,
+            10.9233
+        ],
+        [
+            105.1814,
+            10.9119
+        ],
+        [
+            105.1894,
+            10.9118
+        ],
+        [
+            105.1854,
+            10.8969
+        ],
+        [
+            105.1854,
+            10.8832
+        ],
+        [
+            105.1903,
+            10.8551
+        ],
+        [
+            105.1942,
+            10.8471
+        ],
+        [
+            105.1962,
+            10.8452
+        ],
+        [
+            105.1993,
+            10.8453
+        ],
+        [
+            105.2095,
+            10.8495
+        ],
+        [
+            105.2196,
+            10.8266
+        ],
+        [
+            105.2347,
+            10.8057
+        ],
+        [
+            105.2613,
+            10.7999
+        ],
+        [
+            105.2619,
+            10.7919
+        ],
+        [
+            105.2584,
+            10.7842
+        ],
+        [
+            105.2606,
+            10.7723
+        ],
+        [
+            105.2724,
+            10.7647
+        ],
+        [
+            105.2998,
+            10.7622
+        ],
+        [
+            105.3038,
+            10.7588
+        ],
+        [
+            105.3041,
+            10.7536
+        ],
+        [
+            105.3,
+            10.747
+        ],
+        [
+            105.2784,
+            10.7337
+        ],
+        [
+            105.2755,
+            10.7285
+        ],
+        [
+            105.2785,
+            10.723
+        ],
+        [
+            105.2947,
+            10.7166
+        ],
+        [
+            105.3029,
+            10.7164
+        ],
+        [
+            105.329,
+            10.7229
+        ],
+        [
+            105.3371,
+            10.7233
+        ],
+        [
+            105.3425,
+            10.7219
+        ],
+        [
+            105.3503,
+            10.7148
+        ],
+        [
+            105.3461,
+            10.6924
+        ],
+        [
+            105.338,
+            10.6734
+        ],
+        [
+            105.3398,
+            10.6494
+        ],
+        [
+            105.3469,
+            10.6238
+        ],
+        [
+            105.3711,
+            10.5732
+        ],
+        [
+            105.3753,
+            10.5714
+        ],
+        [
+            105.3864,
+            10.5714
+        ],
+        [
+            105.3937,
+            10.5689
+        ],
+        [
+            105.4087,
+            10.5542
+        ],
+        [
+            105.4151,
+            10.5505
+        ],
+        [
+            105.4188,
+            10.5497
+        ],
+        [
+            105.4458,
+            10.5528
+        ],
+        [
+            105.4787,
+            10.5355
+        ],
+        [
+            105.4823,
+            10.5357
+        ],
+        [
+            105.4884,
+            10.5423
+        ],
+        [
+            105.5014,
+            10.5459
+        ],
+        [
+            105.5099,
+            10.5453
+        ],
+        [
+            105.5132,
+            10.547
+        ],
+        [
+            105.532,
+            10.5378
+        ],
+        [
+            105.5503,
+            10.5213
+        ],
+        [
+            105.5577,
+            10.5081
+        ],
+        [
+            105.5705,
+            10.4786
+        ],
+        [
+            105.5736,
+            10.4685
+        ],
+        [
+            105.5753,
+            10.4474
+        ],
+        [
+            105.5728,
+            10.4396
+        ],
+        [
+            105.574,
+            10.4287
+        ],
+        [
+            105.5668,
+            10.4292
+        ],
+        [
+            105.5548,
+            10.4343
+        ],
+        [
+            105.5514,
+            10.4294
+        ],
+        [
+            105.5486,
+            10.4295
+        ]
+
+
+
+    ];
+
+
+    const polygonCoords2 = [
+    [
+                                105.2061,
+                                10.1836
+                            ],
+                            [
+                                105.1464,
+                                10.2352
+                            ],
+                            [
+                                105.1468,
+                                10.2369
+                            ],
+                            [
+                                105.1415,
+                                10.2385
+                            ],
+                            [
+                                105.1256,
+                                10.2535
+                            ],
+                            [
+                                105.0953,
+                                10.2708
+                            ],
+                            [
+                                105.1249,
+                                10.3147
+                            ],
+                            [
+                                105.1193,
+                                10.3764
+                            ],
+                            [
+                                105.1259,
+                                10.3735
+                            ],
+                            [
+                                105.2653,
+                                10.3689
+                            ],
+                            [
+                                105.2774,
+                                10.3674
+                            ],
+                            [
+                                105.2802,
+                                10.3649
+                            ],
+                            [
+                                105.2848,
+                                10.3639
+                            ],
+                            [
+                                105.2927,
+                                10.3551
+                            ],
+                            [
+                                105.3115,
+                                10.3524
+                            ],
+                            [
+                                105.3181,
+                                10.3547
+                            ],
+                            [
+                                105.3199,
+                                10.3488
+                            ],
+                            [
+                                105.3255,
+                                10.3495
+                            ],
+                            [
+                                105.337,
+                                10.3459
+                            ],
+                            [
+                                105.35,
+                                10.3492
+                            ],
+                            [
+                                105.3569,
+                                10.3483
+                            ],
+                            [
+                                105.3591,
+                                10.351
+                            ],
+                            [
+                                105.3682,
+                                10.3542
+                            ],
+                            [
+                                105.3709,
+                                10.3622
+                            ],
+                            [
+                                105.3752,
+                                10.3642
+                            ],
+                            [
+                                105.3788,
+                                10.3618
+                            ],
+                            [
+                                105.3847,
+                                10.3648
+                            ],
+                            [
+                                105.388,
+                                10.3643
+                            ],
+                            [
+                                105.3951,
+                                10.3522
+                            ],
+                            [
+                                105.3988,
+                                10.3508
+                            ],
+                            [
+                                105.4058,
+                                10.338
+                            ],
+                            [
+                                105.4172,
+                                10.3244
+                            ],
+                            [
+                                105.4218,
+                                10.3135
+                            ],
+                            [
+                                105.4235,
+                                10.313
+                            ],
+                            [
+                                105.4229,
+                                10.3107
+                            ],
+                            [
+                                105.4415,
+                                10.2697
+                            ],
+                            [
+                                105.3972,
+                                10.2528
+                            ],
+                            [
+                                105.3362,
+                                10.2344
+                            ],
+                            [
+                                105.312,
+                                10.2739
+                            ],
+                            [
+                                105.3065,
+                                10.2689
+                            ],
+                            [
+                                105.3013,
+                                10.277
+                            ],
+                            [
+                                105.2875,
+                                10.2621
+                            ],
+                            [
+                                105.2889,
+                                10.2599
+                            ],
+                            [
+                                105.2671,
+                                10.2389
+                            ],
+                            [
+                                105.261,
+                                10.2459
+                            ],
+                            [
+                                105.2532,
+                                10.2385
+                            ],
+                            [
+                                105.2313,
+                                10.2088
+                            ],
+                            [
+                                105.2276,
+                                10.213
+                            ],
+                            [
+                                105.2061,
+                                10.1836
+                            ]
+    ];
+
+
+    const polygonCoords3 = [
+    [
+            105.20546131294395,
+            10.183881785303868
+          ],
+          [
+            105.21258546018157,
+            10.432473118765301
+          ],
+    ];
+
+    const polygonCoordsProjected = polygonCoords.map(coord => ol.proj.fromLonLat(coord));
+    const polygon = new ol.geom.Polygon([polygonCoordsProjected]);
+
+    const feature = new ol.Feature({
+        geometry: polygon
+    });
+
+    const vectorSource = new ol.source.Vector({
+        features: [feature]
+    });
+
+    const vectorLayer = new ol.layer.Vector({
+        source: vectorSource
+    });
+    const style = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'red',
+            width: 6
+        })
+    });
+    vectorLayer.setStyle(style);
+    const point = new ol.geom.Point(ol.proj.fromLonLat([105.64086695012486,
+        20.99023516629913]));
+    const result = polygon.intersectsCoordinate(point.getCoordinates());
+    console.log(result);
+
+
+    map.addLayer(vectorLayer);
+
+
+
+
+
+
+
+    const polygonCoordsProjected2 = polygonCoords2.map(coord => ol.proj.fromLonLat(coord));
+    const polygon2 = new ol.geom.Polygon([polygonCoordsProjected2]);
+
+//
+    
+    const feature2 = new ol.Feature({
+        geometry: polygon2
+    });
+//
+    
+    const vectorSource2 = new ol.source.Vector({
+        features: [feature2]
+    });
+//
+    
+    const vectorLayer2 = new ol.layer.Vector({
+        source: vectorSource2
+    });
+//
+    
+
+    const style2 = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'blue',
+            width: 5
+        })
+    });
+    
+    vectorLayer2.setStyle(style2);
+    // const point = new ol.geom.Point(ol.proj.fromLonLat([  105.8134,21.038]));
+    // const result = polygon.intersectsCoordinate(point.getCoordinates());
+    // console.log(result);
+
+    map.addLayer(vectorLayer2);
+
+    const polygonCoordsProjected3 = polygonCoords3.map(coord => ol.proj.fromLonLat(coord));
+    const polygon3 = new ol.geom.Polygon([polygonCoordsProjected3]);
+
+//
+    
+    const feature3 = new ol.Feature({
+        geometry: polygon3
+    });
+//
+    
+    const vectorSource3 = new ol.source.Vector({
+        features: [feature3]
+    });
+//
+    
+    const vectorLayer3 = new ol.layer.Vector({
+        source: vectorSource3
+    });
+//
+    
+
+    const style3 = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'green',
+            width: 5
+        })
+    });
+    
+    vectorLayer3.setStyle(style3);
+    // const point = new ol.geom.Point(ol.proj.fromLonLat([  105.8134,21.038]));
+    // const result = polygon.intersectsCoordinate(point.getCoordinates());
+    // console.log(result);
+
+    map.addLayer(vectorLayer3);
+
+
+
+    //Save 
+    const mysql = require('mysql2');
+
+    // Create a connection to the database
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'polygon'
+    });
+
+    // Connect to the database
+    connection.connect();
+
+    // Prepare the data for insertion into the database
+    const coordinates = JSON.stringify(polygonCoords);
+
+    // Insert the data into the database
+    const sql = `INSERT INTO polygons (coordinates) VALUES ('${coordinates}')`;
+    connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log('Data inserted into the database');
+    });
+
+    // Close the connection to the database
+    connection.end();
+
+
+    
+
+    
+
+
+</script>
+
+</html>
