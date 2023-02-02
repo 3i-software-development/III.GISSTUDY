@@ -2,6 +2,17 @@
 <head>
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
 <script type="text/javascript">
+    fetch('gadm41_VNM_3.json')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Thực hiện xử lý dữ liệu tại đây
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
     var markers = [];
     var map;
     var listLonLat = [
