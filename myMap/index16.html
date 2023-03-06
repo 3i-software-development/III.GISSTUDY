@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display a map</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+  <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+  </style>
+</head>
+<body>
+    <?php 
+    mysql_connect("localhost","root","") or die (" khong the ket noi ");
+    my_select_db("ten database ") or die (" khong tim thay CSDL");
+    $tb = mysql_query("select * from ten bang ");
+    ?>
+    <div id="map"></div>
+</body>
+<script>
+    var markers = [];
+    var marker2;
+    var time = 0;
+    var locationS;
+    var locationE;
+    var rotationA;
+    var markerCar;
+    var markerIcon;
+    var dr = true;
+    var pracaNoronhaSantos = ol.proj.fromLonLat([-43.19848881797589, -22.906644586771165]);
+    var pracaDeodoro = ol.proj.fromLonLat([-43.17509995536603, -22.91395763413628]);
+    var listLonLat = [
+    [     106.64651597896352,
+            10.802183169145295
+          ],
+          [
+            106.67996642236812,
+            10.799283945866463
+          ],
+          [
+            106.68504957798416,
+            10.803954902926378
+          ],
+          [
+            106.69833137169002,
+            10.802666370304252
+          ],
+          [
+            106.7014468541638,
+            10.803954902926378
+          ],
+          [
+            106.70964549225374,
+            10.803310637306112
+          ],
+          [
+            106.70964549225374,
+            10.801699967208862
+          ],
+          [
+            106.71669632101032,
+            10.8005724930008
+          ],
+          [
+            106.72107499103197,
+            10.797943612331935
+          ],
+          [
+            106.73034094068487,
+            10.799431749788639
+          ],
+          [
+            106.74482118702105,
+            10.802096535186081
+          ],
+          [
+            106.74693901821632,
+            10.79143076760866
+          ],
+          [
+            106.7808243082153,
+            10.796334474218341
+          ],
+          [
+            106.80245643531333,
+            10.794402720560157
+          ],
+          [
+            106.84950118591809,
+            10.785833374467458
+          ],
+          [
+            106.88595313700381,
+            10.787057576234844
+          ],
+          [
+            106.93704817954972,
+            10.770224365330805
+          ],
+          [
+            106.9595063898625,
+            10.764551137448436
+          ],
+          [
+            106.97753017877847,
+            10.736556827016898
+          ],
+          [
+            107.01959886287295,
+            10.689750529186696
+          ],
+          [
+            107.04620111899118,
+            10.63685680674513
+          ],
+          [
+            107.05671835768749,
+            10.60341345556084
+          ],
+          [
+            107.07094747142469,
+            10.53529945813996
+          ],
+          [
+            107.09754972754297,
+            10.502453393127581
+          ],
+          [
+            107.14889826842318,
+            10.500628509279679
+          ],
+          [
+            107.1891109811599,
+            10.484812398178377
+          ],
+          [
+            107.30278302886614,
+            10.501736530123083
+          ],
+          [
+            107.38344637047788,
+            10.5212161006868
+          ],
+          [
+            107.49524293165882,
+            10.550433149778499
+          ],
+          [
+            107.61836066359416,
+            10.58103851083844
+          ],
+          [
+            107.76402276088061,
+            10.683889190535282
+          ],
+          [
+            107.72298351690216,
+            10.831258422513656
+          ],
+          [
+            108.0187491028135,
+            10.95354766370383
+          ],
+          [
+            108.40506881369163,
+            11.235503919725488
+          ],
+          [
+            108.67374599596968,
+            11.260903077952719
+          ],
+          [
+            108.8906299864812,
+            11.467187717662696
+          ],
+          [
+            109.01687589140874,
+            11.663811276657711
+          ],
+          [
+            109.12693642390735,
+            11.952151216760186
+          ],
+          [
+            109.11722520045203,
+            12.19905578120482
+          ],
+          [
+            109.13017349839316,
+            12.3477209302457
+          ],
+          [
+            109.1593071687592,
+            12.546862943813466
+          ],
+          [
+            109.16037710821718,
+            12.5480917376766
+          ],
+          [
+            109.27338444827467,
+            12.781688524308962
+          ],
+          [
+            109.34233807949533,
+            12.912408674462839
+          ],
+          [
+            109.30786126388381,
+            13.257552699449704
+          ],
+          [
+            109.19293854518202,
+            13.524005126851392
+          ],
+          [
+            109.16037710821718,
+            13.669217681713704
+          ],
+          [
+            109.1584617295706,
+            13.80318066479093
+          ],
+          [
+            109.104831649711,
+            13.902260315578673
+          ],
+          [
+            109.05311642629499,
+            14.145696051204894
+          ],
+          [
+            109.06652407680889,
+            14.322070762305103
+          ],
+          [
+            109.03013188255329,
+            14.405568430480557
+          ],
+          [
+            109.0243857466184,
+            14.494598168522202
+          ],
+          [
+            109.06460869816476,
+            14.655873312774759
+          ],
+          [
+            108.91712454249574,
+            14.86516834092727
+          ],
+          [
+            108.83384726579914,
+            15.073699331157812
+          ],
+          [
+            108.77447052780411,
+            15.249326598130963
+          ],
+          [
+            108.66720932368139,
+            15.458039535719621
+          ],
+          [
+            108.51780978936824,
+            15.55401401646317
+          ],
+          [
+            108.3000712844102,
+            15.787041575898286
+          ],
+          [
+            108.19472545893166,
+            15.951013522621253
+          ],
+          [
+            108.12577182771099,
+            16.057799596501923
+          ],
+          [
+            108.0491566819091,
+            16.184763599630386
+          ],
+          [
+            107.6149334193795,
+            16.388087700327432
+          ],
+          [
+            107.40041101113405,
+            16.606634364512473
+          ],
+          [
+            107.03776470487344,
+            16.91963154058847
+          ],
+          [
+            106.98988023908203,
+            16.958109465224197
+          ],
+          [
+            106.78149902830313,
+            17.17846360418271
+          ],
+          [
+            106.55176407576823,
+            17.52561194207459
+          ],
+          [
+            106.34681856074837,
+            17.770193370351848
+          ],
+          [
+            106.18209599727481,
+            18.04176078738159
+          ],
+          [
+            105.84408800127574,
+            18.396855339366383
+          ],
+          [
+            105.74065755444371,
+            18.536745103522932
+          ],
+          [
+            105.62381945709546,
+            18.808928379603756
+          ],
+          [
+            105.56635809774463,
+            19.008250308440992
+          ],
+          [
+            105.61232718522581,
+            19.162108498334277
+          ],
+          [
+            105.76364217390761,
+            19.523560665194623
+          ],
+          [
+            105.80783734173679,
+            19.80518502182028
+          ],
+          [
+            105.92467543908509,
+            20.18496799365002
+          ],
+          [
+            106.00512112318455,
+            20.3179447268662
+          ],
+          [
+            105.9648981716382,
+            20.510018913348702
+          ],
+          [
+            105.9687289289289,
+            20.771713010907945
+          ],
+          [
+            105.90743681228736,
+            20.850491188531848
+          ],
+          [
+            105.88828302583624,
+            20.94711713003518
+          ],
+          [
+            105.86338310345275,
+            21.063343431688523
+          ]
+    ];
+    const key = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
+    const source = new ol.source.TileJSON({
+        url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
+        tileSize: 512,
+        crossOrigin: 'anonymous'
+    });
+
+    const attribution = new ol.control.Attribution({
+        collapsible: false,
+    });
+
+    const map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+            source: source
+            })
+        ],
+        controls: ol.control.defaults.defaults({attribution: false}).extend([attribution]),
+        target: 'map',
+        view: new ol.View({
+            constrainResolution: true,
+            center: ol.proj.fromLonLat([-43.206091, -22.920387]),
+            zoom: 14
+        })
+    });
+
+    function DeleteMarkers() {
+        //Loop through all the markers and remove
+        for (var i = 0; i < markers.length - 1; i++) {
+            map.removeLayer(markers[i]);
+            markers.unshift();
+        }
+    };
+
+    const marker = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(
+                        ol.proj.fromLonLat([-43.206091, -22.920387])
+                    )
+                })
+            ],
+        }),
+
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+                
+            })
+        })
+    })
+
+    map.addLayer(marker);
+
+    function SetRotation(locationS, locationE) {
+        if(Math.abs(locationS[0] - locationE[0]) < 0.0000000000000000000000001){
+            return 90;
+        } else{
+            return Math.atan2((locationE[0] - locationS[0]), (locationE[1] - locationS[1]));
+        }
+    };
+
+    function AddMarker(locationS, rotationA) {
+
+        marker2 = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point(
+                            locationS
+                        )
+                    })
+                ],
+            }),
+        
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [15, 15],
+                    anchorXUnits: 'pixels',
+                    anchorYUnits: 'pixels',
+                    crossOrigin: 'anonymous',
+                    src: 'car_topview.svg',
+                    rotation: rotationA,
+                })
+            })
+        })
+
+        markers.push(marker2);
+
+        if(markers.length > 0){
+            DeleteMarkers();
+        }
+
+        map.addLayer(marker2);
+    }
+
+    function setPosition() {
+
+        //let num = Math.floor(Math.random() * 93);
+
+        if(time <= 0){
+            dr = true;
+        }
+          
+        if(time >= listLonLat.length - 1){
+            dr = false;
+        }
+        
+        if(dr == true){
+            locationS = [listLonLat[time][0], listLonLat[time][1]];
+            locationE = [listLonLat[time + 1][0], listLonLat[time + 1][1]];
+            rotationA = SetRotation(locationS, locationE);
+            console.log(rotationA);
+            time ++;
+        }
+        else{
+            locationS = [listLonLat[time][0], listLonLat[time][1]];
+            locationE = [listLonLat[time - 1][0], listLonLat[time - 1][1]];
+            rotationA = SetRotation(locationS, locationE);
+            console.log(rotationA);
+            time --;
+        }
+
+        locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
+        AddMarker(locationS, rotationA);
+    }
+
+    setInterval(setPosition, 300);
+
+    map.on('click', function (evt) {
+        // console.log(evt);
+        // console.info(evt.pixel);
+        // console.info(map.getPixelFromCoordinate(evt.coordinate));
+        // console.info(ol.proj.toLonLat(evt.coordinate));
+        var coords = ol.proj.toLonLat(evt.coordinate);
+        var lat = coords[1];
+        var lon = coords[0];
+        console.log(`[${lon}, ${lat}],`);
+    });
+</script>
+</html>
