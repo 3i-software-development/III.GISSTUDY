@@ -179,17 +179,62 @@
       }
       polygons = [];
     }
+
+    function handlerPolygonOnClick(event) {
+      CreateNewMarker(event.latLng, map)
+    }
+    function handlerPolygonContextMenu(event) {
+      const polygon = this;
+
+
+      // const vertices = polygon.getPath();
+
+      console.log(event.feature)
+      const featureId = "Notforme"//event.feature.getProperty('id');
+      let contentString =
+        "<b>Bermuda Triangle polygon</b><br>" +
+        "Clicked location: <br>" +
+        event.latLng.lat() +
+        "," +
+        event.latLng.lng() +
+        "<br>" +
+        "<button id='infoWindowButton_" + featureId + "' data-feature-id='" + featureId + "'>Delete </button>";
+
+      // Add an event listener for the button click
+      document.getElementById('infoWindowButton_' + featureId).addEventListener('click', function () {
+        var featureId = this.getAttribute('data-feature-id');
+        DeletePolygon(featureId);
+      });
+
+      // CreateNewMarker(event.latLng, map)
+      infoWindow.close();
+      infoWindow.setContent(contentString);
+      infoWindow.setPosition(event.latLng);
+      infoWindow.open(map);
+    }
+    function DeleteAllPolygons() {
+      //Loop through all the markers and remove
+      map.data.forEach(function (feature) {
+        //console.log(feature.getProperty())
+        map.data.remove(feature);
+      });
+    }
+    function Load() {
+      map.data.forEach(element => {
+        console.log(element);
+      });
+    }
+
   </script>
 </head>
 <;>
-  <div id="dvMap" style="width: 100%; height: 500px"></div>
+  <div id="dvMap" style="width: 100%; height: 550px"></div>
   <br />
-  <input type="button" value="Delete" onclick="DeleteAllMarkers()" />
 
   <input type="button" value="Add marker" onclick="SetPosition()">
   <input type="button" value="Show all marker" onclick="ShowMarker()">
   <input type="button" value="Draw All" onclick="AddPolygon()">
-  <input type="button" value="Delete all polygon" onclick="DeleteAllPolygon()">
+  <input type="button" value="Load" onclick="Load()">
 
   <div>
     <form onsubmit="AddPolygonByName(this.nameHuyen.value); return false;">
