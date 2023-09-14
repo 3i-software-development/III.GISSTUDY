@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearest Driving Route with OpenLayers</title>
+    <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.14.2/css/ol.css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button id="findRoute">Find Route</button>
+
+    <!-- <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.14.2/build/ol.js"></script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([-0.09, 51.505]),
+                    zoom: 13
+                })
+            });
+
+            var startPoint = ol.proj.fromLonLat([-0.09, 51.505]);
+            var endPoint = ol.proj.fromLonLat([-0.1, 51.51]);
+
+            var findRouteButton = document.getElementById("findRoute");
+            findRouteButton.addEventListener("click", function () {
+                var routeCoordinates = [];
+
+                // Tạo một đối tượng ol.Feature để hiển thị tuyến đường
+                var routeFeature = new ol.Feature({
+                    geometry: new ol.geom.LineString([])
+                });
+
+                // Tạo một đối tượng ol.source.Vector để lưu tuyến đường
+                var routeSource = new ol.source.Vector({
+                    features: [routeFeature]
+                });
+
+                // Tạo một đối tượng ol.layer.Vector để hiển thị tuyến đường trên bản đồ
+                var routeLayer = new ol.layer.Vector({
+                    source: routeSource
+                });
+
+                // Thêm lớp tuyến đường vào bản đồ
+                map.addLayer(routeLayer);
+
+                // Sử dụng thư viện OpenLayers để tìm đường lái xe gần nhất
+                var route = new ol.GeolocationRoute({
+                    start: startPoint,
+                    end: endPoint,
+                    map: map
+                });
+
+                route.on('change:route', function() {
+                    var coordinates = route.getCoordinates();
+                    routeCoordinates = coordinates;
+                    routeFeature.getGeometry().setCoordinates(coordinates);
+                    saveRouteToGeoJSON(routeCoordinates);
+                });
+
+                route.findRoute();
+            });
+
+            function saveRouteToGeoJSON(coordinates) {
+                var geojsonObject = {
+                    type: "FeatureCollection",
+                    features: [{
+                        type: "Feature",
+                        properties: {},
+                        geometry: {
+                            type: "LineString",
+                            coordinates: coordinates
+                        }
+                    }]
+                };
+
+                var geojsonString = JSON.stringify(geojsonObject, null, 2);
+
+                var blob = new Blob([geojsonString], { type: "application/json" });
+                var url = URL.createObjectURL(blob);
+
+                var a = document.createElement("a");
+                a.style.display = "none";
+                a.href = url;
+                a.download = "route.geojson";
+                document.body.appendChild(a);
+                a.click();
+
+                URL.revokeObjectURL(url);
+            }
+        });
+    </script>
+</body>
+</html>

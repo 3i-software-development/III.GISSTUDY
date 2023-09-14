@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Nearest Driving Route</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v6.13.0/css/ol.css" type="text/css">
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Nearest Driving Route</h1>
+    <div id="map"></div>
+    <script>
+        import 'ol/ol.css';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import { fromLonLat } from 'ol/proj';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import { Vector as VectorLayer } from 'ol/layer';
+import { Vector as VectorSource } from 'ol/source';
+import { Fill, Stroke, Style } from 'ol/style';
+import { nearestPoint } from 'ol/geom/Geometry';
+import GeoJSON from 'ol/format/GeoJSON';
+
+const map = new Map({
+  target: 'map',
+  layers: [
+    new TileLayer({
+      source: new OSM()
+    })
+  ],
+  view: new View({
+    center: fromLonLat([0, 0]),
+    zoom: 2
+  })
+});
+
+const startLayer = new VectorLayer({
+  source: new VectorSource()
+});
+map.addLayer(startLayer);
+
+const destinationLayer = new VectorLayer({
+  source: new VectorSource()
+});
+map.addLayer(destinationLayer);
+
+const routeLayer = new VectorLayer({
+  source: new VectorSource()
+});
+map.addLayer(routeLayer);
+
+const startPoint = new Feature({
+  geometry: new Point(fromLonLat([0, 0]))
+});
+
+const endPoint = new Feature({
+  geometry: new Point(fromLonLat([10, 10]))
+});
+
+startLayer.getSource().addFeature(startPoint);
+destinationLayer.getSource().addFeature(endPoint);
+
+// Lưu trữ các vị trí rẽ vào biến GeoJSON
+const routeGeoJSON = {
+  type: 'FeatureCollection',
+  features: []
+};
+
+// Bắt đầu di chuyển
+const moveCar = () => {
+  const animationDuration = 5000; // Độ dài thời gian di chuyển (ms)
+  const numSteps = 100; // Số bước di chuyển
+
+  const startCoord = startPoint.getGeometry().getCoordinates();
+  const endCoord = endPoint.getGeometry().getCoordinates();
+  const step = [(endCoord[0] - startCoord[0]) / numSteps, (endCoord[1] - startCoord[1]) / numSteps];
+
+  const routeCoordinates = [];
+
+  for (let i = 0; i <= numSteps; i++) {
+    const x = startCoord[0] + step[0] * i;
+    const y = startCoord[1] + step[1] * i;
+    const coord = [x, y];
+    routeCoordinates.push(coord);
+  }
+
+  // Lưu các vị trí vào biến GeoJSON
+  routeCoordinates.forEach(coord => {
+    const routePoint = new Feature({
+      geometry: new Point(coord)
+    });
+    routeLayer.getSource().addFeature(routePoint);
+
+    // Thêm vị trí vào biến GeoJSON
+    const geojsonFeature = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: coord
+      }
+    };
+    routeGeoJSON.features.push(geojsonFeature);
+  });
+
+  // Vẽ đường di chuyển
+  const routeLine = new Feature({
+    geometry: new LineString(routeCoordinates)
+  });
+  routeLayer.getSource().addFeature(routeLine);
+};
+
+moveCar();
+
+    </script>
+</body>
+</html>

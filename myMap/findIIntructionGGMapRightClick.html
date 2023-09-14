@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Maps - Find Shortest Driving Route</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHceKL6LCQusky6nFYduGFGcg4UKyTI6o"></script>
+  <script>
+    var start;
+    var end;
+    var map;
+    var directionsService;
+    var directionsRenderer;
+    var selectingStart = true; // Mặc định là chọn điểm bắt đầu
+
+    function initMap() {
+      start = new google.maps.LatLng(21.033, 105.8);
+      end = new google.maps.LatLng(20.97, 105.84);
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: start,
+        zoom: 7
+      });
+
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer();
+      directionsRenderer.setMap(map);
+
+      var request = {
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+      };
+
+      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+      // Định nghĩa tọa độ của Chicago và Winona
+      // var chicagoLatLng = new google.maps.LatLng(41.8781, -87.6298); // Chicago, IL
+      // var winonaLatLng = new google.maps.LatLng(44.0554, -91.6664); // Winona, MN
+
+      // Chọn chế độ di chuyển (DRIVING, WALKING, BICYCLING, TRANSIT)
+      //selectedMode = document.getElementById("mode").value;
+      //travelMode: google.maps.TravelMode[selectedMode],
+      //5. Viết chức năng đưa vào toạ độ 2 kiểm xd điểm ngắn nhất trên bản đồ
+        
+      directionsService
+        .route({
+          origin: start, // Tọa độ Chicago
+          destination: end, // Tọa độ Winona
+          travelMode: "DRIVING"
+        })
+        .then((response) => {
+          directionsRenderer.setDirections(response);
+        })
+        .catch((e) =>
+          window.alert("Directions request failed due to " + status)
+        );
+    }
+
+    // 6. Đưa vào 2 điểm genera các toạ độ từ điểm A đến B
+      // Khai báo biến để theo dõi xem đã tìm đường chưa
+      var isRouteFound = false;
+
+      // Lắng nghe sự kiện nhấn nút "Find Route"
+      document.getElementById('findRoute').addEventListener('click', function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+        // Kiểm tra nếu đã tìm đường, thì xóa hướng dẫn và bắt đầu tìm lại
+        if (isRouteFound) {
+          directionsRenderer.setDirections({routes: []});
+        }
+
+      directionsService
+      .route({
+        origin: request.start,
+        destination: request.end,
+        travelMode: "DRIVING",
+      })
+      .then((response) => {
+        directionsRenderer.setDirections(response);
+        isRouteFound = true;
+
+        // Lấy danh sách các bước hướng dẫn
+        var steps = response.routes[0].legs[0].steps;
+
+        // Tạo đối tượng GeoJSON
+        var geojsonObject = {
+          type: 'FeatureCollection',
+          features: []
+        };
+
+        // Duyệt qua các bước và tạo GeoJSON
+        for (var i = 0; i < steps.length; i++) {
+          var step = steps[i];
+          var instruction = step.instructions;
+          var distance = step.distance.text;
+          var duration = step.duration.text;
+          var location = step.start_location;
+
+          var feature = {
+            type: 'Feature',
+            properties: {
+              instruction: instruction,
+              distance: distance,
+              duration: duration
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: [location.lng(), location.lat()]
+            }
+          };
+
+          geojsonObject.features.push(feature);
+        }
+
+        // Chuyển đổi đối tượng GeoJSON thành chuỗi JSON
+        var geojsonString = JSON.stringify(geojsonObject, null, 2);
+
+        // Tạo một tệp GeoJSON và tải về
+        var blob = new Blob([geojsonString], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+
+        var a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'directions.geojson';
+        document.body.appendChild(a);
+        a.click();
+
+        URL.revokeObjectURL(url);
+      })
+      .catch((e) =>
+      window.alert("Directions request failed due to " + status));
+      });
+
+      // Lắng nghe sự kiện kéo thả điểm bắt đầu (start)
+      var startMarker = new google.maps.Marker({
+        position: start,
+        map: map,
+        draggable: true
+      });
+
+      google.maps.event.addListener(startMarker, 'dragend', function(event) {
+        start = event.latLng;
+        updateRoute();
+      });
+
+      // Lắng nghe sự kiện kéo thả điểm đích (end)
+      var endMarker = new google.maps.Marker({
+        position: end,
+        map: map,
+        draggable: true
+      });
+
+      google.maps.event.addListener(endMarker, 'dragend', function(event) {
+        end = event.latLng;
+        updateRoute();
+      });
+
+      // Lắng nghe sự kiện chuột phải trên bản đồ
+      map.addListener('rightclick', function(event) {
+        if (selectingStart) {
+          start = event.latLng;
+          startMarker.setPosition(start);
+        } else {
+          end = event.latLng;
+          endMarker.setPosition(end);
+        }
+        updateRoute();
+      });
+
+      // Lắng nghe sự kiện click vào nút "Select Start" hoặc "Select End"
+      document.getElementById('selectStart').addEventListener('click', function () {
+        selectingStart = true;
+        alert('Selecting Start Location');
+      });
+
+      document.getElementById('selectEnd').addEventListener('click', function () {
+        selectingStart = false;
+        alert('Selecting End Location');
+      });
+
+      function updateRoute() {
+        // Cập nhật lại request
+        request.origin = start;
+        request.destination = end;
+
+        // Kiểm tra nếu đã tìm đường, thì xóa hướng dẫn và bắt đầu tìm lại
+        if (isRouteFound) {
+          directionsRenderer.setDirections({routes: []});
+        }
+
+        // Gọi hàm tìm đường mới
+        directionsService.route(request, function(response, status) {
+          if (status === 'OK') {
+            directionsRenderer.setDirections(response);
+            isRouteFound = true;
+          } else {
+            alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+    }
+  </script>
+</head>
+<body onload="initMap()">
+  <div id="map" style="height: 500px; width: 100%;"></div>
+  <button id="findRoute">Find Route</button>
+  <button id="selectStart">Select Start</button>
+  <button id="selectEnd">Select End</button>
+</body>
+</html>

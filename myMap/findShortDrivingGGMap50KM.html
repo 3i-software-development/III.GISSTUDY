@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Maps - Find Shortest Driving Route</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHceKL6LCQusky6nFYduGFGcg4UKyTI6o"></script>
+    <script>
+        var start;
+        var end;
+        var map;
+        var directionsService;
+        var directionsRenderer;
+        var selectingStart = true; // Mặc định là chọn điểm bắt đầu
+        //  8. Cho 2 điểm từ SG tơi HN xd các điểm xe đi qua conselog lên có khống chế
+        function initMap() {
+            // Thay đổi điểm xuất phát (SG) và điểm đích (HN)
+            var end = new google.maps.LatLng(10.7769, 106.7009); // Tọa độ Sài Gòn (SG)
+            var start = new google.maps.LatLng(21.0285, 105.8542); // Tọa độ Hà Nội (HN)
+            var distanceBetweenPoints = 0;
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: start,
+                zoom: 7
+            });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: 'DRIVING'
+            };
+
+            // Khai báo biến để theo dõi xem đã tìm đường chưa
+            var isRouteFound = false;
+
+            function haversineDistance(lat1, lon1, lat2, lon2) {
+                const R = 6371; // Bán kính Trái Đất (đơn vị km)
+                const dLat = (lat2 - lat1) * (Math.PI / 180);
+                const dLon = (lon2 - lon1) * (Math.PI / 180);
+                const a =
+                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * (Math.PI / 180)) *
+                    Math.cos(lat2 * (Math.PI / 180)) *
+                    Math.sin(dLon / 2) *
+                    Math.sin(dLon / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                const distance = R * c; // Khoảng cách giữa hai điểm (đơn vị km)
+                return distance;
+            }
+
+            // Lắng nghe sự kiện nhấn nút "Find Route"
+            document.getElementById('findRoute').addEventListener('click', function () {
+            // Kiểm tra nếu đã tìm đường, thì xóa hướng dẫn và bắt đầu tìm lại
+            if (isRouteFound) {
+                directionsRenderer.setDirections({ routes: [] });
+                document.getElementById('directionsPanel').innerHTML = ''; // Xóa nội dung chỉ dẫn
+            }
+
+            // Gọi hàm tìm đường
+            directionsService.route(request, function (response, status) {
+                if (status === 'OK') {
+                    directionsRenderer.setDirections(response);
+                    isRouteFound = true;
+
+                    // Lấy danh sách các bước hướng dẫn
+                    var steps = response.routes[0].legs[0].steps;
+
+                    // Hiển thị bảng chỉ dẫn trong phần tử HTML
+                    var route = response.routes[0].legs[0];
+                    var directionsText = '<b>Directions:</b><br>';
+                    for (var i = 0; i < route.steps.length; i++) {
+                        directionsText += (i + 1) + '. ' + route.steps[i].instructions + '<br>';
+                    }
+                    document.getElementById('directionsPanel').innerHTML = directionsText;
+                
+
+                // Tạo đối tượng GeoJSON
+                var geojsonObject = {
+                    type: 'FeatureCollection',
+                    features: []
+                    };
+
+                    // Duyệt qua các bước và tạo GeoJSON
+                    for (var i = 0; i < steps.length; i++) {
+                    var step = steps[i];
+                    var instruction = step.instructions;
+                    var distance = step.distance.text;
+                    var duration = step.duration.text;
+                    var location = step.start_location;
+
+                    var feature = {
+                        type: 'Feature',
+                        properties: {
+                        instruction: instruction,
+                        distance: distance,
+                        duration: duration
+                        },
+                        geometry: {
+                        type: 'Point',
+                        coordinates: [location.lng(), location.lat()]
+                        }
+                    };
+
+                    geojsonObject.features.push(feature);
+                    }
+
+                    // Chuyển đổi đối tượng GeoJSON thành chuỗi JSON
+                    var geojsonString = JSON.stringify(geojsonObject, null, 2);
+
+                    // Tạo một tệp GeoJSON và tải về
+                    var blob = new Blob([geojsonString], { type: 'application/json' });
+                    var url = URL.createObjectURL(blob);
+
+                    var a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'directions.geojson';
+                    document.body.appendChild(a);
+                    a.click();
+
+                    URL.revokeObjectURL(url);
+                } else {
+                    alert('Directions request failed due to ' + status);
+                }
+            });
+});
+
+
+            // Lắng nghe sự kiện kéo thả điểm bắt đầu (start)
+            var startMarker = new google.maps.Marker({
+                position: start,
+                map: map,
+                draggable: true
+            });
+
+            google.maps.event.addListener(startMarker, 'dragend', function (event) {
+                start = event.latLng;
+                updateRoute();
+            });
+
+            // Lắng nghe sự kiện kéo thả điểm đích (end)
+            var endMarker = new google.maps.Marker({
+                position: end,
+                map: map,
+                draggable: true
+            });
+
+            google.maps.event.addListener(endMarker, 'dragend', function (event) {
+                end = event.latLng;
+                updateRoute();
+            });
+
+            // Lắng nghe sự kiện chuột phải trên bản đồ
+            map.addListener('rightclick', function (event) {
+                if (selectingStart) {
+                    start = event.latLng;
+                    startMarker.setPosition(start);
+                } else {
+                    end = event.latLng;
+                    endMarker.setPosition(end);
+                }
+                updateRoute();
+            });
+
+            // Lắng nghe sự kiện click vào nút "Select Start" hoặc "Select End"
+            document.getElementById('selectStart').addEventListener('click', function () {
+                selectingStart = true;
+                alert('Selecting Start Location');
+            });
+
+            document.getElementById('selectEnd').addEventListener('click', function () {
+                selectingStart = false;
+                alert('Selecting End Location');
+            });
+
+            function updateRoute() {
+                // Cập nhật lại request
+                request.origin = start;
+                request.destination = end;
+
+                // Tính toán khoảng cách giữa điểm bắt đầu và kết thúc
+                distanceBetweenPoints = haversineDistance(start.lat(), start.lng(), end.lat(), end.lng());
+
+                if (distanceBetweenPoints > 50) {
+                    alert("Khoảng cách giữa điểm bắt đầu và kết thúc lớn hơn 50km, không cập nhật đường đi.");
+                    return;
+                }
+
+                // Kiểm tra nếu đã tìm đường, thì xóa hướng dẫn và bắt đầu tìm lại
+                if (isRouteFound) {
+                    directionsRenderer.setDirections({ routes: [] });
+                }
+
+                // Gọi hàm tìm đường mới
+                directionsService.route(request, function (response, status) {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+                        isRouteFound = true;
+
+                        // Hiển thị thông tin chỉ dẫn trong phần tử "directionsPanel"
+                        var route = response.routes[0].legs[0];
+                        var directionsText = '<b>Directions:</b><br>';
+                        for (var i = 0; i < route.steps.length; i++) {
+                            directionsText += (i + 1) + '. ' + route.steps[i].instructions + '<br>';
+                        }
+                        document.getElementById('directionsPanel').innerHTML = directionsText;
+                    } else {
+                        alert('Directions request failed due to ' + status);
+                    }
+                });
+            }
+
+        }
+    </script>
+    <style>
+      
+    /* CSS cho map và directionsPanel */
+    #map {
+        float: left; /* Thay đổi float thành left */
+        width: 70%; /* Thay đổi chiều rộng */
+        height: 500px;
+    }
+
+    #directionsPanel {
+        float: right; /* Thay đổi float thành right */
+        width: 30%; /* Thay đổi chiều rộng */
+        height: 500px; /* Đặt chiều cao tương tự với bản đồ */
+        background-color: #fff;
+        border: 1px solid #999;
+        padding: 1rem;
+        box-sizing: border-box;
+        overflow: auto;
+    }
+
+    /* CSS cho nút và bảng chỉ dẫn */
+    button {
+        margin: 0.5rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        float: left;
+    }
+
+    /* CSS cho phần chọn điểm xuất phát và đích */
+    #selectStart,
+    #selectEnd {
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    /* CSS cho input và select */
+    input,
+    select {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    </style>
+</head>
+
+<body onload="initMap()">
+    
+        <div id="map" style="height: 500px"></div>
+    
+        
+    
+    
+    <button id="findRoute">Find Route</button>
+        <button id="selectStart">Select Start</button>
+        <button id="selectEnd">Select End</button>
+    <div id="directionsPanel"></div>
+   
+
+</body>
+
+</html>
