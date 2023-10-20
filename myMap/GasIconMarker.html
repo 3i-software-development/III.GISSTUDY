@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Popup</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@main/dist/en/v7.1.0/ol/ol.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@main/dist/en/v7.1.0/ol/dist/ol.js"></script>
+    <style>
+      html,
+      body,
+      .map {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .ol-popup {
+        position: absolute;
+        background-color: white;
+        -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #cccccc;
+        bottom: 12px;
+        left: -50px;
+        min-width: 280px;
+      }
+      .ol-popup:after,
+      .ol-popup:before {
+        top: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      .ol-popup:after {
+        border-top-color: white;
+        border-width: 10px;
+        left: 48px;
+        margin-left: -10px;
+      }
+      .ol-popup:before {
+        border-top-color: #cccccc;
+        border-width: 11px;
+        left: 48px;
+        margin-left: -11px;
+      }
+      .ol-popup-closer {
+        text-decoration: none;
+        position: absolute;
+        top: 2px;
+        right: 8px;
+      }
+      .ol-popup-closer:after {
+        content: "✖";
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
+    <script>
+      const container = document.getElementById("popup");
+      const content = document.getElementById("popup-content");
+      const closer = document.getElementById("popup-closer");
+      const overlay = new ol.Overlay({
+        element: container,
+        autoPan: {
+          animation: {
+            duration: 250,
+          },
+        },
+        offset: [0, -50],
+      });
+
+      closer.onclick = function () {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
+
+      const Model = [
+        {
+          category: "Capital city",
+          title: "London",
+          long: -0.12755,
+          lat: 51.507222,
+          description: "UK capital",
+        },
+        {
+          category: "Capital city",
+          title: "Rome",
+          long: 12.5,
+          lat: 41.9,
+          description: "Italy capital",
+        },
+        {
+          category: "Capital city",
+          title: "Bern",
+          long: 7.4458,
+          lat: 46.95,
+          description: "Switzerland capital",
+        },
+      ];
+
+      const additionalMarkers = [
+        {
+          category: "Additional city",
+          title: "New York",
+          long: -74.006,
+          lat: 40.7128,
+          description: "USA city",
+        },
+        {
+          category: "Additional city",
+          title: "Sydney",
+          long: 151.2093,
+          lat: -33.8688,
+          description: "Australia city",
+        },
+      ];
+
+      const allMarkers = Model.concat(additionalMarkers);
+
+      const map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM(),
+          }),
+        ],
+        overlays: [overlay],
+        target: "map",
+        view: new ol.View({
+          center: ol.proj.fromLonLat([7.5, 47]),
+          zoom: 3,
+        }),
+      });
+
+      const features = [];
+      for (key in allMarkers) {
+        const _Data = allMarkers[key];
+        const feature = new ol.Feature({
+          geometry: new ol.geom.Point(
+            ol.proj.fromLonLat([parseFloat(_Data.long), parseFloat(_Data.lat)])
+          ),
+          category: _Data.category,
+          title: _Data.title,
+          description: _Data.description,
+        });
+        features.push(feature);
+      }
+
+      const markers = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: features,
+        }),
+        style: new ol.style.Style({
+          image: new ol.style.Icon({
+            anchor: [0.5, 1],
+            src:
+              "https://ucarecdn.com/4b516de9-d43d-4b75-9f0f-ab0916bd85eb/marker.png",
+          }),
+        }),
+      });
+
+      map.addLayer(markers);
+
+      map.on("singleclick", function (evt) {
+        const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+          return feature;
+        });
+        if (feature) {
+          const coordinates = feature.getGeometry().getCoordinates();
+          content.innerHTML =
+            "<p>Category:</p><code>" + feature.get("category") + "</code><br>" +
+            "<p>Title:</p><code>" + feature.get("title") + "</code><br>" +
+            "<p>Description:</p><code>" + feature.get("description") + "</code>";
+          overlay.setPosition(coordinates);
+        }
+      });
+    </script>
+  </body>
+</html>

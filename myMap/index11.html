@@ -83,6 +83,19 @@
         };
         document.getElementById('start').addEventListener('change', onChangeHandler);
         document.getElementById('end').addEventListener('change', onChangeHandler);
+
+        //Attach click event handler to the map.
+        google.maps.event.addListener(map, 'click', function (e) {
+  
+          //Determine the location where the user has clicked.
+          var location = e.latLng;
+
+          console.log(location);
+
+          var latitude = e.latLng.lat();
+          var longitude = e.latLng.lng();
+          console.log( latitude + ', ' + longitude ); // tọa độ của điểm đã click
+        });
       }
 
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
@@ -100,18 +113,37 @@
           }
         });
       }
-
-      calculateAndDisplayRoute(gillette, buffalo);
     </script>
     <!-- <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHceKL6LCQusky6nFYduGFGcg4UKyTI6o&callback=initMap">
     </script> -->
 
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHceKL6LCQusky6nFYduGFGcg4UKyTI6o&callback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHceKL6LCQusky6nFYduGFGcg4UKyTI6o&callback=initMap">
     </script>
 
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHceKL6LCQusky6nFYduGFGcg4UKyTI6o&libraries=places"
     type="text/javascript"></script> -->
+
+    <!-- //vẽ điểm trên polyline
+        drawPoint: function () {
+            $('#drawPoint').click(function () {
+                debugger
+                //xóa polygon cũ
+                var features = parkSourceVector.getSource().getFeatures();
+                if (features != null && features.length > 0) {
+
+                    parkSourceVector.getSource().removeFeature(features[features.length - 1]);
+
+                }
+                ol.Observable.unByKey(eventCircleDraw); 
+                typeDraw = "Polygon";
+                draw = new ol.interaction.Draw({
+                    source: parkSources,
+                    type: typeDraw
+                });               
+                map.addInteraction(draw);
+            });
+        }, -->
   </body>
 </html>

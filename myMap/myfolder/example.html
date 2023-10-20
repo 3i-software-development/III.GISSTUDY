@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Leaflet Map with Routing</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+</head>
+
+<body>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    <div id="route-info"></div>
+    <button id="save-button">Lưu</button> <!-- Thêm nút Lưu -->
+
+    <script>
+        var map = L.map('map').setView([21.0285, 105.8542], 13); // Tọa độ Hà Nội
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var control = L.Routing.control({
+            waypoints: [
+                L.latLng(21.0587, 105.7979), // Tọa độ điểm xuất phát
+                L.latLng(21.0285, 105.8542) // Tọa độ Hà Nội
+            ],
+            routeWhileDragging: true,
+            route: function (waypoints, callback) {
+                // Thiết lập các tùy chọn để chỉ hiển thị một tuyến đường ngắn nhất
+                var routeOptions = {
+                    profile: 'driving-car', // Chế độ lái xe
+                    format: 'geojson',
+                    geometry: 'polyline',
+                    instructions: true,
+                };
+
+                // Tạo yêu cầu định tuyến
+                L.Routing.osrmv1(waypoints, function (error, routes) {
+                    if (!error) {
+                        var shortestRoute = routes.sort((a, b) => a.routes[0].summary.totalDistance - b.routes[0].summary.totalDistance)[0];
+                        callback(null, shortestRoute);
+                    } else {
+                        callback(error, null);
+                    }
+                }, routeOptions);
+            }
+        }).addTo(map);
+
+        var route;
+
+        control.on('routesfound', function (e) {
+            var route = e.routes[0];
+            var routeSummary = route.summary;
+            var routeInfo = document.getElementById('route-info');
+            routeInfo.innerHTML = '<h2>Chỉ dẫn:</h2>';
+            routeInfo.innerHTML += '<p>Thời gian: ' + routeSummary.totalTime + ' giây</p>';
+            routeInfo.innerHTML += '<p>Quãng đường: ' + (routeSummary.totalDistance / 1000).toFixed(2) + ' km</p>';
+            routeInfo.innerHTML += '<p>Số lượng bước: ' + route.instructions.length + '</p>';
+
+            // Hiển thị danh sách bước chỉ dẫn
+            routeInfo.innerHTML += '<h3>Danh sách bước:</h3>';
+            routeInfo.innerHTML += '<ol>';
+            route.instructions.forEach(function (instruction) {
+                routeInfo.innerHTML += '<li>' + instruction.text + '</li>'; // Trích xuất chỉ dẫn từ đối tượng instruction
+            });
+            routeInfo.innerHTML += '</ol>';
+        });
+
+
+        // ... (Code trước đó)
+
+        // Xử lý sự kiện bấm nút "Lưu"
+        var saveButton = document.getElementById('save-button');
+        saveButton.addEventListener('click', function () {
+            // Tạo đối tượng GeoJSON từ tuyến đường và waypoints
+            var waypoints = control.getWaypoints();
+            var geojson = {
+                type: "FeatureCollection",
+                features: []
+            };
+
+            // Thêm điểm xuất phát và điểm đích vào GeoJSON
+            waypoints.forEach(function (waypoint, index) {
+                var feature = {
+                    type: "Feature",
+                    geometry: {
+                        type: "Point",
+                        coordinates: [
+                            waypoint.latLng.lng,
+                            waypoint.latLng.lat
+                        ]
+                    },
+                    properties: {
+                        name: index === 0 ? "Starting Point" : "Destination " + index
+                    }
+                };
+                geojson.features.push(feature);
+            });
+
+            // Thêm tuyến đường vào GeoJSON
+            var routeGeometry = route.routes[0].geometry;
+            var routeFeature = {
+                type: "Feature",
+                geometry: JSON.parse(routeGeometry),
+                properties: {
+                    name: "Route"
+                }
+            };
+            geojson.features.push(routeFeature);
+
+            // Tạo tệp GeoJSON
+            var geojsonBlob = new Blob([JSON.stringify(geojson)], { type: "application/json" });
+            var url = URL.createObjectURL(geojsonBlob);
+
+            // Tạo một thẻ 'a' để tải xuống
+            var a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = "route.geojson";
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+    </script>
+
+</body>
+
+</html>

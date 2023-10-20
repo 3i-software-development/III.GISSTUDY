@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Vẽ polygon và điểm trên bản đồ Google Maps</title>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
+<script type="text/javascript">
+      // Tạo bản đồ
+      var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: {lat: 37.7749, lng: -122.4194}
+      });
+
+      // Tạo mảng lưu trữ tọa độ của polygon
+      var polygonCoords = [];
+
+      // Tạo sự kiện click chuột để vẽ polygon
+      map.addListener('click', function(e) {
+          polygonCoords.push(e.latLng);
+
+          // Nếu có từ 3 điểm trở lên thì mới vẽ polygon
+          if (polygonCoords.length >= 3) {
+              var polygon = new google.maps.Polygon({
+                  paths: polygonCoords,
+                  strokeColor: '#FF0000',
+                  strokeOpacity: 0.8,
+                  strokeWeight: 2,
+                  fillColor: '#FF0000',
+                  fillOpacity: 0.35
+              });
+
+              polygon.setMap(map);
+          }
+      });
+
+      // Tạo sự kiện click chuột để vẽ điểm
+      map.addListener('rightclick', function(e) {
+          var point = new google.maps.Marker({
+              position: e.latLng,
+              map: map
+          });
+
+          // Trả về geojson của điểm và polygon
+          var pointGeoJson = point.toGeoJson();
+          var polygonGeoJson = polygon.toGeoJson();
+
+          // Kiểm tra xem điểm có nằm trong polygon không
+          if (google.maps.geometry.poly.containsLocation(e.latLng, polygon)) {
+              alert("Điểm nằm trong polygon");
+          } else {
+              alert("Điểm không nằm trong polygon");
+          }
+      });
+
+      
+      //Vẽ polygon từ geojson
+      var polygonGeoJson = {
+         "type": "Feature",
+         "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+               [
+                  [
+                     -122.42,
+                     37.78
+                  ],
+                  [
+                     -122.41,
+                     37.78
+                  ],
+                  [
+                     -122.41,
+                     37.77
+                  ],
+                  [
+                     -122.42,
+                     37.77
+                  ],
+                  [
+                     -122.42,
+                     37.78
+                  ]
+               ]
+            ]
+         },
+         "properties": {
+            "name": "Polygon from GeoJSON"
+         }
+      };
+
+      var polygonFromGeoJson = new google.maps.Data();
+      polygonFromGeoJson.addGeoJson(polygonGeoJson);
+      polygonFromGeoJson.setMap(map);
+    </script>
+  </head>
+  <body>
+    <div id="map" style="height:500px;"></div>
+  </body>
+</html>

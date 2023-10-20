@@ -7,20 +7,26 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
   <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
     #map {
         position: absolute;
         top: 0;
         bottom: 0;
-        width: 100%;
+        margin: 0;
+        padding: 0;
+        width: 99%;
     }
   </style>
 </head>
 <body>
-    <div id="map"></div>
+    <div>
+        <div style="width: 100%; height: 90%; z-index: -1;" id="map"> 
+        </div>
+        <div style="z-index: 1; position: absolute; left: 0.5%; bottom: 6.5%;">
+            <input type="button" id = "start" value="StartDraw" onclick="drawPolyline()"></input>
+            <input type="button" id = "end" value="EndDraw" ></input>
+            <input type="button" id = "save" value="Save" onclick="save()"></input>
+        </div>
+    </div>
 </body>
 <script>
     var markers = [];
@@ -32,6 +38,9 @@
     var markerCar;
     var markerIcon;
     var dr = true;
+    var eventCircleDraw;
+    var centerPoint;
+    var polygonArea = `[`;
     var pracaNoronhaSantos = ol.proj.fromLonLat([-43.19848881797589, -22.906644586771165]);
     var pracaDeodoro = ol.proj.fromLonLat([-43.17509995536603, -22.91395763413628]);
     var listLonLat = [
@@ -129,6 +138,17 @@
         [-43.1755996479186, -22.913924174153166],
         [-43.17540652886953, -22.913746293854643],
     ];
+
+    var parkSources = new ol.source.Vector({
+        features: [
+        ]
+    });
+
+    var parkSourceVector = new ol.layer.Vector({
+        source: parkSources,
+        updateWhileAnimating: true
+    });
+
     const key = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
     const source = new ol.source.TileJSON({
         url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
@@ -144,7 +164,8 @@
         layers: [
             new ol.layer.Tile({
             source: source
-            })
+            }),
+            parkSourceVector,
         ],
         controls: ol.control.defaults.defaults({attribution: false}).extend([attribution]),
         target: 'map',
@@ -244,14 +265,12 @@
             locationS = [listLonLat[time][0], listLonLat[time][1]];
             locationE = [listLonLat[time + 1][0], listLonLat[time + 1][1]];
             rotationA = SetRotation(locationS, locationE);
-            console.log(rotationA);
             time ++;
         }
         else{
             locationS = [listLonLat[time][0], listLonLat[time][1]];
             locationE = [listLonLat[time - 1][0], listLonLat[time - 1][1]];
             rotationA = SetRotation(locationS, locationE);
-            console.log(rotationA);
             time --;
         }
 
@@ -261,15 +280,74 @@
 
     setInterval(setPosition, 300);
 
-    map.on('click', function (evt) {
-        // console.log(evt);
-        // console.info(evt.pixel);
-        // console.info(map.getPixelFromCoordinate(evt.coordinate));
-        // console.info(ol.proj.toLonLat(evt.coordinate));
-        var coords = ol.proj.toLonLat(evt.coordinate);
-        var lat = coords[1];
-        var lon = coords[0];
-        console.log(`[${lon}, ${lat}],`);
-    });
+    //vẽ điểm trên polyline
+    function drawPolyline() {
+        //xóa polygon cũ
+        var features = parkSourceVector.getSource().getFeatures();
+        if (features != null && features.length > 0) {
+
+            parkSourceVector.getSource().removeFeature(features[features.length - 1]);
+
+        }
+        ol.Observable.unByKey(eventCircleDraw); 
+        typeDraw = "Polygon";
+        draw = new ol.interaction.Draw({
+            source: parkSources,
+            type: typeDraw
+        });
+        map.addInteraction(draw);
+    }
+
+    //click save
+    function save () {
+        var data = {};
+        var features2 = parkSourceVector.getSource().getFeatures();
+        var newForm = new ol.format.GeoJSON();
+        var featColl = newForm.writeFeaturesObject(features2);
+        if (featColl.features.length == 0) {
+            alert("Vui lòng vẽ vị trí !");
+        }else 
+        {
+            if (featColl.features.length == 1) {
+
+                console.log("featColl");
+                console.log(featColl.features[0].geometry.coordinates);
+                let listCo = featColl.features[0].geometry.coordinates;
+                console.log("listCo");
+                for (let i = 0; i < listCo.length; i++) {
+                    for (let j = 0; j < listCo[i].length; j++) {
+                        console.log(listCo[k]);
+                    }
+                }
+                data = {
+                    gis_data: featColl.features[0].geometry.coordinates,
+                    centerPoint: centerPoint,
+                    properties: {
+                        fill_color: "#FF0000",
+                        font_size: 12
+                    }
+                };
+                var a = JSON.stringify(data);
+
+                polygonArea = polygonArea + data;
+            }
+            else {
+                alert("Chỉ được phép vẽ 1 vị trí !");
+            }
+        }
+    }
+    
+    //var startDraw = document.getElementById('start');
+
+    // map.on('click', function (evt) {
+    //     // console.log(evt);
+    //     // console.info(evt.pixel);
+    //     // console.info(map.getPixelFromCoordinate(evt.coordinate));
+    //     // console.info(ol.proj.toLonLat(evt.coordinate));
+    //     var coords = ol.proj.toLonLat(evt.coordinate);
+    //     var lat = coords[1];
+    //     var lon = coords[0];
+    //     console.log(`[${lon}, ${lat}],`);
+    // });
 </script>
 </html>
