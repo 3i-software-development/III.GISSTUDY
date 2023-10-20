@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -6,17 +7,39 @@
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
 </head>
 
+<style>
+ #buttonContainer {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    padding: 10px;
+}
+
+button, input[type="button"], input[type="submit"] {
+    padding: 5px 10px;
+    margin-right: 20px; /* Điều chỉnh khoảng cách bên phải của mỗi nút */
+    margin-top: 10px;
+}
+
+
+</style>
+
 <body>
-    <div id="map" style="width: 100%; height: 400px;"></div>
+    <div id="buttonContainer">
+        <button id="startDrawing">Start Drawing</button>
+        <button id="stopDrawing">Stop Drawing</button>
+        <input type="button" value="Draw" onclick="addPolygon()">
+        <form onsubmit="addPolygonByName(this.nameHuyen.value); return false;">
+            <input type="text" placeholder="Nhập tên huyện" name="nameHuyen">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    
+    
+    <div id="map" style="width: 100%; height: 600px; margin-top: 50px;"></div>
     <div id="coordinate-info"></div>
 
-    <button id="startDrawing">Start Drawing</button>
-    <button id="stopDrawing">Stop Drawing</button>
-    <input type="button" value="draw" onclick="addPolygon()">
-    <form onsubmit="addPolygonByName(this.nameHuyen.value); return false;">
-        <input type="text" placeholder="Nhập tên huyện" name="nameHuyen">
-        <input type="submit" value="Submit">
-    </form>
+    
     <script>
         var map;
         var vectorSource;
@@ -134,17 +157,17 @@
                 controls: ol.control.defaults.defaults({ attribution: false }).extend([attribution]),
                 view: new ol.View({
                     constrainResolution: true,
-                    center: ol.proj.fromLonLat([25, 25]),
-                    zoom: 5,
+                    center: ol.proj.fromLonLat([107.1400, 15.4000]),
+                    zoom: 7,
                 }),
             });
 
             // Tạo polygon ban đầu
             var polygonCoordinates = [
-                [0, 0],
-                [50, 0],
-                [50, 50],
-                [0, 50],
+            [102.1400, 23.4000],
+            [109.4600, 23.4000],
+            [109.4600, 8.1800],
+            [102.1400, 8.1800],
             ];
 
             defaultPolygon = new ol.Feature({
