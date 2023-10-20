@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.0.1/dist/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@7.0.1/dist/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+    <script>
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: [-78.695757, 35.788022],
+          zoom: 8
+        })
+      });
+
+      // Create a vector layer.
+      var vectorLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              geometry: new ol.geom.Polygon([[[-78.695757, 35.788022], [-78.695757, 35.788023], [-78.695758, 35.788023], [-78.695758, 35.788022]]]),
+              properties: {
+                name: 'My Polygon'
+              }
+            })
+          ]
+        })
+      });
+
+      // Add the vector layer to the map.
+      map.addLayer(vectorLayer);
+    </script>
+  </body>
+</html>

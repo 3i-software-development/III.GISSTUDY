@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>OpenLayers with OpenRouteService</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@7.1.0/dist/ol.js"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+
+        /* Thêm CSS để tùy chỉnh hình ảnh marker */
+        .marker {
+            width: 12px;
+            height: 12px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            /* Tạo hình tròn */
+            background-color: rgb(65, 106, 252);
+            /* Màu nền của marker (có thể thay đổi) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <div id="directions">
+        <h2>Directions:</h2>
+        <ul id="directions-list">
+            <!-- Danh sách chỉ dẫn sẽ được hiển thị ở đây -->
+        </ul>
+    </div>
+
+    <script>
+        // Hàm tính khoảng cách giữa hai điểm sử dụng công thức haversine
+        function calculateDistance(point1, point2) {
+            var lon1 = point1[0];
+            var lat1 = point1[1];
+            var lon2 = point2[0];
+            var lat2 = point2[1];
+
+            var R = 6371; // Bán kính Trái Đất (đơn vị: km)
+            var dLat = deg2rad(lat2 - lat1);
+            var dLon = deg2rad(lon2 - lon1);
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var distance = R * c;
+
+            return distance * 1000; // Chuyển đổi sang mét
+        }
+
+        // Hàm tính độ thành radian
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
+
+        // Hàm tính hướng giữa hai điểm
+        function calculateBearing(point1, point2) {
+            var lon1 = point1[0];
+            var lat1 = point1[1];
+            var lon2 = point2[0];
+            var lat2 = point2[1];
+
+            var dLon = deg2rad(lon2 - lon1);
+            var y = Math.sin(dLon) * Math.cos(deg2rad(lat2));
+            var x = Math.cos(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) - Math.sin(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(dLon);
+            var bearing = Math.atan2(y, x);
+            
+            // Chuyển đổi radian sang độ
+            bearing = (bearing * 180 / Math.PI + 360) % 360;
+
+            return bearing;
+        }
+
+        // Khởi tạo bản đồ OpenLayers
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([105.8269, 21.0285]),
+                zoom: 20,
+            })
+        });
+
+        // Tạo một lớp Vector để hiển thị đường đi
+        var vectorLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                format: new ol.format.GeoJSON(),
+            }),
+            style: new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: 'black', // Màu sắc của đường đi
+                    width: 3 // Độ dày của đường đi
+                })
+            })
+        });
+
+        map.addLayer(vectorLayer);
+
+        // Tọa độ điểm A và B
+        var A = [105.8269, 21.0285]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
+        var B = [105.7979, 21.0587]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
+
+        // Tạo overlay cho điểm A (điểm bắt đầu)
+        var markerA = new ol.Overlay({
+            position: ol.proj.fromLonLat(A),
+            positioning: 'center-center',
+            element: document.createElement('div'),
+        });
+        markerA.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
+
+        // Tạo overlay cho điểm B (điểm kết thúc)
+        var markerB = new ol.Overlay({
+            position: ol.proj.fromLonLat(B),
+            positioning: 'center-center',
+            element: document.createElement('div'),
+        });
+        markerB.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
+
+        // Thêm các overlay vào bản đồ
+        map.addOverlay(markerA);
+        map.addOverlay(markerB);
+
+
+        // Gửi yêu cầu lấy đường đi từ OpenRouteService
+        var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+        var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+        var requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + apiKey,
+            },
+            body: JSON.stringify({
+                'coordinates': [A, B],
+            }),
+        };
+
+        // Sau khi nhận được phản hồi từ API
+        fetch(url, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                // Lấy đường đi từ dữ liệu trả về
+                var route = data.features[0];
+                console.log(route);
+                // Thêm đường đi vào lớp Vector
+                vectorLayer.getSource().addFeature(new ol.Feature({
+                    geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform('EPSG:4326', 'EPSG:3857'),
+                }));
+
+                // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
+                var extent = vectorLayer.getSource().getExtent();
+                map.getView().fit(extent, map.getSize());
+
+                // Hiển thị các chỉ dẫn về tuyến đường trong phần tử HTML
+                var directionsList = document.getElementById('directions-list');
+                directionsList.innerHTML = ''; // Xóa bất kỳ nội dung trước đó
+
+                if (route.properties.segments && route.properties.segments.length > 0) {
+                    var coordinates = route.geometry.coordinates;
+                    for (var i = 0; i < coordinates.length - 1; i++) {
+                        var startPoint = coordinates[i];
+                        var endPoint = coordinates[i + 1];
+
+                        var distance = calculateDistance(startPoint, endPoint);
+                        var bearing = calculateBearing(startPoint, endPoint);
+
+                        var instruction = `Continue ${distance.toFixed(2)} meters in the direction of ${bearing.toFixed(2)} degrees.`;
+                        console.log(bearing.toFixed(2));
+                        var li = document.createElement('li');
+                        li.textContent = instruction;
+                        directionsList.appendChild(li);
+                    }
+                } else {
+                    // Trường hợp không có chỉ dẫn
+                    var li = document.createElement('li');
+                    li.textContent = 'No directions available.';
+                    directionsList.appendChild(li);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    </script>
+</body>
+
+</html>

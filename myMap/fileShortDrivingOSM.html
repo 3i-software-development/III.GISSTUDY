@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearest Driving Route</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 700px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button id="findRoute">Find Route</button>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Khởi tạo bản đồ Leaflet
+            var map = L.map('map').setView([51.505, -0.09], 13); // Điểm ban đầu
+
+            // Sử dụng dịch vụ bản đồ từ OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var startPoint = L.latLng(51.505, -0.09); // Điểm A
+            var endPoint = L.latLng(51.51, -0.1); // Điểm B
+
+            var findRouteButton = document.getElementById("findRoute");
+            findRouteButton.addEventListener("click", function () {
+                // Sử dụng thư viện Leaflet Routing Machine để tìm đường lái xe gần nhất
+                L.Routing.control({
+                    waypoints: [
+                        L.latLng(startPoint),
+                        L.latLng(endPoint)
+                    ],
+                    routeWhileDragging: true
+                }).addTo(map);
+            });
+        });
+    </script>
+</body>
+</html>

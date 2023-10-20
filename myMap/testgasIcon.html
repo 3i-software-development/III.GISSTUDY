@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Popup</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@main/dist/en/v7.1.0/ol/ol.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@main/dist/en/v7.1.0/ol/dist/ol.js"></script>
+    <style>
+      html,
+      body,
+      .map {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .ol-popup {
+        position: absolute;
+        background-color: white;
+        -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #cccccc;
+        bottom: 12px;
+        left: -50px;
+        min-width: 280px;
+      }
+      .ol-popup:after,
+      .ol-popup:before {
+        top: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      .ol-popup:after {
+        border-top-color: white;
+        border-width: 10px;
+        left: 48px;
+        margin-left: -10px;
+      }
+      .ol-popup:before {
+        border-top-color: #cccccc;
+        border-width: 11px;
+        left: 48px;
+        margin-left: -11px;
+      }
+      .ol-popup-closer {
+        text-decoration: none;
+        position: absolute;
+        top: 2px;
+        right: 8px;
+      }
+      .ol-popup-closer:after {
+        content: "✖";
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
+    <script>
+      /**
+       * Elements that make up the popup.
+       */
+      const container = document.getElementById("popup");
+      const content = document.getElementById("popup-content");
+      const closer = document.getElementById("popup-closer");
+
+      /**
+       * Create an overlay to anchor the popup to the map.
+       */
+      const overlay = new ol.Overlay({
+        element: container,
+        autoPan: {
+          animation: {
+            duration: 250,
+          },
+        },
+        offset: [0, -30],
+      });
+
+      /**
+       * Add a click handler to hide the popup.
+       * @return {boolean} Don't follow the href.
+       */
+      closer.onclick = function () {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
+
+      const Model = [];
+
+      /**
+       * Create the map.
+       */
+      const map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM(),
+          }),
+        ],
+        overlays: [overlay],
+        target: "map",
+        view: new ol.View({
+          center: ol.proj.fromLonLat([-43.206091, -22.920387]),
+          zoom: 14,
+        }),
+      });
+
+      // Create a vector source and layer to add points
+      const vectorSource = new ol.source.Vector();
+
+      const vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: new ol.style.Style({
+          image: new ol.style.Icon({
+            anchor: [0.5, 1],
+            src: "gasFire.png",
+            scale: 0.8,
+          }),
+        }),
+      });
+
+      map.addLayer(vectorLayer);
+
+      map.on("click", function (evt) {
+        const marker = map.forEachFeatureAtPixel(
+          evt.pixel,
+          (feature) => feature
+        );
+        if (marker) {
+          const markerCoordinates = marker.getGeometry().getCoordinates();
+          content.innerHTML =
+            "<p>Coordinates:</p><code>" +
+            ol.coordinate.toStringHDMS(ol.proj.toLonLat(markerCoordinates)) +
+            "</code>";
+          overlay.setPosition(markerCoordinates);
+        } else {
+          const coordinates = evt.coordinate;
+          content.innerHTML =
+            "<p>Coordinates:</p><code>" +
+            ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates)) +
+            "</code>";
+          overlay.setPosition(coordinates);
+
+          // Add a point to the vector source at the clicked coordinates
+          vectorSource.addFeature(
+            new ol.Feature(new ol.geom.Point(coordinates))
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

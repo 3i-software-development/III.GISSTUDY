@@ -1,10 +1,10 @@
 <html>
   <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.0.1/dist/ol.css" type="text/css">
-    <script src="https://cdn.jsdelivr.net/npm/ol@7.0.1/dist/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
     <script>
-      var polygon = new ol.geom.Polygon([[[-78.695757, 35.788022], [-78.695757, 35.788022], [-78.695757, 35.788022], [-78.695757, 35.788022]]]);
-      var point = new ol.geom.Point([-78.695757, 35.788022]);
+      var polygon = new ol.geom.Polygon([[ [105.7994, 21.0795],  [105.7979, 21.0210], [105.8839, 21.0384], [105.8737, 20.9813]]]);
+      var point = new ol.geom.Point( [105.8737, 20.9813]);
       var isInside = polygon.intersectsCoordinate(point.getCoordinates());
       console.log(isInside);
     </script>
