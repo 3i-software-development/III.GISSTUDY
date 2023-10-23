@@ -96,9 +96,10 @@ button, input[type="button"], input[type="submit"] {
         <button id="startDrawing">Start Drawing</button>
         <button id="stopDrawing">Stop Drawing</button>
         <!-- Tìm khoảng cách từ a đến b   -->
-        <button id="calculateDistance">Calculate distance</button>
+        <button id="calculateDistance" onclick="calculateDistance()">Calculate distance</button>
+        
         <!-- Tìm đường đi ngắn nhất cho hai điểm trên open street map -->
-        <button id="findWay">Find shortest way </button>
+        <button id="findWay" onclick="findShortestWay()">Find shortest way </button>
         <!-- Vẽ 1000 marker  -->
         <button id="DrawMarkerByButton">Draw marker by button</button>
         <!-- chuyển qua lại giữa open street map và gg map  -->
@@ -113,8 +114,8 @@ button, input[type="button"], input[type="submit"] {
         </form>
     </div>
     
-    
-    <div id="map" style="width: 100%; height: 600px; margin-top: 50px;"></div>
+    <div id="map" class="map" style="height: 600px;"></div>
+    <div id="distance-info"></div>
     <div id="coordinate-info"></div>
 
     

@@ -119,6 +119,20 @@ function createMap() {
         }),
     });
 
+    var vectorLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            format: new ol.format.GeoJSON(),
+        }),
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'black',
+                width: 3
+            })
+        })
+    });
+
+    map.addLayer(vectorLayer);
+
     // Tạo polygon ban đầu
     var polygonCoordinates = [
     [102.1400, 23.4000],
@@ -174,7 +188,7 @@ function checkPointAndAddIcon(evt) {
             pointInsideAnyPolygon = true;
             var iconFeature = new ol.Feature({
                 geometry: new ol.geom.Point(selectedPoint),
-            });
+            }); 
 
             var iconStyle = new ol.style.Style({
                 image: new ol.style.Icon({
@@ -240,4 +254,18 @@ function stopDrawing() {
         map.removeInteraction(draw);
         isDrawing = false;
     }
+}
+    
+function Distance(from,end){
+    var line = new ol.geom.LineString([from, end]);
+    var distance= Math.round(line.getLength() * 100) / 100;
+    return distance;
+}
+
+function calculateDistance(){
+   var from=[11950618.596416306,1835627.633675859];
+   var end=[12016660.1888547,1784873.4468945018];
+
+    var distanceinfo = document.getElementById('distance-info');
+    distanceinfo.innerHTML ='distance: ' + Distance(from,end);
 }
