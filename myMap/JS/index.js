@@ -13,7 +13,7 @@ function readJson() {
         .then(data => {
             // Use the 'data' variable which now contains the JSON data
             geojson = data;
-            console.log(data);
+            console.log(geojson);
 
         })
         .catch(error => {
@@ -21,6 +21,15 @@ function readJson() {
         });
 }
 
+function CheckPosion(point)
+{
+    var features = new ol.format.GeoJSON().readFeatures(geojson, {
+        featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
+    });
+
+    result=features.find(poligon=>checkPointInsidePolygon(point,poligon));
+    return result;
+}
 function addPolygon() {
     // Kiểm tra xem vectorSource đã được tạo hay chưa
     if (!vectorSource) {
@@ -41,44 +50,44 @@ function addPolygon() {
 
 function addPolygonByName(name) {
     // Kiểm tra xem vectorSource đã được tạo hay chưa
-if (!vectorSource) {
-vectorSource = new ol.source.Vector();
-}
+    if (!vectorSource) {
+        vectorSource = new ol.source.Vector();
+    }
 
-var features = new ol.format.GeoJSON().readFeatures(geojson, {
-featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
-});
+    var features = new ol.format.GeoJSON().readFeatures(geojson, {
+        featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
+    });
 
-// Lọc các đối tượng có 'VARNAME_2' trùng với giá trị của biến 'name'
-var filteredFeatures = features.filter(function (feature) {
-return feature.get('VARNAME_2') === name;
-});
+    // Lọc các đối tượng có 'VARNAME_2' trùng với giá trị của biến 'name'
+    var filteredFeatures = features.filter(function (feature) {
+        return feature.get('VARNAME_2') === name;
+    });
 
-vectorSource.clear(); // Xóa tất cả các đối tượng trên lớp vector
+    vectorSource.clear(); // Xóa tất cả các đối tượng trên lớp vector
 
-// Tạo phong cách chỉ với đường viền màu đen
-var style = new ol.style.Style({
-stroke: new ol.style.Stroke({
-    color: 'black', // Màu đen cho đường viền
-    width: 2 // Độ rộng của đường viền
-})
-});
+    // Tạo phong cách chỉ với đường viền màu đen
+    var style = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+            color: 'black', // Màu đen cho đường viền
+            width: 2 // Độ rộng của đường viền
+        })                                              
+    });
 
-// Gán phong cách cho các đối tượng trong filteredFeatures
-filteredFeatures.forEach(function (feature) {
-feature.setStyle(style);
-});
+    // Gán phong cách cho các đối tượng trong filteredFeatures
+    filteredFeatures.forEach(function (feature) {
+        feature.setStyle(style);
+    });
 
-vectorSource.addFeatures(filteredFeatures); // Thêm các đối tượng mới vào lớp vector
+    vectorSource.addFeatures(filteredFeatures); // Thêm các đối tượng mới vào lớp vector
 
-if (filteredFeatures.length > 0) {
-// Nếu có các đối tượng được tìm thấy, tùy chỉnh hiển thị bản đồ để hiển thị chúng.
-var extent = vectorSource.getExtent();
-map.getView().fit(extent, map.getSize());
-} else {
-// Xử lý trường hợp không tìm thấy đối tượng
-console.log('Không tìm thấy đối tượng có VARNAME_2 là ' + name);
-}
+    if (filteredFeatures.length > 0) {
+        // Nếu có các đối tượng được tìm thấy, tùy chỉnh hiển thị bản đồ để hiển thị chúng.
+        var extent = vectorSource.getExtent();
+        map.getView().fit(extent, map.getSize());
+    } else {
+        // Xử lý trường hợp không tìm thấy đối tượng
+        console.log('Không tìm thấy đối tượng có VARNAME_2 là ' + name);
+    }
 }
 
 
@@ -147,7 +156,9 @@ function createMap() {
 
     vectorSource.addFeature(defaultPolygon);
 }
-
+function checkPointInsidePolygon(point, polygon){
+    return polygon.getGeometry().intersectsCoordinate(point);
+}
 
 // Function to check if the point is inside the polygons and add an icon at the clicked location
 function checkPointAndAddIcon(evt) {
@@ -155,12 +166,17 @@ function checkPointAndAddIcon(evt) {
         return;
     }
     var selectedPoint = evt.coordinate;
-
+    var a=CheckPosion(selectedPoint);
+    var address
+    if(a!=undefined){
+        a=a.values_;
+        address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
+    }
     var pointInsideAnyPolygon = false; // Biến để kiểm tra điểm có thuộc vào bất kỳ polygon nào không
 
     // Kiểm tra điểm với polygon mặc định
-    var defaultPolygonGeometry = defaultPolygon.getGeometry();
-    if (defaultPolygonGeometry.intersectsCoordinate(selectedPoint)) {
+    var defaultPolygonGeometry = defaultPolygon;
+    if (checkPointInsidePolygon(selectedPoint,defaultPolygonGeometry)) {
         console.log("Point is inside the default polygon.");
         pointInsideAnyPolygon = true;
         var iconFeature = new ol.Feature({
@@ -182,8 +198,8 @@ function checkPointAndAddIcon(evt) {
 
     // Kiểm tra điểm với tất cả các polygon trong mảng
     for (var i = 0; i < polygons.length; i++) {
-        var polygonGeometry = polygons[i].getGeometry();
-        if (polygonGeometry.intersectsCoordinate(selectedPoint)) {
+        var polygonGeometry = polygons[i];
+        if (checkPointInsidePolygon(selectedPoint,polygonGeometry)) {
             console.log("Point is inside polygon " + i + ".");
             pointInsideAnyPolygon = true;
             var iconFeature = new ol.Feature({
@@ -227,7 +243,7 @@ function checkPointAndAddIcon(evt) {
     }
 
     var coordinateInfo = document.getElementById('coordinate-info');
-    coordinateInfo.innerHTML = 'Coordinates: ' + selectedPoint;
+    coordinateInfo.innerHTML = 'Coordinates: ' + address;
 }
 
 // Function to start drawing
