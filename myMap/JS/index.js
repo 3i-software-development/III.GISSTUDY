@@ -180,42 +180,48 @@ function addPolygonByName(name) {
 
     // Kiểm tra xem có thuộc polygon không và hiển thị thuộc tỉnh nào
     function checkPointAndAddIcon(evt) {
-    if (isDrawing) {
-        return;
-    }
-    var selectedPoint = evt.coordinate;
-    var a=CheckPosion(selectedPoint);
-    var address
-    if(a!=undefined){
-        a=a.values_;
-        address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
-    }
-    var pointInsideAnyPolygon = false; // Biến để kiểm tra điểm có thuộc vào bất kỳ polygon nào không
+        if (isDrawing) {
+            return;
+        }
+        var selectedPoint = evt.coordinate;
+        //List điạ chỉ
+        var features = new ol.format.GeoJSON().readFeatures(geojson, {
+            featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
+        });
 
-    // Kiểm tra điểm với polygon mặc định
-    var defaultPolygonGeometry = defaultPolygon;
-    if (checkPointInsidePolygon(selectedPoint,defaultPolygonGeometry)) {
-        console.log("Point is inside the default polygon.");
-        pointInsideAnyPolygon = true;
+        var a=CheckPosion(selectedPoint, features);
+        var address=selectedPoint;
+        //Lấy điạ chỉ
+        if(a!=undefined){
+            a=a.values_;
+            address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
+        }
+        
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 0.5],
+                src: link + "gasFire.png",
+                scale: 0.7,
+            }),
+        });
+
         var iconFeature = new ol.Feature({
             geometry: new ol.geom.Point(selectedPoint),
         });
 
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 0.5],
-                src: link + "map-marker.svg",
-                color: 'blue',
-                scale: 0.05,
-            }),
+        const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
+            if (feature.getGeometry() instanceof ol.geom.Point) {
+                return feature; // Đây là một marker
+            }
         });
-
-        iconFeature.setStyle(iconStyle);
-        vectorSource.addFeature(iconFeature);
-
-        // Hiển thị thông tin trong popup khi click
-        var popupContent = "<b>Address:</b> " + address;
-        showPopup(evt.coordinate, popupContent);
+        if (marker) {
+            showPopup(selectedPoint, address);
+        } else {
+            showPopup(selectedPoint, address);
+            // Add a point to the vector source at the clicked coordinates
+            iconFeature.setStyle(iconStyle);
+            vectorSource.addFeature(iconFeature);
+        }
     }
 
     function showPopup(coordinate, content) {
@@ -231,69 +237,19 @@ function addPolygonByName(name) {
                 stopEvent: false,
                 offset: [0, -15],
             });
-            closer.onclick = function () {
+            closer.onclick = function (event) {
+                event.stopPropagation(); // Ngăn chặn sự kiện click lan toả
                 popup.setPosition(undefined);
+                map.removeOverlay(popup); // Loại bỏ overlay khi đóng popup
                 closer.blur();
                 return false;
-              };
+            };
+            
+            
             map.addOverlay(popup);
             popup.setPosition(coordinate);
+        }  
     }
-    
-    
-    
-}
-
-    // Kiểm tra điểm với tất cả các polygon trong mảng
-    for (var i = 0; i < polygons.length; i++) {
-        var polygonGeometry = polygons[i];
-        if (checkPointInsidePolygon(selectedPoint,polygonGeometry)) {
-            console.log("Point is inside polygon " + i + ".");
-            pointInsideAnyPolygon = true;
-            var iconFeature = new ol.Feature({
-                geometry: new ol.geom.Point(selectedPoint),
-            }); 
-
-            var iconStyle = new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [0.5, 0.5],
-                    src: link + "map-marker.svg",
-                    color: 'green',
-                    scale: 0.05,
-                }),
-            });
-
-            iconFeature.setStyle(iconStyle);
-            vectorSource.addFeature(iconFeature);
-            break; // Nếu điểm thuộc một polygon, không cần kiểm tra tiếp
-        }
-    }
-
-    if (!pointInsideAnyPolygon) {
-        console.log("Point is outside all polygons.");
-
-        // Add an icon at the clicked location
-        var iconFeature = new ol.Feature({
-            geometry: new ol.geom.Point(selectedPoint),
-        });
-
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 0.5],
-                src: link + "map-marker.svg",
-                color: 'red',
-                scale: 0.05,
-            }),
-        });
-
-        iconFeature.setStyle(iconStyle);
-        vectorSource.addFeature(iconFeature);
-    }
-
-    var coordinateInfo = document.getElementById('coordinate-info');
-    coordinateInfo.innerHTML = 'Coordinates: ' + address;
-    }
-
     function checkPointInsidePolygon(point, polygon){
         return polygon.getGeometry().intersectsCoordinate(point);
         }
