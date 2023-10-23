@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
     <script src="/III.GISSTUDY/myMap/JS/index.js"></script>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.13.1/build/ol.js"></script>
 </head>
 
 <style>
@@ -60,7 +61,7 @@ button, input[type="button"], input[type="submit"] {
         color: #fff;
     }
 
-    #changeMap {
+    #switchMapButton {
         background-color: #1abc9c;
         color: #fff;
     }
@@ -103,7 +104,7 @@ button, input[type="button"], input[type="submit"] {
         <!-- Vẽ 1000 marker  -->
         <button id="DrawMarkerByButton">Draw marker by button</button>
         <!-- chuyển qua lại giữa open street map và gg map  -->
-        <button id="changeMap">Change map</button>
+        <button id="switchMapButton" onclick="switchMap()">Chuyển đổi Bản đồ</button>
         <!-- check xem điểm thuộc huyện nào  -->
         <button id="checkPosition">Check position</button>
         <!-- ve ban do theo file va theo huyen  -->

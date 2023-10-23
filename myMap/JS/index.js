@@ -5,7 +5,8 @@ var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
 var link = "/III.GISSTUDY/myMap/Image/";
-
+var googleLayer;
+var osmLayer;
 var geojson = {};
 
 function readJson() {
@@ -113,6 +114,17 @@ function createMap() {
         collapsible: false,
     });
 
+    // Google Maps Layer
+    googleLayer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+        url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+    })
+    });
+    // OpenStreetMap Layer
+    osmLayer = new ol.layer.Tile({
+        source: new ol.source.OSM()
+    });
+
     map = new ol.Map({
         target: "map",
         layers: [
@@ -157,6 +169,7 @@ function createMap() {
 
     vectorSource.addFeature(defaultPolygon);
 }
+
 function checkPointInsidePolygon(point, polygon){
     return polygon.getGeometry().intersectsCoordinate(point);
 }
@@ -316,4 +329,17 @@ function savePolygonsToGeoJSONFile() {
 
     var distanceinfo = document.getElementById('distance-info');
     distanceinfo.innerHTML ='distance: ' + Distance(from,end);
+    }
+
+    function switchMap() {
+        // Kiểm tra lớp nền hiện tại và chuyển đổi
+        
+        if (map.getLayers().getArray()[0] === googleLayer) {
+            map.getLayers().setAt(0, osmLayer); // Chuyển sang OpenStreetMap
+        }
+        else if (map.getLayers().getArray()[0] === osmLayer) {
+            map.getLayers().setAt(0, googleLayer); // Chuyển sang OpenStreetMap
+        } else {
+            map.getLayers().setAt(0, googleLayer); // Chuyển sang Google Maps
+        }
     }
