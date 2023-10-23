@@ -8,6 +8,11 @@ var link = "/III.GISSTUDY/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
+var fromMarker = null;
+var endMarker = null;
+var isSelectingFrom = true;
+const container = document.getElementById("popup");  
+const closer = document.getElementById("popup-closer");
 
 function readJson() {
     fetch('./VN_Huyen.geojson')
@@ -93,8 +98,8 @@ function addPolygonByName(name) {
 }
 
 
-
-function createMap() {
+    // khởi tạo bản đồ =================================
+    function createMap() {
     // Create a source for the features
     vectorSource = new ol.source.Vector();
 
@@ -168,14 +173,13 @@ function createMap() {
     });
 
     vectorSource.addFeature(defaultPolygon);
-}
+    }
+    //======================================================
 
-function checkPointInsidePolygon(point, polygon){
-    return polygon.getGeometry().intersectsCoordinate(point);
-}
+    
 
-// Function to check if the point is inside the polygons and add an icon at the clicked location
-function checkPointAndAddIcon(evt) {
+    // Kiểm tra xem có thuộc polygon không và hiển thị thuộc tỉnh nào
+    function checkPointAndAddIcon(evt) {
     if (isDrawing) {
         return;
     }
@@ -208,7 +212,46 @@ function checkPointAndAddIcon(evt) {
 
         iconFeature.setStyle(iconStyle);
         vectorSource.addFeature(iconFeature);
+
+        // Hiển thị thông tin trong popup khi click
+        var popupContent = "<b>Address:</b> " + address;
+        showPopup(evt.coordinate, popupContent);
     }
+
+    function showPopup(coordinate, content) {
+        var popupElement = document.getElementById('popup');
+        var popupContentElement = document.getElementById('popup-content');
+    
+        if (popupElement && popupContentElement) {
+            popupContentElement.innerHTML = content;
+    
+            var popup = new ol.Overlay({
+                element: popupElement,
+                positioning: 'bottom-center',
+                stopEvent: false,
+                offset: [0, -15],
+            });
+    
+            map.addOverlay(popup);
+            popup.setPosition(coordinate);
+    }
+    
+    const overlay = new ol.Overlay({
+        element: container,
+        autoPan: {
+          animation: {
+            duration: 250,
+          },
+        },
+        offset: [0, -30],
+      });
+    
+    closer.onclick = function () {
+    overlay.setPosition(undefined);
+    closer.blur();
+    return false;
+  };
+}
 
     // Kiểm tra điểm với tất cả các polygon trong mảng
     for (var i = 0; i < polygons.length; i++) {
@@ -258,10 +301,15 @@ function checkPointAndAddIcon(evt) {
 
     var coordinateInfo = document.getElementById('coordinate-info');
     coordinateInfo.innerHTML = 'Coordinates: ' + address;
-}
+    }
 
-// Function to start drawing
-function startDrawing() {
+    function checkPointInsidePolygon(point, polygon){
+        return polygon.getGeometry().intersectsCoordinate(point);
+        }
+    //=======================================================
+
+    // vẽ và lưu tọa độ polygon vào tọa độ ==================
+    function startDrawing() {
     if (!isDrawing) {
         draw = new ol.interaction.Draw({
             source: vectorSource,
@@ -277,9 +325,9 @@ function startDrawing() {
             savePolygonsToGeoJSONFile();
         });
     }
-}
+    }
 
-function savePolygonsToGeoJSONFile() {
+    function savePolygonsToGeoJSONFile() {
     // Tạo một đối tượng GeoJSON
     var geojsonObject = {
         type: "FeatureCollection",
@@ -307,30 +355,18 @@ function savePolygonsToGeoJSONFile() {
     a.href = url;
     a.download = "polygons.geojson"; // Tên file GeoJSON
     a.click();
-}
+    }
 
-// Function to stop drawing
+
     function stopDrawing() {
         if (isDrawing) {
             map.removeInteraction(draw);
             isDrawing = false;
         }
     }
+    // =======================================================
     
-    function Distance(from,end){
-    var line = new ol.geom.LineString([from, end]);
-    var distance= Math.round(line.getLength() * 100) / 100;
-    return distance;
-    }
-
-    function calculateDistance(){
-   var from=[11950618.596416306,1835627.633675859];
-   var end=[12016660.1888547,1784873.4468945018];
-
-    var distanceinfo = document.getElementById('distance-info');
-    distanceinfo.innerHTML ='distance: ' + Distance(from,end);
-    }
-
+    // đổi bản đồ ============================================
     function switchMap() {
         // Kiểm tra lớp nền hiện tại và chuyển đổi
         
@@ -343,3 +379,63 @@ function savePolygonsToGeoJSONFile() {
             map.getLayers().setAt(0, googleLayer); // Chuyển sang Google Maps
         }
     }
+
+    //========================================================
+
+
+    // Tính khoảng cách  ======================================
+    function degreesToMeters(degrees) {
+        var radius = 6371000; // Bán kính trái đất ở mức biển (đơn vị: mét)
+        return degrees * (Math.PI / 180) * radius;
+    }
+    
+    function Distance(from, end) {
+        var line = new ol.geom.LineString([from, end]);
+        var distanceInDegrees = line.getLength();
+        var distanceInMeters = degreesToMeters(distanceInDegrees);
+        var distanceInKilometers = distanceInMeters / 1000;
+        return distanceInKilometers;
+    }
+
+    function handleMapDoubleClick(event) {
+        var coordinates = event.coordinate;
+        var markerStyle = new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 6,
+                fill: new ol.style.Fill({ color: 'blue' }),
+                stroke: new ol.style.Stroke({ color: 'black', width: 3 }),
+            }),
+        });
+    
+        if (isSelectingFrom) {
+            fromMarker = createMarker(coordinates, markerStyle);
+            isSelectingFrom = false;
+        } else {
+            endMarker = createMarker(coordinates, markerStyle);
+            var distance = Distance(fromMarker.getGeometry().getCoordinates(), endMarker.getGeometry().getCoordinates());
+            var distanceinfo = document.getElementById('distance-info');
+            distanceinfo.innerHTML = 'Distance: ' + distance + " kilometer";
+            isSelectingFrom = true;
+        }
+    }
+
+    function createMarker(coordinates, style) {
+        var marker = new ol.Feature({
+            geometry: new ol.geom.Point(coordinates)
+        });
+    
+        marker.setStyle(style);
+    
+        var markerLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [marker],
+            }),
+        });
+    
+        map.addLayer(markerLayer);
+    
+        return marker;
+    }
+    //=========================================================
+
+    
