@@ -4,6 +4,7 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
+var link = "/III.GISSTUDY/myMap/Image/";
 
 var geojson = {};
 
@@ -186,9 +187,9 @@ function checkPointAndAddIcon(evt) {
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
                 anchor: [0.5, 0.5],
-                src: 'https://openlayers.org/en/latest/examples/data/dot.png',
+                src: link + "map-marker.svg",
                 color: 'blue',
-                scale: 0.7,
+                scale: 0.05,
             }),
         });
 
@@ -209,9 +210,9 @@ function checkPointAndAddIcon(evt) {
             var iconStyle = new ol.style.Style({
                 image: new ol.style.Icon({
                     anchor: [0.5, 0.5],
-                    src: 'https://openlayers.org/en/latest/examples/data/dot.png',
+                    src: link + "map-marker.svg",
                     color: 'green',
-                    scale: 0.7,
+                    scale: 0.05,
                 }),
             });
 
@@ -232,9 +233,9 @@ function checkPointAndAddIcon(evt) {
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
                 anchor: [0.5, 0.5],
-                src: 'https://openlayers.org/en/latest/examples/data/dot.png',
+                src: link + "map-marker.svg",
                 color: 'red',
-                scale: 0.7,
+                scale: 0.05,
             }),
         });
 
@@ -260,28 +261,59 @@ function startDrawing() {
         draw.on("drawend", function (event) {
             var drawnPolygon = event.feature;
             polygons.push(drawnPolygon); // Thêm polygon vào mảng
+            savePolygonsToGeoJSONFile();
         });
     }
 }
 
-// Function to stop drawing
-function stopDrawing() {
-    if (isDrawing) {
-        map.removeInteraction(draw);
-        isDrawing = false;
-    }
+function savePolygonsToGeoJSONFile() {
+    // Tạo một đối tượng GeoJSON
+    var geojsonObject = {
+        type: "FeatureCollection",
+        features: []
+    };
+
+    // Lặp qua mảng polygons và chuyển đổi chúng thành đối tượng GeoJSON
+    polygons.forEach(function(polygon) {
+        var format = new ol.format.GeoJSON();
+        var geojsonFeature = format.writeFeature(polygon);
+        geojsonObject.features.push(geojsonFeature);
+    });
+
+    // Chuyển đổi đối tượng GeoJSON sang JSON
+    var geojsonContent = JSON.stringify(geojsonObject);
+
+    // Tạo một đối tượng Blob để lưu dữ liệu GeoJSON
+    var blob = new Blob([geojsonContent], { type: "application/geo+json" });
+
+    // Tạo một URL đối tượng để tạo liên kết tải về
+    var url = URL.createObjectURL(blob);
+
+    // Tạo một thẻ a để tạo liên kết tải về
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "polygons.geojson"; // Tên file GeoJSON
+    a.click();
 }
+
+// Function to stop drawing
+    function stopDrawing() {
+        if (isDrawing) {
+            map.removeInteraction(draw);
+            isDrawing = false;
+        }
+    }
     
-function Distance(from,end){
+    function Distance(from,end){
     var line = new ol.geom.LineString([from, end]);
     var distance= Math.round(line.getLength() * 100) / 100;
     return distance;
-}
+    }
 
-function calculateDistance(){
+    function calculateDistance(){
    var from=[11950618.596416306,1835627.633675859];
    var end=[12016660.1888547,1784873.4468945018];
 
     var distanceinfo = document.getElementById('distance-info');
     distanceinfo.innerHTML ='distance: ' + Distance(from,end);
-}
+    }
