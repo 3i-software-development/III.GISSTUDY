@@ -4,20 +4,20 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/III.GISSTUDY/myMap/Image/";
+var link = "/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
 var fromMarker = null;
 var endMarker = null;
 var isSelectingFrom = true;
+//Thuộc tính Popup
 var ShowPopup=false;
 var container = document.getElementById("popup");  
 var closer = document.getElementById("popup-closer");
 var popupElement = document.getElementById('popup');
 var popupContentElement = document.getElementById('popup-content');
-var A = null;
-var B = null;
+//hệ tọa độ
 const PIXEL="EPSG:3857"
 const LONLAT="EPSG:4326"
 
@@ -49,13 +49,37 @@ function readJson() {
             // Use the 'data' variable which now contains the JSON data
             geojson = data;
             console.log(geojson);
-
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
-
+function DrawCylinder() {
+    fetch('./cylinkers.json')
+        .then(response => response.json())
+        .then(data => {
+            // Use the 'data' variable which now contains the JSON data
+            var geojson2 = data;
+            geojson2.forEach(marker=>{
+                var location=[
+                    marker.location.longitude,
+                    marker.location.latitude
+                ]
+                
+                var iconStyle = new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 0.5],
+                        src: link + "gasFire.png",
+                        scale: 0.7,
+                    }),
+                });
+                drawMarker(iconStyle,ol.proj.transform(location,LONLAT, PIXEL))
+            })
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 function CheckPosion(point)
 {
     var features = new ol.format.GeoJSON().readFeatures(geojson, {
@@ -103,7 +127,7 @@ function addPolygonByName(name) {
     // Tạo phong cách chỉ với đường viền màu đen
     var style = new ol.style.Style({
             stroke: new ol.style.Stroke({
-            color: 'black', // Màu đen cho đường viền
+            color: 'blue', // Màu đen cho đường viền
             width: 2 // Độ rộng của đường viền
         })                                              
     });
@@ -181,42 +205,11 @@ function addPolygonByName(name) {
             scale: 0.7,
         }),
     });
-    // var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
-    // var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
-    // drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL))
-    // drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL))
-    // loadFindWay(A,B)
-
-    map.on('dblclick', function (event) {
-        var coordinate = event.coordinate;
-  
-        if (A === null) {
-         A = ol.proj.toLonLat(coordinate);
-         drawMarker1(iconStyle, coordinate);
-        } else if (B === null) {
-         B = ol.proj.toLonLat(coordinate);
-         drawMarker1(iconStyle, coordinate);
-    
-         loadFindWay(A, B);
-        }
-});
-
-function drawMarker1(style, coordinate) {
-  var iconFeature = new ol.Feature({
-    geometry: new ol.geom.Point(coordinate),
-  });
-
-  var iconSource = new ol.source.Vector({
-    features: [iconFeature],
-  });
-
-  var iconLayer = new ol.layer.Vector({
-    source: iconSource,
-    style: style,
-  });
-
-  map.addLayer(iconLayer);
-}
+    var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
+    var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
+    drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL))
+    drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL))
+    loadFindWay(A,B)
     
     defaultPolygon = new ol.Feature({
         geometry: new ol.geom.Polygon([polygonCoordinates]).transform(LONLAT, PIXEL),
@@ -287,8 +280,8 @@ function drawMarker1(style, coordinate) {
                 }));
 
                 // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
-                var extent = vectorLayer.getSource().getExtent();
-                map.getView().fit(extent, map.getSize());
+                // var extent = vectorLayer.getSource().getExtent();
+                // map.getView().fit(extent, map.getSize());
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -320,11 +313,11 @@ function drawMarker1(style, coordinate) {
 
         var a=CheckPosion(selectedPoint, features);
         var address=ol.proj.transform(selectedPoint, PIXEL, LONLAT);
-        // //Lấy điạ chỉ
-        // if(a!=undefined){
-        //     a=a.values_;
-        //     address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
-        // }
+        //Lấy điạ chỉ
+        if(a!=undefined){
+            a=a.values_;
+            address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
+        }
         
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
@@ -349,6 +342,8 @@ function drawMarker1(style, coordinate) {
 
         iconFeature.setStyle(markerStyle);
         vectorSource.addFeature(iconFeature);
+        
+        console.log(coordinate)
     }
 
     function showPopup(coordinate, content) {
@@ -673,15 +668,3 @@ function setPosition() {
 
 // Gọi hàm simulateMarkerMovement để bắt đầu mô phỏng chuyển động của marker
 simulateMarkerMovement();
-setTimeout(function(){
-    var iconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-            anchor: [0.5, 0.5],
-            src: link + "gasFire.png",
-            scale: 0.7,
-        }),
-    });
-    polygonCoordinates.forEach(x=>{
-        drawMarker(iconStyle,x);
-    });
-}, 1000);
