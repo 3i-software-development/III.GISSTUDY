@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>OpenLayers Toggle Layers</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+    <style>
+        #map {
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.controls {
+  background-color: #fff;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  height: 29px;
+  margin-left: 17px;
+  margin-top: 10px;
+  outline: none;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+.controls:focus {
+  border-color: #4d90fe;
+}
+
+.title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD05grnuqyT3CFDwxhXg0zgGAg6cfpANI8&libraries=places&callback=initMap" async defer></script>
+
+    <script>
+        function initMap(){
+            var map = new ol.Map({
+  target: 'map', // ID của phần tử HTML để vẽ bản đồ
+  layers: [
+    // Thêm lớp Tile với bản đồ nền (ví dụ: Google Maps)
+    new ol.layer.Tile({
+      source: new ol.source.XYZ({
+        url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+      }),
+    }),
+  ],
+  view: new ol.View({
+    center: ol.proj.fromLonLat([107.1400, 15.4000]),
+    zoom: 5,
+  }),
+});
+        }
+    // Khởi tạo biến bản đồ
+
+
+// Xác định các lớp POI hoặc khách sạn (có thể dựa trên 'featureType')
+var poiLayer = new ol.layer.Vector({
+  source: new ol.source.Vector(),
+});
+
+map.getLayers().push(poiLayer);
+
+
+// Điều chỉnh style cho lớp POI (ẩn hoặc thay đổi màu sắc)
+poiLayer.setStyle(function(feature, resolution) {
+  // Kiểm tra điều kiện để ẩn POI (ví dụ: feature.get('type') === 'hotel')
+  if (feature.get('type') === 'poi') {
+    return new ol.style.Style({
+        opacity:0,
+      // Cài đặt style ẩn (ví dụ: opacity: 0)
+    });
+  } else {
+    return new ol.style.Style({
+      // Cài đặt style mặc định
+    });
+  }
+});
+
+// Thêm lớp POI vào bản đồ
+map.addLayer(poiLayer);
+
+
+
+    </script>
+</body>
+</html>
