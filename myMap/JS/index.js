@@ -4,7 +4,7 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/Image/";
+var link = "/III.GISSTUDY/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
@@ -165,7 +165,7 @@ function addPolygonByName(name) {
         view: new ol.View({
             constrainResolution: true,
             center: ol.proj.fromLonLat([107.1400, 15.4000]),
-            zoom: 3,
+            zoom: 6,
         }),
     });
 
@@ -181,7 +181,63 @@ function addPolygonByName(name) {
         })
     });
 
+     // Tọa độ điểm A và B
+     var A = [105.8269, 21.0285]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
+     var B = [105.7979, 21.0587]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
+
+     // Tạo overlay cho điểm A (điểm bắt đầu)
+     var markerA = new ol.Overlay({
+         position: ol.proj.fromLonLat(A),
+         positioning: 'center-center',
+         element: document.createElement('div'),
+     });
+     markerA.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
+
+     // Tạo overlay cho điểm B (điểm kết thúc)
+     var markerB = new ol.Overlay({
+         position: ol.proj.fromLonLat(B),
+         positioning: 'center-center',
+         element: document.createElement('div'),
+     });
+     markerB.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
+
+     // Thêm các overlay vào bản đồ
+     map.addOverlay(markerA);
+     map.addOverlay(markerB);
+
     map.addLayer(vectorLayer);
+    // Gửi yêu cầu lấy đường đi từ OpenRouteService
+    var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+    var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+    var requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apiKey,
+        },
+        body: JSON.stringify({
+            'coordinates': [A, B],
+        }),
+    };
+
+    fetch(url, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                // Lấy đường đi từ dữ liệu trả về
+                var route = data.features[0];
+                console.log(route);
+                // Thêm đường đi vào lớp Vector
+                vectorLayer.getSource().addFeature(new ol.Feature({
+                    geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform('EPSG:4326', 'EPSG:3857'),
+                }));
+
+                // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
+                var extent = vectorLayer.getSource().getExtent();
+                map.getView().fit(extent, map.getSize());
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
     
     defaultPolygon = new ol.Feature({

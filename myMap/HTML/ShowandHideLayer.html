@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OpenLayers Routing Example</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v6.13.0/css/ol.css" type="text/css">
+    <script src="https://openlayers.org/en/v6.13.0/build/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" class="map" style="height: 600px;"></div>
+
+    <script>
+      const map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM(),
+          }),
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([105.8269, 21.0285]),
+          zoom: 12,
+        }),
+      });
+
+      const vectorSource = new ol.source.Vector();
+      const vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+      });
+      map.addLayer(vectorLayer);
+
+      const startPoint = ol.proj.fromLonLat([105.8269, 21.0285]);
+      const endPoint = ol.proj.fromLonLat([105.7979, 21.0587]);
+
+      // Điều hướng dịch vụ (tùy chọn: Mapbox, OSRM, hoặc Google Maps)
+      
+      var routingService = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+        var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e';
+
+      // Gửi yêu cầu tới dịch vụ hướng dẫn để tìm tuyến đường
+      fetch(`${routingService}?api_key=${apiKey}&start=${startPoint}&end=${endPoint}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const route = data.routes[0].geometry;
+          const routeFeature = new ol.Feature({
+            geometry: new ol.geom.LineString(route),
+          });
+          vectorSource.addFeature(routeFeature);
+        });
+    </script>
+  </body>
+</html>
