@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vẽ 500 Phần Tử bằng OpenLayers</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.3.0/dist/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@7.3.0/dist/ol.js"></script>
+</head>
+<body>
+    <div id="map" class="map" style="height: 500px;"></div>
+
+    <script>
+        const map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM(),
+                }),
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([105.7815, 21.0556]),
+                zoom: 10,
+            }),
+        });
+
+        // Dữ liệu của 500 phần tử (hãy điều chỉnh dữ liệu của bạn)
+        const cylinkerData = [
+            { lon: 105.7815, lat: 21.0556, title: "Phần tử 1", image: "image1.jpg", code: "code1" },
+            // Thêm các phần tử khác ở đây...
+        ];
+
+        // Vẽ các phần tử lên bản đồ
+        cylinkerData.forEach(cylinker => {
+            const marker = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([cylinker.lon, cylinker.lat])),
+            });
+
+            const markerStyle = new ol.style.Style({
+                image: new ol.style.Icon({
+                    src: cylinker.image,
+                }),
+            });
+
+            marker.setStyle(markerStyle);
+
+            // Thêm marker vào lớp
+            const vectorSource = new ol.source.Vector({
+                features: [marker],
+            });
+
+            const vectorLayer = new ol.layer.Vector({
+                source: vectorSource,
+            });
+
+            map.addLayer(vectorLayer);
+        });
+    </script>
+</body>
+</html>
