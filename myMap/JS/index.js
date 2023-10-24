@@ -4,7 +4,7 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/III.GISSTUDY/myMap/Image/";
+var link = "/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
@@ -16,6 +16,9 @@ var container = document.getElementById("popup");
 var closer = document.getElementById("popup-closer");
 var popupElement = document.getElementById('popup');
 var popupContentElement = document.getElementById('popup-content');
+const PIXEL="EPSG:3857"
+const LONLAT="EPSG:4326"
+
 var popup = new ol.Overlay({
     element: popupElement,
     positioning: 'bottom-center',
@@ -54,7 +57,7 @@ function readJson() {
 function CheckPosion(point)
 {
     var features = new ol.format.GeoJSON().readFeatures(geojson, {
-        featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
+        featureProjection: PIXEL, // Chuyển đổi hệ tọa độ sang EPSG:3857
     });
 
     result=features.find(poligon=>checkPointInsidePolygon(point,poligon));
@@ -67,7 +70,7 @@ function addPolygon() {
     }
 
     var features = new ol.format.GeoJSON().readFeatures(geojson, {
-        featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
+        featureProjection: PIXEL, // Chuyển đổi hệ tọa độ sang EPSG:3857
     });
 
     vectorSource.clear(); // Xóa tất cả các đối tượng trên lớp vector
@@ -85,7 +88,7 @@ function addPolygonByName(name) {
     }
 
     var features = new ol.format.GeoJSON().readFeatures(geojson, {
-        featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
+        featureProjection: PIXEL, // Chuyển đổi hệ tọa độ sang EPSG:3857
     });
 
     // Lọc các đối tượng có 'VARNAME_2' trùng với giá trị của biến 'name'
@@ -168,59 +171,78 @@ function addPolygonByName(name) {
             zoom: 6,
         }),
     });
-
-    var vectorLayer = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            format: new ol.format.GeoJSON(),
+    
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0.5, 0.5],
+            src: link + "gasFire.png",
+            scale: 0.7,
         }),
-        style: new ol.style.Style({
-            stroke: new ol.style.Stroke({
-                color: 'black',
-                width: 3
-            })
-        })
+    });
+    var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
+    var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
+    drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL))
+    drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL))
+    loadFindWay(A,B)
+    
+    defaultPolygon = new ol.Feature({
+        geometry: new ol.geom.Polygon([polygonCoordinates]).transform(LONLAT, PIXEL),
     });
 
-     // Tọa độ điểm A và B
-     var A = [105.8269, 21.0285]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
-     var B = [105.7979, 21.0587]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
+    //vectorSource.addFeature(defaultPolygon);
+    
+    }
+    //======================================================
 
-     // Tạo overlay cho điểm A (điểm bắt đầu)
-     var markerA = new ol.Overlay({
-         position: ol.proj.fromLonLat(A),
-         positioning: 'center-center',
-         element: document.createElement('div'),
-     });
-     markerA.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
+    function loadFindWay(A,B){
+        
+        var vectorLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                format: new ol.format.GeoJSON(),
+            }),
+            style: new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: 'black',
+                    width: 3
+                })
+            })
+        });
+        // // Tạo overlay cho điểm A (điểm bắt đầu)
+        // var markerA = new ol.Overlay({
+        //     position: ol.proj.fromLonLat(A),
+        //     positioning: 'center-center',
+        //     element: document.createElement('div'),
+        // });
+        // markerA.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
 
-     // Tạo overlay cho điểm B (điểm kết thúc)
-     var markerB = new ol.Overlay({
-         position: ol.proj.fromLonLat(B),
-         positioning: 'center-center',
-         element: document.createElement('div'),
-     });
-     markerB.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
+        // // Tạo overlay cho điểm B (điểm kết thúc)
+        // var markerB = new ol.Overlay({
+        //     position: ol.proj.fromLonLat(B),
+        //     positioning: 'center-center',
+        //     element: document.createElement('div'),
+        // });
+        // markerB.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
 
-     // Thêm các overlay vào bản đồ
-     map.addOverlay(markerA);
-     map.addOverlay(markerB);
+        // // Thêm các overlay vào bản đồ
+        // map.addOverlay(markerA);
+        // map.addOverlay(markerB);
 
-    map.addLayer(vectorLayer);
-    // Gửi yêu cầu lấy đường đi từ OpenRouteService
-    var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
-    var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
-    var requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + apiKey,
-        },
-        body: JSON.stringify({
-            'coordinates': [A, B],
-        }),
-    };
+        map.addLayer(vectorLayer);
+        // Gửi yêu cầu lấy đường đi từ OpenRouteService
+        var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+        var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+        var requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + apiKey,
+            },
+            body: JSON.stringify({
+                'coordinates': [A, B],
+            }),
+        };
 
-    fetch(url, requestOptions)
+        fetch(url, requestOptions)
             .then(response => response.json())
             .then(data => {
                 // Lấy đường đi từ dữ liệu trả về
@@ -228,7 +250,7 @@ function addPolygonByName(name) {
                 console.log(route);
                 // Thêm đường đi vào lớp Vector
                 vectorLayer.getSource().addFeature(new ol.Feature({
-                    geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform('EPSG:4326', 'EPSG:3857'),
+                    geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
                 }));
 
                 // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
@@ -238,18 +260,7 @@ function addPolygonByName(name) {
             .catch(error => {
                 console.error('Error:', error);
             });
-
-    
-    defaultPolygon = new ol.Feature({
-        geometry: new ol.geom.Polygon([polygonCoordinates]).transform('EPSG:4326', 'EPSG:3857'),
-    });
-
-    //vectorSource.addFeature(defaultPolygon);
-    
     }
-    //======================================================
-
-    
 
     // Kiểm tra xem có thuộc polygon không và hiển thị thuộc tỉnh nào
     function checkPointAndAddIcon(evt) {
@@ -258,6 +269,7 @@ function addPolygonByName(name) {
         }
         const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
             if (feature.getGeometry() instanceof ol.geom.Point) {
+                console.log(feature)
                 return feature; // Đây là một marker
             }
         });
@@ -270,16 +282,16 @@ function addPolygonByName(name) {
         var selectedPoint = evt.coordinate;
         //List điạ chỉ
         var features = new ol.format.GeoJSON().readFeatures(geojson, {
-            featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
+            featureProjection: PIXEL, // Chuyển đổi hệ tọa độ sang EPSG:3857
         });
 
         var a=CheckPosion(selectedPoint, features);
-        var address=selectedPoint;
-        //Lấy điạ chỉ
-        if(a!=undefined){
-            a=a.values_;
-            address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
-        }
+        var address=ol.proj.transform(selectedPoint, PIXEL, LONLAT);
+        // //Lấy điạ chỉ
+        // if(a!=undefined){
+        //     a=a.values_;
+        //     address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
+        // }
         
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
