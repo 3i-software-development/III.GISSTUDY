@@ -4,7 +4,7 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/Image/";
+var link = "/III.GISSTUDY/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
@@ -16,6 +16,8 @@ var container = document.getElementById("popup");
 var closer = document.getElementById("popup-closer");
 var popupElement = document.getElementById('popup');
 var popupContentElement = document.getElementById('popup-content');
+var A = null;
+var B = null;
 const PIXEL="EPSG:3857"
 const LONLAT="EPSG:4326"
 
@@ -179,11 +181,42 @@ function addPolygonByName(name) {
             scale: 0.7,
         }),
     });
-    var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
-    var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
-    drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL))
-    drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL))
-    loadFindWay(A,B)
+    // var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
+    // var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
+    // drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL))
+    // drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL))
+    // loadFindWay(A,B)
+
+    map.on('dblclick', function (event) {
+        var coordinate = event.coordinate;
+  
+        if (A === null) {
+         A = ol.proj.toLonLat(coordinate);
+         drawMarker1(iconStyle, coordinate);
+        } else if (B === null) {
+         B = ol.proj.toLonLat(coordinate);
+         drawMarker1(iconStyle, coordinate);
+    
+         loadFindWay(A, B);
+        }
+});
+
+function drawMarker1(style, coordinate) {
+  var iconFeature = new ol.Feature({
+    geometry: new ol.geom.Point(coordinate),
+  });
+
+  var iconSource = new ol.source.Vector({
+    features: [iconFeature],
+  });
+
+  var iconLayer = new ol.layer.Vector({
+    source: iconSource,
+    style: style,
+  });
+
+  map.addLayer(iconLayer);
+}
     
     defaultPolygon = new ol.Feature({
         geometry: new ol.geom.Polygon([polygonCoordinates]).transform(LONLAT, PIXEL),

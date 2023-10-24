@@ -1,51 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>OpenLayers Routing Example</title>
-    <link rel="stylesheet" href="https://openlayers.org/en/v6.13.0/css/ol.css" type="text/css">
-    <script src="https://openlayers.org/en/v6.13.0/build/ol.js"></script>
-  </head>
-  <body>
-    <div id="map" class="map" style="height: 600px;"></div>
+<head>
+    <meta charset="UTF-8">
+    <title>Vẽ 500 Phần Tử bằng OpenLayers</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.3.0/dist/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@7.3.0/dist/ol.js"></script>
+</head>
+<body>
+    <div id="map" class="map" style="height: 500px;"></div>
 
     <script>
-      const map = new ol.Map({
-        target: 'map',
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM(),
-          }),
-        ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([105.8269, 21.0285]),
-          zoom: 12,
-        }),
-      });
+        const map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM(),
+                }),
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([105.7815, 21.0556]),
+                zoom: 10,
+            }),
+        });
 
-      const vectorSource = new ol.source.Vector();
-      const vectorLayer = new ol.layer.Vector({
-        source: vectorSource,
-      });
-      map.addLayer(vectorLayer);
+        // Dữ liệu của 500 phần tử (hãy điều chỉnh dữ liệu của bạn)
+        const cylinkerData = [
+            { lon: 105.7815, lat: 21.0556, title: "Phần tử 1", image: "image1.jpg", code: "code1" },
+            // Thêm các phần tử khác ở đây...
+        ];
 
-      const startPoint = ol.proj.fromLonLat([105.8269, 21.0285]);
-      const endPoint = ol.proj.fromLonLat([105.7979, 21.0587]);
+        // Vẽ các phần tử lên bản đồ
+        cylinkerData.forEach(cylinker => {
+            const marker = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([cylinker.lon, cylinker.lat])),
+            });
 
-      // Điều hướng dịch vụ (tùy chọn: Mapbox, OSRM, hoặc Google Maps)
-      
-      var routingService = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
-        var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e';
+            const markerStyle = new ol.style.Style({
+                image: new ol.style.Icon({
+                    src: cylinker.image,
+                }),
+            });
 
-      // Gửi yêu cầu tới dịch vụ hướng dẫn để tìm tuyến đường
-      fetch(`${routingService}?api_key=${apiKey}&start=${startPoint}&end=${endPoint}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const route = data.routes[0].geometry;
-          const routeFeature = new ol.Feature({
-            geometry: new ol.geom.LineString(route),
-          });
-          vectorSource.addFeature(routeFeature);
+            marker.setStyle(markerStyle);
+
+            // Thêm marker vào lớp
+            const vectorSource = new ol.source.Vector({
+                features: [marker],
+            });
+
+            const vectorLayer = new ol.layer.Vector({
+                source: vectorSource,
+            });
+
+            map.addLayer(vectorLayer);
         });
     </script>
-  </body>
+</body>
 </html>
