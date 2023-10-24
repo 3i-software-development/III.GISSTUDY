@@ -5,7 +5,6 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
-    <script src="/III.GISSTUDY/myMap/JS/index.js"></script>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.13.1/build/ol.js"></script>
 </head>
 
@@ -158,27 +157,28 @@ button, input[type="button"], input[type="submit"] {
         </form>
     </div>
     
-    <div id="map" class="map" style="height: 600px;"></div>
-    <div id="popup" class="ol-popup">
-        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-        <div id="popup-content"></div>
-      </div>
-    <div id="distance-info"></div>
-    <div id="coordinate-info"></div>
+    <div id="map" class="map" style="height: 600px;">
+        <div>
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+            <div id="distance-info"></div>
+            <div id="coordinate-info"></div>
+        </div>
+    </div>
+    
 
     
+    <script src="/JS/index.js"></script>
     <script>
        
         document.getElementById("startDrawing").addEventListener("click", startDrawing);
         document.getElementById("stopDrawing").addEventListener("click", stopDrawing);
-
         createMap();
         readJson();
         map.on("click", checkPointAndAddIcon);
-        
         map.on('contextmenu', handleMapDoubleClick);
-       
-
     </script>
 </body>
 

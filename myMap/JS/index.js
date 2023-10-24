@@ -4,16 +4,39 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/III.GISSTUDY/myMap/Image/";
+var link = "/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
 var fromMarker = null;
 var endMarker = null;
 var isSelectingFrom = true;
-const container = document.getElementById("popup");  
-const closer = document.getElementById("popup-closer");
-
+var ShowPopup=false;
+var container = document.getElementById("popup");  
+var closer = document.getElementById("popup-closer");
+var popupElement = document.getElementById('popup');
+var popupContentElement = document.getElementById('popup-content');
+var popup = new ol.Overlay({
+    element: popupElement,
+    positioning: 'bottom-center',
+    stopEvent: false,
+    offset: [0, -15],
+});
+closer.onclick = function (event) {
+    event.stopPropagation(); // Ngăn chặn sự kiện click lan toả
+    popup.setPosition(undefined);
+    map.removeOverlay(popup); // Loại bỏ overlay khi đóng popup
+    ShowPopup=false;
+    closer.blur();
+    return false;
+};
+// Tạo polygon ban đầu
+var polygonCoordinates = [
+    [102.1400, 23.4000],
+    [109.4600, 23.4000],
+    [109.4600, 8.1800],
+    [102.1400, 8.1800],
+    ];      
 function readJson() {
     fetch('./VN_Huyen.geojson')
         .then(response => response.json())
@@ -142,7 +165,7 @@ function addPolygonByName(name) {
         view: new ol.View({
             constrainResolution: true,
             center: ol.proj.fromLonLat([107.1400, 15.4000]),
-            zoom: 7,
+            zoom: 3,
         }),
     });
 
@@ -160,19 +183,13 @@ function addPolygonByName(name) {
 
     map.addLayer(vectorLayer);
 
-    // Tạo polygon ban đầu
-    var polygonCoordinates = [
-    [102.1400, 23.4000],
-    [109.4600, 23.4000],
-    [109.4600, 8.1800],
-    [102.1400, 8.1800],
-    ];
-
+    
     defaultPolygon = new ol.Feature({
         geometry: new ol.geom.Polygon([polygonCoordinates]).transform('EPSG:4326', 'EPSG:3857'),
     });
 
-    vectorSource.addFeature(defaultPolygon);
+    //vectorSource.addFeature(defaultPolygon);
+    
     }
     //======================================================
 
@@ -181,6 +198,17 @@ function addPolygonByName(name) {
     // Kiểm tra xem có thuộc polygon không và hiển thị thuộc tỉnh nào
     function checkPointAndAddIcon(evt) {
         if (isDrawing) {
+            return;
+        }
+        const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
+            if (feature.getGeometry() instanceof ol.geom.Point) {
+                return feature; // Đây là một marker
+            }
+        });
+        if(marker){
+            ShowPopup=false;
+        }
+        if (ShowPopup) {
             return;
         }
         var selectedPoint = evt.coordinate;
@@ -205,54 +233,32 @@ function addPolygonByName(name) {
             }),
         });
 
-        var iconFeature = new ol.Feature({
-            geometry: new ol.geom.Point(selectedPoint),
-        });
-
-        const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
-            if (feature.getGeometry() instanceof ol.geom.Point) {
-                return feature; // Đây là một marker
-            }
-        });
         if (marker) {
             showPopup(selectedPoint, address);
         } else {
+            drawMarker(iconStyle,selectedPoint);
             showPopup(selectedPoint, address);
-            // Add a point to the vector source at the clicked coordinates
-            iconFeature.setStyle(iconStyle);
-            vectorSource.addFeature(iconFeature);
         }
     }
 
+    function drawMarker(markerStyle,coordinate){
+        var iconFeature = new ol.Feature({
+            geometry: new ol.geom.Point(coordinate),
+        });
+
+        iconFeature.setStyle(markerStyle);
+        vectorSource.addFeature(iconFeature);
+    }
+
     function showPopup(coordinate, content) {
-        var popupElement = document.getElementById('popup');
-        var popupContentElement = document.getElementById('popup-content');
-        var closer=document.getElementById('popup-closer');
-        if (popupElement && popupContentElement) {
-            popupContentElement.innerHTML = content;
-    
-            var popup = new ol.Overlay({
-                element: popupElement,
-                positioning: 'bottom-center',
-                stopEvent: false,
-                offset: [0, -15],
-            });
-            closer.onclick = function (event) {
-                event.stopPropagation(); // Ngăn chặn sự kiện click lan toả
-                popup.setPosition(undefined);
-                map.removeOverlay(popup); // Loại bỏ overlay khi đóng popup
-                closer.blur();
-                return false;
-            };
-            
-            
-            map.addOverlay(popup);
-            popup.setPosition(coordinate);
-        }  
+        ShowPopup=true;
+        popupContentElement.innerHTML = content;
+        map.addOverlay(popup);
+        popup.setPosition(coordinate);
     }
     function checkPointInsidePolygon(point, polygon){
         return polygon.getGeometry().intersectsCoordinate(point);
-        }
+    }
     //=======================================================
 
     // vẽ và lưu tọa độ polygon vào tọa độ ==================
@@ -286,6 +292,7 @@ function addPolygonByName(name) {
         var format = new ol.format.GeoJSON();
         var geojsonFeature = format.writeFeature(polygon);
         geojsonObject.features.push(geojsonFeature);
+
     });
 
     // Chuyển đổi đối tượng GeoJSON sang JSON
@@ -565,5 +572,15 @@ function setPosition() {
 
 // Gọi hàm simulateMarkerMovement để bắt đầu mô phỏng chuyển động của marker
 simulateMarkerMovement();
-
-    
+setTimeout(function(){
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0.5, 0.5],
+            src: link + "gasFire.png",
+            scale: 0.7,
+        }),
+    });
+    polygonCoordinates.forEach(x=>{
+        drawMarker(iconStyle,x);
+    });
+}, 1000);
