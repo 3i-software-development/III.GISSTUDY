@@ -54,6 +54,18 @@ function readJson() {
             console.error('Error:', error);
         });
 }
+function CongNghiepAPolygon() {
+    fetch('../JS/CongNghiepA.json')
+        .then(response => response.json())
+        .then(data => {
+            // Use the 'data' variable which now contains the JSON data
+            var data2 = data;
+            console.log(data2);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 function DrawCylinder() {
     fetch('./cylinkers.json')
         .then(response => response.json())
@@ -296,6 +308,7 @@ function addPolygonByName(name) {
         const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
             if (feature.getGeometry() instanceof ol.geom.Point) {
                 console.log(feature)
+
                 return feature; // Đây là một marker
             }
         });
@@ -315,7 +328,7 @@ function addPolygonByName(name) {
         var address=ol.proj.transform(selectedPoint, PIXEL, LONLAT);
         //Lấy điạ chỉ
         if(a!=undefined){
-            a=a.values_;
+            a=a.values_;    
             address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
         }
         
@@ -329,6 +342,7 @@ function addPolygonByName(name) {
 
         if (marker) {
             showPopup(selectedPoint, address);
+            selectedFeature=marker;
         } else {
             drawMarker(iconStyle,selectedPoint);
             showPopup(selectedPoint, address);
@@ -592,10 +606,7 @@ function simulateMarkerMovement() {
 
     // Hàm để xóa các marker trước khi thêm marker mới
     function deleteMarkers() {
-        for (var i = 0; i < markers.length; i++) {
-            map.removeLayer(markers[i]);
-        }
-        markers = [];
+        
     }
 
     // Hàm để thêm marker mới và xóa marker cũ
@@ -654,13 +665,13 @@ function setPosition() {
 
 
 
-    function setRotation(locationS, locationE) {
+function setRotation(locationS, locationE) {
         if (Math.abs(locationS[0] - locationE[0]) < 0.0000000000000000000000001) {
             return 90;
         } else {
             return Math.atan2((locationE[0] - locationS[0]), (locationE[1] - locationS[1]));
         }
-    }
+}
 
     // Gọi setPosition để bắt đầu mô phỏng chuyển động
     setInterval(setPosition, 300);
@@ -668,3 +679,32 @@ function setPosition() {
 
 // Gọi hàm simulateMarkerMovement để bắt đầu mô phỏng chuyển động của marker
 simulateMarkerMovement();
+var selectedFeature = null; // Biến lưu trạng thái đã chọn
+
+
+// Xóa marker đã chọn
+function deleteSelectedMarker() {
+  if (selectedFeature) {
+    vectorSource.removeFeature(selectedFeature);
+    selectedFeature = null; // Đặt lại trạng thái đã chọn
+  }
+}
+function clearAllMarkers() {
+    // Lấy danh sách tất cả các lớp (layers) trên bản đồ
+    var layers = map.getLayers().getArray();
+
+    // Lặp qua các lớp để tìm và xóa lớp marker
+    layers.forEach(function (layer) {
+        if (layer instanceof ol.layer.Vector) {
+            map.removeLayer(layer);
+        }
+    });
+
+    // Sau khi xóa tất cả các lớp marker, bạn có thể tạo một lớp vector mới
+    // để sử dụng cho việc vẽ marker sau này.
+    vectorSource = new ol.source.Vector();
+    var vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+    });
+    map.addLayer(vectorLayer);
+}

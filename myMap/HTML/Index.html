@@ -152,6 +152,11 @@ button, input[type="button"], input[type="submit"] {
         <button id="checkPosition">Check position</button>
         <!-- ve ban do theo file va theo huyen  -->
         <input type="button" value="Draw" onclick="addPolygon()">
+        <!-- Xóa một marker -->
+        <button id="Detele" onclick="deleteSelectedMarker()">Delete This Marker</button>
+        
+        <!-- Xóa tất cả marker -->
+        <button id="DeteleAll" onclick="clearAllMarkers()">Delete All Marker</button>
         <form onsubmit="addPolygonByName(this.nameHuyen.value); return false;">
             <input type="text" placeholder="Nhập tên huyện" name="nameHuyen">
             <input type="submit" value="Submit">
@@ -166,6 +171,7 @@ button, input[type="button"], input[type="submit"] {
             </div>
             <div id="distance-info"></div>
             <div id="coordinate-info"></div>
+            
         </div>
     </div>
     
