@@ -223,13 +223,6 @@ function getPolygonByName(name) {
             scale: 0.7,
         }),
     });
-<<<<<<< HEAD
-    var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
-    var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
-    drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL),"Start")
-    drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL),"End")
-    loadFindWay(A,B)
-=======
     // Tạo một sự kiện lắng nghe cho bản đồ
     map.on('dblclick', function(event) {
         var lonlat = ol.proj.transform(event.coordinate, PIXEL, LONLAT);
@@ -251,7 +244,6 @@ function getPolygonByName(name) {
             routeLayer = loadFindWay(A, B);
         }
     });    
->>>>>>> 1ae2a16ec1e94bfa3bad070fb586bea16b7c2b69
     
     defaultPolygon = new ol.Feature({
         geometry: new ol.geom.Polygon([polygonCoordinates]).transform(LONLAT, PIXEL),
