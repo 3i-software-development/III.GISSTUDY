@@ -2,19 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>OpenLayers Map Example</title>
+    <title>Marker Display with Bounding Box</title>
     <!-- Thêm các tệp CSS và JavaScript của OpenLayers -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 700px;
+        }
+
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-    <div id="map" style="width: 100%; height: 400px;"></div>
-    <button id="zoom-in">Phóng to</button>
-    <button id="zoom-out">Thu nhỏ</button>
-
-    <div id="coordinates"></div>
+    <div id="map"></div>
+    <div id="info"></div>
 
     <script>
+        var view = new ol.View({
+            center: ol.proj.fromLonLat(
+                
+            
+            ), // Tọa độ trung tâm mặc định
+            zoom: 2 // Mức độ zoom mặc định
+        });
+
         var map = new ol.Map({
             target: 'map',
             layers: [
@@ -22,38 +42,90 @@
                     source: new ol.source.OSM()
                 })
             ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([0, 0]), // Tọa độ trung tâm
-                zoom: 2 // Mức phóng đại
-            })
+            view: view
         });
 
-        var view = map.getView();
-        view.on('change:resolution', function () {
-            var extent = view.calculateExtent(map.getSize());
+        var markers = new ol.layer.Vector({
+            source: new ol.source.Vector()
+        });
 
-            var topLeft = ol.proj.toLonLat(ol.extent.getTopLeft(extent));
-            var topRight = ol.proj.toLonLat(ol.extent.getTopRight(extent));
-            var bottomLeft = ol.proj.toLonLat(ol.extent.getBottomLeft(extent));
-            var bottomRight = ol.proj.toLonLat(ol.extent.getBottomRight(extent));
+        map.addLayer(markers);
 
-            var coordinatesElement = document.getElementById('coordinates');
-            coordinatesElement.innerHTML =
+        function addMarker(coordinates, color) {
+            var marker = new ol.Feature({
+                geometry: new ol.geom.Point(coordinates)
+            });
+
+            // Tạo phong cách tùy chỉnh cho marker với màu sắc
+            var markerStyle = new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: 6,
+                    fill: new ol.style.Fill({
+                        color: color
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: 'black',
+                        width: 2
+                    })
+                })
+            });
+
+            marker.setStyle(markerStyle);
+            markers.getSource().addFeature(marker);
+        }
+
+        function clearMarkersOutsideBounds(extent) {
+            markers.getSource().getFeatures().forEach(function (feature) {
+                var coordinates = feature.getGeometry().getCoordinates();
+                if (!ol.extent.containsCoordinate(extent, coordinates)) {
+                    markers.getSource().removeFeature(feature);
+                }
+            });
+        }
+
+        function updateMarkers(extent) {
+            clearMarkersOutsideBounds(extent);
+            // Thêm các marker mới tại các tọa độ tùy chọn
+            addMarker(ol.proj.fromLonLat([0, 0]), 'red');
+            addMarker(ol.proj.fromLonLat([10, 10]), 'blue');
+            // Cập nhật bản đồ
+            markers.getSource().changed();
+        }
+
+        function updateInfo(extent) {
+            var center = view.getCenter();
+            var zoom = view.getZoom();
+            var topLeft = ol.proj.transform([extent[0], extent[3]], 'EPSG:3857', 'EPSG:4326');
+            var bottomRight = ol.proj.transform([extent[2], extent[1]], 'EPSG:3857', 'EPSG:4326');
+            var radius = (extent[2] - extent[0]) / 2;
+
+            var infoText = 'Center: ' + center + '<br>' +
+                'Zoom Level: ' + zoom + '<br>' +
                 'Top Left: ' + topLeft + '<br>' +
-                'Top Right: ' + topRight + '<br>' +
-                'Bottom Left: ' + bottomLeft + '<br>' +
-                'Bottom Right: ' + bottomRight;
+                'Bottom Right: ' + bottomRight + '<br>' +
+                'Radius (degrees): ' + radius;
+
+            document.getElementById('info').innerHTML = infoText;
+        }
+
+        function updateMap() {
+            var extent = view.calculateExtent(map.getSize());
+            updateMarkers(extent);
+            updateInfo(extent);
+        }
+
+        // Lắng nghe sự kiện moveend (kéo chuột hoàn thành)
+        map.on('moveend', function () {
+            updateMap();
         });
 
-        var zoomInButton = document.getElementById('zoom-in');
-        zoomInButton.addEventListener('click', function () {
-            view.setZoom(view.getZoom() + 1);
+        // Lắng nghe sự kiện wheel (cuộn chuột)
+        map.on('wheel', function () {
+            updateMap();
         });
 
-        var zoomOutButton = document.getElementById('zoom-out');
-        zoomOutButton.addEventListener('click', function () {
-            view.setZoom(view.getZoom() - 1);
-        });
+        // Cập nhật marker và thông tin ban đầu
+        updateMap();
     </script>
 </body>
 </html>

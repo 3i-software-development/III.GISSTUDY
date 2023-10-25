@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.13.1/build/ol.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.Default.css" />
 </head>
 
 <style>
@@ -169,6 +172,7 @@ button, input[type="button"], input[type="submit"] {
             </div>
             <div id="distance-info"></div>
             <div id="coordinate-info"></div>
+            <div id="info"></div>
         </div>
     </div>
     
@@ -183,6 +187,15 @@ button, input[type="button"], input[type="submit"] {
         readJson();
         map.on("click", checkPointAndAddIcon);
         map.on('contextmenu', handleMapDoubleClick);
+        // Lắng nghe sự kiện moveend (kéo chuột hoàn thành)
+        map.on('moveend', function () {
+            updateMap();
+        });
+
+        // Lắng nghe sự kiện wheel (cuộn chuột)
+        map.on('wheel', function () {
+            updateMap();
+        });
         
 
     </script>
