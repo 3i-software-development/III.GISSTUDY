@@ -66,31 +66,34 @@ function CongNghiepAPolygon() {
             console.error('Error:', error);
         });
 }
-function DrawCylinder() {
-    fetch('./cylinkers.json')
-        .then(response => response.json())
-        .then(data => {
-            // Use the 'data' variable which now contains the JSON data
-            var geojson2 = data;
-            geojson2.forEach(marker=>{
-                var location=[
-                    marker.location.longitude,
-                    marker.location.latitude
-                ]
-                
-                var iconStyle = new ol.style.Style({
-                    image: new ol.style.Icon({
-                        anchor: [0.5, 0.5],
-                        src: link + "gasFire.png",
-                        scale: 0.7,
-                    }),
-                });
-                drawMarker(iconStyle,ol.proj.transform(location,LONLAT, PIXEL))
-            })
-        })
-        .catch(error => {
-            console.error('Error:', error);
+function DrawRandomMarkersInSidePolygon(numberOfMarkers,poligon){
+    for (var i = 0; i < numberOfMarkers; i++) {
+        do{
+            var randomCoord = generateRandomCoordinates(poligon.getGeometry().getExtent());
+        }while(!checkPointInsidePolygon(randomCoord,poligon))
+        
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 0.5],
+                src: link + "gasFire.png",
+                scale: 0.7,
+            }),
         });
+        drawMarker(iconStyle,randomCoord,i);
+    }
+}
+function DrawCylinder() {    
+    DrawRandomMarkersInSidePolygon(100,getPolygonByName("Vinh Chau"))
+}
+
+function generateRandomCoordinates(extent) {
+    var minX = extent[0];
+    var minY = extent[1];
+    var maxX = extent[2];
+    var maxY = extent[3];
+    var randomX = minX + (maxX - minX) * Math.random();
+    var randomY = minY + (maxY - minY) * Math.random();
+    return [randomX, randomY];
 }
 function CheckPosion(point)
 {
@@ -119,7 +122,8 @@ function addPolygon() {
     map.getView().fit(extent, map.getSize());
 }
 
-function addPolygonByName(name) {
+function getPolygonByName(name) {
+    var listLonLat=[]
     // Kiểm tra xem vectorSource đã được tạo hay chưa
     if (!vectorSource) {
         vectorSource = new ol.source.Vector();
@@ -148,7 +152,6 @@ function addPolygonByName(name) {
     filteredFeatures.forEach(function (feature) {
         feature.setStyle(style);
     });
-
     vectorSource.addFeatures(filteredFeatures); // Thêm các đối tượng mới vào lớp vector
 
     if (filteredFeatures.length > 0) {
@@ -159,6 +162,7 @@ function addPolygonByName(name) {
         // Xử lý trường hợp không tìm thấy đối tượng
         console.log('Không tìm thấy đối tượng có VARNAME_2 là ' + name);
     }
+    return filteredFeatures[0]
 }
 
 
@@ -219,15 +223,15 @@ function addPolygonByName(name) {
     });
     var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
     var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
-    drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL))
-    drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL))
+    drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL),"Start")
+    drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL),"End")
     loadFindWay(A,B)
     
     defaultPolygon = new ol.Feature({
         geometry: new ol.geom.Polygon([polygonCoordinates]).transform(LONLAT, PIXEL),
     });
 
-    //vectorSource.addFeature(defaultPolygon);
+    vectorSource.addFeature(defaultPolygon);
     
     }
     //======================================================
@@ -344,14 +348,15 @@ function addPolygonByName(name) {
             showPopup(selectedPoint, address);
             selectedFeature=marker;
         } else {
-            drawMarker(iconStyle,selectedPoint);
+            drawMarker(iconStyle,selectedPoint,undefined);
             showPopup(selectedPoint, address);
         }
     }
 
-    function drawMarker(markerStyle,coordinate){
+    function drawMarker(markerStyle,coordinate,id){
         var iconFeature = new ol.Feature({
             geometry: new ol.geom.Point(coordinate),
+            id:id
         });
 
         iconFeature.setStyle(markerStyle);
@@ -681,13 +686,16 @@ function setRotation(locationS, locationE) {
 simulateMarkerMovement();
 var selectedFeature = null; // Biến lưu trạng thái đã chọn
 
+function removeMarkerById(featureId) {
+    // Tìm feature theo ID
+    var featureToRemove = vectorLayer.getSource().getFeatureById(featureId);
 
-// Xóa marker đã chọn
-function deleteSelectedMarker() {
-  if (selectedFeature) {
-    vectorSource.removeFeature(selectedFeature);
-    selectedFeature = null; // Đặt lại trạng thái đã chọn
-  }
+    if (featureToRemove) {
+        // Xóa feature khỏi lớp vector
+        vectorLayer.getSource().removeFeature(featureToRemove);
+    } else {
+        console.log('Không tìm thấy feature có ID là ' + featureId);
+    }
 }
 function clearAllMarkers() {
     // Lấy danh sách tất cả các lớp (layers) trên bản đồ

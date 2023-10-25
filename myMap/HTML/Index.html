@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.13.1/build/ol.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.Default.css" />
 </head>
 
 <style>
@@ -157,7 +160,7 @@ button, input[type="button"], input[type="submit"] {
         
         <!-- Xóa tất cả marker -->
         <button id="DeteleAll" onclick="clearAllMarkers()">Delete All Marker</button>
-        <form onsubmit="addPolygonByName(this.nameHuyen.value); return false;">
+        <form onsubmit="getPolygonByName(this.nameHuyen.value); return false;">
             <input type="text" placeholder="Nhập tên huyện" name="nameHuyen">
             <input type="submit" value="Submit">
         </form>
@@ -171,7 +174,6 @@ button, input[type="button"], input[type="submit"] {
             </div>
             <div id="distance-info"></div>
             <div id="coordinate-info"></div>
-            
         </div>
     </div>
     
