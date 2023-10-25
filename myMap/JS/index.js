@@ -750,6 +750,7 @@ function clearAllMarkers() {
     // Sau khi xóa tất cả các lớp marker, bạn có thể tạo một lớp vector mới
     // để sử dụng cho việc vẽ marker sau này.
     vectorSource = new ol.source.Vector();
+    MarkerListLocation=[]
     var vectorLayer = new ol.layer.Vector({
         source: vectorSource,
     });
