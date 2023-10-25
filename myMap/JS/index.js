@@ -4,13 +4,15 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/Image/";
+var link = "/III.GISSTUDY/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
 var fromMarker = null;
 var endMarker = null;
 var isSelectingFrom = true;
+var selectedPoint = null;
+var routeLayer = null;
 //Thuộc tính Popup
 var ShowPopup=false;
 var container = document.getElementById("popup");  
@@ -217,11 +219,27 @@ function addPolygonByName(name) {
             scale: 0.7,
         }),
     });
-    var A = [105.78152087266271,21.05558941967182]; // Thay đổi lon_A và lat_A thành tọa độ của điểm A
-    var B = [105.77562308451664,21.05875443266983]; // Thay đổi lon_B và lat_B thành tọa độ của điểm B
-    drawMarker(iconStyle,ol.proj.transform(A,LONLAT, PIXEL))
-    drawMarker(iconStyle,ol.proj.transform(B,LONLAT, PIXEL))
-    loadFindWay(A,B)
+    // Tạo một sự kiện lắng nghe cho bản đồ
+    map.on('dblclick', function(event) {
+        var lonlat = ol.proj.transform(event.coordinate, PIXEL, LONLAT);
+        
+        if (selectedPoint === null) {
+            A = lonlat;
+            drawMarker(iconStyle, event.coordinate);
+            selectedPoint = 'A';
+        } else {
+            B = lonlat;
+            drawMarker(iconStyle, event.coordinate);
+            selectedPoint = 'B';
+    
+            // Kiểm tra nếu đã có đối tượng đường tìm kiếm, thì xóa nó trước khi tạo đường mới
+            if (routeLayer) {
+                map.removeLayer(routeLayer);
+            }
+    
+            routeLayer = loadFindWay(A, B);
+        }
+    });    
     
     defaultPolygon = new ol.Feature({
         geometry: new ol.geom.Polygon([polygonCoordinates]).transform(LONLAT, PIXEL),
@@ -232,8 +250,8 @@ function addPolygonByName(name) {
     }
     //======================================================
 
-    function loadFindWay(A,B){
-        
+    function loadFindWay(A, B) {
+        // Kiểm tra và xóa tất cả các tính năng trên lớp Vector hiện tại
         var vectorLayer = new ol.layer.Vector({
             source: new ol.source.Vector({
                 format: new ol.format.GeoJSON(),
@@ -245,27 +263,11 @@ function addPolygonByName(name) {
                 })
             })
         });
-        // // Tạo overlay cho điểm A (điểm bắt đầu)
-        // var markerA = new ol.Overlay({
-        //     position: ol.proj.fromLonLat(A),
-        //     positioning: 'center-center',
-        //     element: document.createElement('div'),
-        // });
-        // markerA.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
-
-        // // Tạo overlay cho điểm B (điểm kết thúc)
-        // var markerB = new ol.Overlay({
-        //     position: ol.proj.fromLonLat(B),
-        //     positioning: 'center-center',
-        //     element: document.createElement('div'),
-        // });
-        // markerB.getElement().className = 'marker'; // Sử dụng CSS class "marker" cho hình tròn
-
-        // // Thêm các overlay vào bản đồ
-        // map.addOverlay(markerA);
-        // map.addOverlay(markerB);
-
+    
+        vectorLayer.getSource().clear(); // Xóa tất cả các tính năng trên lớp Vector
+    
         map.addLayer(vectorLayer);
+    
         // Gửi yêu cầu lấy đường đi từ OpenRouteService
         var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
         var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
@@ -277,9 +279,9 @@ function addPolygonByName(name) {
             },
             body: JSON.stringify({
                 'coordinates': [A, B],
-            }),
+            })
         };
-
+    
         fetch(url, requestOptions)
             .then(response => response.json())
             .then(data => {
@@ -290,7 +292,7 @@ function addPolygonByName(name) {
                 vectorLayer.getSource().addFeature(new ol.Feature({
                     geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
                 }));
-
+    
                 // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
                 // var extent = vectorLayer.getSource().getExtent();
                 // map.getView().fit(extent, map.getSize());
@@ -299,6 +301,8 @@ function addPolygonByName(name) {
                 console.error('Error:', error);
             });
     }
+    
+    
 
     // Kiểm tra xem có thuộc polygon không và hiển thị thuộc tỉnh nào
     function checkPointAndAddIcon(evt) {
