@@ -4,7 +4,7 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/III.GISSTUDY/myMap/Image/";
+var link = "/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
