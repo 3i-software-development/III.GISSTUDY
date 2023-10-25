@@ -381,12 +381,6 @@ function showPopup(coordinate, content) {
     map.addOverlay(popup);
     popup.setPosition(coordinate);
 
-    var popupCloser = document.getElementById('popup-closer-marker');
-
-
-    popupCloser.addEventListener('click', function () {
-        overlay.setPosition(undefined); // Đóng popup bằng cách thiết lập vị trí là undefined
-    });
 }
 function checkPointInsidePolygon(point, polygon) {
     return polygon.getGeometry().intersectsCoordinate(point);
