@@ -834,3 +834,53 @@ function addMarker(coordinates, image) {
     vectorSource.addFeature(vectorSource1);
 }
 //=====================================
+function findAndZoomToMarker() {
+    // Lấy giá trị ID từ thẻ input
+    var markerId = document.getElementById("markerIdInput").value;
+
+    // Duyệt qua tất cả các features trên layer vectorSource để tìm marker có ID tương ứng
+    var foundFeature = null;
+    vectorSource.getFeatures().forEach(function (feature) {
+        if (feature.get("id") == markerId) {
+            foundFeature = feature;
+        }
+    });
+
+    var overlay = new ol.Overlay({
+        element: document.getElementById('popup-marker'),
+        autoPan: true,
+        autoPanAnimation: {
+            duration: 250,
+        },
+    });
+
+    map.addOverlay(overlay);
+    if (foundFeature) {
+        // Tìm thấy marker, lấy tọa độ của marker
+        var markerCoordinate = foundFeature.getGeometry().getCoordinates();
+
+        // Đặt giá trị zoom
+        var zoomLevel = 20;
+        var content = "Marker ID:  " + markerId; // Thay bằng thông tin thực tế của marker
+
+        // Thiết lập nội dung cho popup
+        document.getElementById('popup-content-marker').innerHTML = content;
+
+        // Hiển thị popup tại tọa độ của marker
+        overlay.setPosition(markerCoordinate);
+
+        // Sử dụng OpenLayers để thực hiện zoom vào marker
+        map.getView().setCenter(markerCoordinate);
+        map.getView().setZoom(zoomLevel);
+    } else {
+        alert("Can not find marker with ID:  " + markerId);
+    }
+
+
+    var popupCloser = document.getElementById('popup-closer-marker');
+
+
+    popupCloser.addEventListener('click', function () {
+        overlay.setPosition(undefined); // Đóng popup bằng cách thiết lập vị trí là undefined
+    });
+}

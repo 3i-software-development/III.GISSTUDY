@@ -163,7 +163,19 @@ button, input[type="button"], input[type="submit"] {
             <input type="submit" value="Submit">
         </form>
     </div>
-    
+    <!-- popup marker -->
+    <div id="popup-marker" class="ol-popup-marker">
+        <a href="#" id="popup-closer-marker" class="ol-popup-closer-marker"></a>
+        <div id="popup-content-marker"></div>
+    </div>
+     <!-- popup marker -->
+     <!-- search marker -->
+    <div>
+        <input type="text" id="markerIdInput">
+        <button onclick="findAndZoomToMarker()">Tìm và Zoom</button>
+    </div>
+    <!-- search marker -->
+
     <div id="map" class="map" style="height: 600px;">
         <div>
             <div id="popup" class="ol-popup">
