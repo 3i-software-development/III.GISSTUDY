@@ -1,0 +1,4502 @@
+[
+  {
+    "ma": "MA1",
+    "title": "Cylinker 1",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.221502742337087,
+      "longitude": 108.17987169968757
+    }
+  },
+  {
+    "ma": "MA2",
+    "title": "Cylinker 2",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.992412368414058,
+      "longitude": 107.26221982707953
+    }
+  },
+  {
+    "ma": "MA3",
+    "title": "Cylinker 3",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.106227743893882,
+      "longitude": 102.87062342121828
+    }
+  },
+  {
+    "ma": "MA4",
+    "title": "Cylinker 4",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.101186642277003,
+      "longitude": 107.37796513979069
+    }
+  },
+  {
+    "ma": "MA5",
+    "title": "Cylinker 5",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.451378237190884,
+      "longitude": 108.64948214777823
+    }
+  },
+  {
+    "ma": "MA6",
+    "title": "Cylinker 6",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.87406683423689,
+      "longitude": 103.97965107538094
+    }
+  },
+  {
+    "ma": "MA7",
+    "title": "Cylinker 7",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.734909920159057,
+      "longitude": 104.73895453937364
+    }
+  },
+  {
+    "ma": "MA8",
+    "title": "Cylinker 8",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.235540569333857,
+      "longitude": 108.30478146813293
+    }
+  },
+  {
+    "ma": "MA9",
+    "title": "Cylinker 9",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.803046617129926,
+      "longitude": 102.78547957348489
+    }
+  },
+  {
+    "ma": "MA10",
+    "title": "Cylinker 10",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.730633780547715,
+      "longitude": 106.74364049823663
+    }
+  },
+  {
+    "ma": "MA11",
+    "title": "Cylinker 11",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.649173762756817,
+      "longitude": 104.50346294448192
+    }
+  },
+  {
+    "ma": "MA12",
+    "title": "Cylinker 12",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.821792863639457,
+      "longitude": 105.93297044340974
+    }
+  },
+  {
+    "ma": "MA13",
+    "title": "Cylinker 13",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.479923715007565,
+      "longitude": 102.46411184721407
+    }
+  },
+  {
+    "ma": "MA14",
+    "title": "Cylinker 14",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.987865348943155,
+      "longitude": 107.84629284367784
+    }
+  },
+  {
+    "ma": "MA15",
+    "title": "Cylinker 15",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.303370888148667,
+      "longitude": 108.14153859081173
+    }
+  },
+  {
+    "ma": "MA16",
+    "title": "Cylinker 16",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.57276579688411,
+      "longitude": 105.77400630319818
+    }
+  },
+  {
+    "ma": "MA17",
+    "title": "Cylinker 17",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.555173299199957,
+      "longitude": 106.93399467690685
+    }
+  },
+  {
+    "ma": "MA18",
+    "title": "Cylinker 18",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.58807499177737,
+      "longitude": 107.14859246962158
+    }
+  },
+  {
+    "ma": "MA19",
+    "title": "Cylinker 19",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.165673283674096,
+      "longitude": 105.33111734060745
+    }
+  },
+  {
+    "ma": "MA20",
+    "title": "Cylinker 20",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.922264049065646,
+      "longitude": 107.52768832037663
+    }
+  },
+  {
+    "ma": "MA21",
+    "title": "Cylinker 21",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.043103681967807,
+      "longitude": 107.13136066067213
+    }
+  },
+  {
+    "ma": "MA22",
+    "title": "Cylinker 22",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.824851782027054,
+      "longitude": 106.39160228986385
+    }
+  },
+  {
+    "ma": "MA23",
+    "title": "Cylinker 23",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.210288529011395,
+      "longitude": 104.38707204421678
+    }
+  },
+  {
+    "ma": "MA24",
+    "title": "Cylinker 24",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.984158425186159,
+      "longitude": 108.10140234560049
+    }
+  },
+  {
+    "ma": "MA25",
+    "title": "Cylinker 25",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.315925964693733,
+      "longitude": 102.29124306772617
+    }
+  },
+  {
+    "ma": "MA26",
+    "title": "Cylinker 26",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.32842971646697,
+      "longitude": 103.51279559529478
+    }
+  },
+  {
+    "ma": "MA27",
+    "title": "Cylinker 27",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.717299376834783,
+      "longitude": 109.44943921306331
+    }
+  },
+  {
+    "ma": "MA28",
+    "title": "Cylinker 28",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.773314895011495,
+      "longitude": 102.53515305807557
+    }
+  },
+  {
+    "ma": "MA29",
+    "title": "Cylinker 29",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.081129108232629,
+      "longitude": 108.77028299832479
+    }
+  },
+  {
+    "ma": "MA30",
+    "title": "Cylinker 30",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.870598990886776,
+      "longitude": 106.73100010655314
+    }
+  },
+  {
+    "ma": "MA31",
+    "title": "Cylinker 31",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.274938717996926,
+      "longitude": 103.3265789056726
+    }
+  },
+  {
+    "ma": "MA32",
+    "title": "Cylinker 32",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.630591238518445,
+      "longitude": 105.42293711795602
+    }
+  },
+  {
+    "ma": "MA33",
+    "title": "Cylinker 33",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.86285663682,
+      "longitude": 103.52920362206157
+    }
+  },
+  {
+    "ma": "MA34",
+    "title": "Cylinker 34",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.518708459450108,
+      "longitude": 107.58013617626602
+    }
+  },
+  {
+    "ma": "MA35",
+    "title": "Cylinker 35",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.603164289868687,
+      "longitude": 109.45876477092182
+    }
+  },
+  {
+    "ma": "MA36",
+    "title": "Cylinker 36",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.460889074173764,
+      "longitude": 108.21811583051574
+    }
+  },
+  {
+    "ma": "MA37",
+    "title": "Cylinker 37",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.120856693395147,
+      "longitude": 109.32212860003206
+    }
+  },
+  {
+    "ma": "MA38",
+    "title": "Cylinker 38",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.775507858073773,
+      "longitude": 103.84159017095496
+    }
+  },
+  {
+    "ma": "MA39",
+    "title": "Cylinker 39",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.168266043756256,
+      "longitude": 102.8474931642489
+    }
+  },
+  {
+    "ma": "MA40",
+    "title": "Cylinker 40",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.20375272481372,
+      "longitude": 108.84950237239623
+    }
+  },
+  {
+    "ma": "MA41",
+    "title": "Cylinker 41",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.20455592362297,
+      "longitude": 105.62349181705534
+    }
+  },
+  {
+    "ma": "MA42",
+    "title": "Cylinker 42",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.082596215047126,
+      "longitude": 102.5693239786547
+    }
+  },
+  {
+    "ma": "MA43",
+    "title": "Cylinker 43",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.732070304573444,
+      "longitude": 107.7671288230739
+    }
+  },
+  {
+    "ma": "MA44",
+    "title": "Cylinker 44",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.71730599081115,
+      "longitude": 106.60715616258693
+    }
+  },
+  {
+    "ma": "MA45",
+    "title": "Cylinker 45",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.760826420738645,
+      "longitude": 104.98649513830452
+    }
+  },
+  {
+    "ma": "MA46",
+    "title": "Cylinker 46",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.9922595702304,
+      "longitude": 103.18287954529303
+    }
+  },
+  {
+    "ma": "MA47",
+    "title": "Cylinker 47",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.807088884933133,
+      "longitude": 105.97932727465542
+    }
+  },
+  {
+    "ma": "MA48",
+    "title": "Cylinker 48",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.040995151745214,
+      "longitude": 102.10142655693534
+    }
+  },
+  {
+    "ma": "MA49",
+    "title": "Cylinker 49",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.378728621207259,
+      "longitude": 108.12027936889022
+    }
+  },
+  {
+    "ma": "MA50",
+    "title": "Cylinker 50",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.337915769286855,
+      "longitude": 107.07649119320189
+    }
+  },
+  {
+    "ma": "MA51",
+    "title": "Cylinker 51",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.583020045115827,
+      "longitude": 105.40487986084531
+    }
+  },
+  {
+    "ma": "MA52",
+    "title": "Cylinker 52",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.433920890836767,
+      "longitude": 103.61020412626704
+    }
+  },
+  {
+    "ma": "MA53",
+    "title": "Cylinker 53",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.869705068590388,
+      "longitude": 105.61531267059841
+    }
+  },
+  {
+    "ma": "MA54",
+    "title": "Cylinker 54",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.7965126067724,
+      "longitude": 102.70497820815496
+    }
+  },
+  {
+    "ma": "MA55",
+    "title": "Cylinker 55",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.619376155055228,
+      "longitude": 105.04847474499188
+    }
+  },
+  {
+    "ma": "MA56",
+    "title": "Cylinker 56",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.024223861771116,
+      "longitude": 107.5438415122829
+    }
+  },
+  {
+    "ma": "MA57",
+    "title": "Cylinker 57",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.634944671569876,
+      "longitude": 104.55017528492068
+    }
+  },
+  {
+    "ma": "MA58",
+    "title": "Cylinker 58",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.509931477564004,
+      "longitude": 104.05135895420864
+    }
+  },
+  {
+    "ma": "MA59",
+    "title": "Cylinker 59",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.223129215906376,
+      "longitude": 106.19084707477447
+    }
+  },
+  {
+    "ma": "MA60",
+    "title": "Cylinker 60",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.001014249751577,
+      "longitude": 102.36777024528553
+    }
+  },
+  {
+    "ma": "MA61",
+    "title": "Cylinker 61",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.416202296531857,
+      "longitude": 103.62765044470936
+    }
+  },
+  {
+    "ma": "MA62",
+    "title": "Cylinker 62",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.15376513741488,
+      "longitude": 104.55375798252264
+    }
+  },
+  {
+    "ma": "MA63",
+    "title": "Cylinker 63",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.50612797465746,
+      "longitude": 105.20115803181635
+    }
+  },
+  {
+    "ma": "MA64",
+    "title": "Cylinker 64",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.162357750679513,
+      "longitude": 108.58618799668707
+    }
+  },
+  {
+    "ma": "MA65",
+    "title": "Cylinker 65",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.86342391127269,
+      "longitude": 102.68399741460928
+    }
+  },
+  {
+    "ma": "MA66",
+    "title": "Cylinker 66",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.54058306215765,
+      "longitude": 103.37686136956177
+    }
+  },
+  {
+    "ma": "MA67",
+    "title": "Cylinker 67",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.974442469511494,
+      "longitude": 103.59701250587014
+    }
+  },
+  {
+    "ma": "MA68",
+    "title": "Cylinker 68",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.269590374238426,
+      "longitude": 103.9500111345374
+    }
+  },
+  {
+    "ma": "MA69",
+    "title": "Cylinker 69",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.652403995689493,
+      "longitude": 107.93811909157624
+    }
+  },
+  {
+    "ma": "MA70",
+    "title": "Cylinker 70",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.046106114139604,
+      "longitude": 102.35983347080507
+    }
+  },
+  {
+    "ma": "MA71",
+    "title": "Cylinker 71",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.078364897564908,
+      "longitude": 106.93074675302987
+    }
+  },
+  {
+    "ma": "MA72",
+    "title": "Cylinker 72",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.82307385856764,
+      "longitude": 102.48053120092862
+    }
+  },
+  {
+    "ma": "MA73",
+    "title": "Cylinker 73",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.534300862834431,
+      "longitude": 103.79229947209959
+    }
+  },
+  {
+    "ma": "MA74",
+    "title": "Cylinker 74",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.4592603564899,
+      "longitude": 106.66601983606205
+    }
+  },
+  {
+    "ma": "MA75",
+    "title": "Cylinker 75",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.485925876084828,
+      "longitude": 102.50041734448995
+    }
+  },
+  {
+    "ma": "MA76",
+    "title": "Cylinker 76",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.062592115168215,
+      "longitude": 102.49691516832713
+    }
+  },
+  {
+    "ma": "MA77",
+    "title": "Cylinker 77",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.421974375146602,
+      "longitude": 105.67886703359824
+    }
+  },
+  {
+    "ma": "MA78",
+    "title": "Cylinker 78",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.611420340662498,
+      "longitude": 103.05667263247058
+    }
+  },
+  {
+    "ma": "MA79",
+    "title": "Cylinker 79",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.881640146427753,
+      "longitude": 107.44933712697939
+    }
+  },
+  {
+    "ma": "MA80",
+    "title": "Cylinker 80",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.46072284041582,
+      "longitude": 109.4229572792494
+    }
+  },
+  {
+    "ma": "MA81",
+    "title": "Cylinker 81",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.254601579647556,
+      "longitude": 108.56981096322343
+    }
+  },
+  {
+    "ma": "MA82",
+    "title": "Cylinker 82",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.141792284817612,
+      "longitude": 106.68959555241182
+    }
+  },
+  {
+    "ma": "MA83",
+    "title": "Cylinker 83",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.968168542725072,
+      "longitude": 107.86465090123157
+    }
+  },
+  {
+    "ma": "MA84",
+    "title": "Cylinker 84",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.943006112913707,
+      "longitude": 107.66882862166273
+    }
+  },
+  {
+    "ma": "MA85",
+    "title": "Cylinker 85",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.394863536812032,
+      "longitude": 106.84001656433433
+    }
+  },
+  {
+    "ma": "MA86",
+    "title": "Cylinker 86",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.637921621919915,
+      "longitude": 108.86089284936331
+    }
+  },
+  {
+    "ma": "MA87",
+    "title": "Cylinker 87",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.45330765025203,
+      "longitude": 103.30694734716698
+    }
+  },
+  {
+    "ma": "MA88",
+    "title": "Cylinker 88",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.519182600415803,
+      "longitude": 106.0742913044701
+    }
+  },
+  {
+    "ma": "MA89",
+    "title": "Cylinker 89",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.029188331553977,
+      "longitude": 102.46291040464472
+    }
+  },
+  {
+    "ma": "MA90",
+    "title": "Cylinker 90",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.8650648713352,
+      "longitude": 106.53504466373303
+    }
+  },
+  {
+    "ma": "MA91",
+    "title": "Cylinker 91",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.60210506392402,
+      "longitude": 108.81059342908512
+    }
+  },
+  {
+    "ma": "MA92",
+    "title": "Cylinker 92",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.057467441637236,
+      "longitude": 108.83970330410912
+    }
+  },
+  {
+    "ma": "MA93",
+    "title": "Cylinker 93",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.82594191738707,
+      "longitude": 109.24160589510169
+    }
+  },
+  {
+    "ma": "MA94",
+    "title": "Cylinker 94",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.827867467805152,
+      "longitude": 103.07582275624857
+    }
+  },
+  {
+    "ma": "MA95",
+    "title": "Cylinker 95",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.188206306738998,
+      "longitude": 109.09776373998154
+    }
+  },
+  {
+    "ma": "MA96",
+    "title": "Cylinker 96",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.942896312800556,
+      "longitude": 106.50472743584226
+    }
+  },
+  {
+    "ma": "MA97",
+    "title": "Cylinker 97",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.18270988859325,
+      "longitude": 104.933372915073
+    }
+  },
+  {
+    "ma": "MA98",
+    "title": "Cylinker 98",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.49867807606385,
+      "longitude": 105.36225291848805
+    }
+  },
+  {
+    "ma": "MA99",
+    "title": "Cylinker 99",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.672839501498341,
+      "longitude": 109.2467249515004
+    }
+  },
+  {
+    "ma": "MA100",
+    "title": "Cylinker 100",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.505093173730714,
+      "longitude": 109.3635785495179
+    }
+  },
+  {
+    "ma": "MA101",
+    "title": "Cylinker 101",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.831119506058599,
+      "longitude": 102.79522794304462
+    }
+  },
+  {
+    "ma": "MA102",
+    "title": "Cylinker 102",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.47338195641275,
+      "longitude": 104.71683450047358
+    }
+  },
+  {
+    "ma": "MA103",
+    "title": "Cylinker 103",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.274238698084222,
+      "longitude": 102.98927982539206
+    }
+  },
+  {
+    "ma": "MA104",
+    "title": "Cylinker 104",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.54319103579285,
+      "longitude": 104.48078179847786
+    }
+  },
+  {
+    "ma": "MA105",
+    "title": "Cylinker 105",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.546835835455468,
+      "longitude": 105.82049964646797
+    }
+  },
+  {
+    "ma": "MA106",
+    "title": "Cylinker 106",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.832094811676448,
+      "longitude": 106.66402803909382
+    }
+  },
+  {
+    "ma": "MA107",
+    "title": "Cylinker 107",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.296909211337933,
+      "longitude": 109.32347172702067
+    }
+  },
+  {
+    "ma": "MA108",
+    "title": "Cylinker 108",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.064654076108138,
+      "longitude": 104.35192265155261
+    }
+  },
+  {
+    "ma": "MA109",
+    "title": "Cylinker 109",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.135068642369987,
+      "longitude": 104.11590278859796
+    }
+  },
+  {
+    "ma": "MA110",
+    "title": "Cylinker 110",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.382251283451584,
+      "longitude": 103.40492751075016
+    }
+  },
+  {
+    "ma": "MA111",
+    "title": "Cylinker 111",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.843519947350337,
+      "longitude": 106.99098059130692
+    }
+  },
+  {
+    "ma": "MA112",
+    "title": "Cylinker 112",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.88825836442685,
+      "longitude": 107.5395243600484
+    }
+  },
+  {
+    "ma": "MA113",
+    "title": "Cylinker 113",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.498753143918353,
+      "longitude": 105.77269040020434
+    }
+  },
+  {
+    "ma": "MA114",
+    "title": "Cylinker 114",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.588449964994092,
+      "longitude": 108.29296900028501
+    }
+  },
+  {
+    "ma": "MA115",
+    "title": "Cylinker 115",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.190166510992167,
+      "longitude": 105.11601844513856
+    }
+  },
+  {
+    "ma": "MA116",
+    "title": "Cylinker 116",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.546608156154825,
+      "longitude": 105.1000008522615
+    }
+  },
+  {
+    "ma": "MA117",
+    "title": "Cylinker 117",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.49584116849762,
+      "longitude": 104.47814994302043
+    }
+  },
+  {
+    "ma": "MA118",
+    "title": "Cylinker 118",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.825271084753352,
+      "longitude": 104.13822614865973
+    }
+  },
+  {
+    "ma": "MA119",
+    "title": "Cylinker 119",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.496301882329917,
+      "longitude": 106.04943347274921
+    }
+  },
+  {
+    "ma": "MA120",
+    "title": "Cylinker 120",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.013250962478642,
+      "longitude": 109.39286952570303
+    }
+  },
+  {
+    "ma": "MA121",
+    "title": "Cylinker 121",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.759064004578978,
+      "longitude": 105.90315753665254
+    }
+  },
+  {
+    "ma": "MA122",
+    "title": "Cylinker 122",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.220981848693874,
+      "longitude": 107.86068533910868
+    }
+  },
+  {
+    "ma": "MA123",
+    "title": "Cylinker 123",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.08620093622028,
+      "longitude": 103.75122889979004
+    }
+  },
+  {
+    "ma": "MA124",
+    "title": "Cylinker 124",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.06958394698994,
+      "longitude": 103.81657341122688
+    }
+  },
+  {
+    "ma": "MA125",
+    "title": "Cylinker 125",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.320462113695726,
+      "longitude": 107.96529116990337
+    }
+  },
+  {
+    "ma": "MA126",
+    "title": "Cylinker 126",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.248187842461313,
+      "longitude": 106.67941550966357
+    }
+  },
+  {
+    "ma": "MA127",
+    "title": "Cylinker 127",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.998242372821586,
+      "longitude": 103.09402625648455
+    }
+  },
+  {
+    "ma": "MA128",
+    "title": "Cylinker 128",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.702498551603803,
+      "longitude": 106.42337589747099
+    }
+  },
+  {
+    "ma": "MA129",
+    "title": "Cylinker 129",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.104010282023172,
+      "longitude": 105.29320759511964
+    }
+  },
+  {
+    "ma": "MA130",
+    "title": "Cylinker 130",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.360046923767428,
+      "longitude": 108.54478214221105
+    }
+  },
+  {
+    "ma": "MA131",
+    "title": "Cylinker 131",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.998447085670724,
+      "longitude": 102.91711106672078
+    }
+  },
+  {
+    "ma": "MA132",
+    "title": "Cylinker 132",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.435697441844658,
+      "longitude": 107.29349329439876
+    }
+  },
+  {
+    "ma": "MA133",
+    "title": "Cylinker 133",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.732804480447168,
+      "longitude": 105.29589109261975
+    }
+  },
+  {
+    "ma": "MA134",
+    "title": "Cylinker 134",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.41943677259114,
+      "longitude": 108.29895536873586
+    }
+  },
+  {
+    "ma": "MA135",
+    "title": "Cylinker 135",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.788954627695169,
+      "longitude": 103.7366159567857
+    }
+  },
+  {
+    "ma": "MA136",
+    "title": "Cylinker 136",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.12487889501448,
+      "longitude": 106.96148962976382
+    }
+  },
+  {
+    "ma": "MA137",
+    "title": "Cylinker 137",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.983384520639987,
+      "longitude": 103.54666605685753
+    }
+  },
+  {
+    "ma": "MA138",
+    "title": "Cylinker 138",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.223455554036377,
+      "longitude": 106.14758459684131
+    }
+  },
+  {
+    "ma": "MA139",
+    "title": "Cylinker 139",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.81148083144902,
+      "longitude": 104.38613535209116
+    }
+  },
+  {
+    "ma": "MA140",
+    "title": "Cylinker 140",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.76593103607371,
+      "longitude": 102.96799952721874
+    }
+  },
+  {
+    "ma": "MA141",
+    "title": "Cylinker 141",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.83239673656439,
+      "longitude": 104.9286168241912
+    }
+  },
+  {
+    "ma": "MA142",
+    "title": "Cylinker 142",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.43424129228979,
+      "longitude": 105.31311231069219
+    }
+  },
+  {
+    "ma": "MA143",
+    "title": "Cylinker 143",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.59412619680034,
+      "longitude": 103.26391120348207
+    }
+  },
+  {
+    "ma": "MA144",
+    "title": "Cylinker 144",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.27088147651078,
+      "longitude": 102.87048241467606
+    }
+  },
+  {
+    "ma": "MA145",
+    "title": "Cylinker 145",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.658764948513761,
+      "longitude": 106.75683660847352
+    }
+  },
+  {
+    "ma": "MA146",
+    "title": "Cylinker 146",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.14752749371711,
+      "longitude": 106.81042961502307
+    }
+  },
+  {
+    "ma": "MA147",
+    "title": "Cylinker 147",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.406734218635211,
+      "longitude": 102.81650910363051
+    }
+  },
+  {
+    "ma": "MA148",
+    "title": "Cylinker 148",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.933516877732146,
+      "longitude": 109.17413032919536
+    }
+  },
+  {
+    "ma": "MA149",
+    "title": "Cylinker 149",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.812243699367414,
+      "longitude": 103.30407336866465
+    }
+  },
+  {
+    "ma": "MA150",
+    "title": "Cylinker 150",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.903966659871463,
+      "longitude": 108.25637747418186
+    }
+  },
+  {
+    "ma": "MA151",
+    "title": "Cylinker 151",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.627744998881992,
+      "longitude": 107.4020159851728
+    }
+  },
+  {
+    "ma": "MA152",
+    "title": "Cylinker 152",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.719909164592856,
+      "longitude": 104.72591565518573
+    }
+  },
+  {
+    "ma": "MA153",
+    "title": "Cylinker 153",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.019145197788497,
+      "longitude": 102.92052795317635
+    }
+  },
+  {
+    "ma": "MA154",
+    "title": "Cylinker 154",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.523195266613795,
+      "longitude": 109.28607088560865
+    }
+  },
+  {
+    "ma": "MA155",
+    "title": "Cylinker 155",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.502471443924655,
+      "longitude": 108.91446838188035
+    }
+  },
+  {
+    "ma": "MA156",
+    "title": "Cylinker 156",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.112878011121179,
+      "longitude": 108.08219324468797
+    }
+  },
+  {
+    "ma": "MA157",
+    "title": "Cylinker 157",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.337190946758874,
+      "longitude": 105.01574226297888
+    }
+  },
+  {
+    "ma": "MA158",
+    "title": "Cylinker 158",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.555546636809705,
+      "longitude": 107.19530165489866
+    }
+  },
+  {
+    "ma": "MA159",
+    "title": "Cylinker 159",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.012485318615823,
+      "longitude": 107.33870543130168
+    }
+  },
+  {
+    "ma": "MA160",
+    "title": "Cylinker 160",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.334703367017585,
+      "longitude": 108.67419350506681
+    }
+  },
+  {
+    "ma": "MA161",
+    "title": "Cylinker 161",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.161280827628406,
+      "longitude": 108.46312300723054
+    }
+  },
+  {
+    "ma": "MA162",
+    "title": "Cylinker 162",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.89547293576529,
+      "longitude": 102.92918101896441
+    }
+  },
+  {
+    "ma": "MA163",
+    "title": "Cylinker 163",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.168744708744786,
+      "longitude": 107.42020688776185
+    }
+  },
+  {
+    "ma": "MA164",
+    "title": "Cylinker 164",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.953052357074952,
+      "longitude": 104.87522003095822
+    }
+  },
+  {
+    "ma": "MA165",
+    "title": "Cylinker 165",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.983698965667813,
+      "longitude": 106.88133910907827
+    }
+  },
+  {
+    "ma": "MA166",
+    "title": "Cylinker 166",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.477404999859031,
+      "longitude": 108.23477405498784
+    }
+  },
+  {
+    "ma": "MA167",
+    "title": "Cylinker 167",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.961259482524014,
+      "longitude": 104.59310825751805
+    }
+  },
+  {
+    "ma": "MA168",
+    "title": "Cylinker 168",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.929633121032328,
+      "longitude": 104.2729523813314
+    }
+  },
+  {
+    "ma": "MA169",
+    "title": "Cylinker 169",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.124150270011652,
+      "longitude": 109.3379727119396
+    }
+  },
+  {
+    "ma": "MA170",
+    "title": "Cylinker 170",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.048010218284984,
+      "longitude": 103.32811848930889
+    }
+  },
+  {
+    "ma": "MA171",
+    "title": "Cylinker 171",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.27391231043899,
+      "longitude": 103.81347001773683
+    }
+  },
+  {
+    "ma": "MA172",
+    "title": "Cylinker 172",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.984232612796978,
+      "longitude": 107.20102238347975
+    }
+  },
+  {
+    "ma": "MA173",
+    "title": "Cylinker 173",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.787385723451074,
+      "longitude": 102.26589887873452
+    }
+  },
+  {
+    "ma": "MA174",
+    "title": "Cylinker 174",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.76895271720463,
+      "longitude": 105.59868925928848
+    }
+  },
+  {
+    "ma": "MA175",
+    "title": "Cylinker 175",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.377233300712831,
+      "longitude": 104.80246097078714
+    }
+  },
+  {
+    "ma": "MA176",
+    "title": "Cylinker 176",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.498627268303256,
+      "longitude": 108.79762981147633
+    }
+  },
+  {
+    "ma": "MA177",
+    "title": "Cylinker 177",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.456678643358686,
+      "longitude": 107.92090993558139
+    }
+  },
+  {
+    "ma": "MA178",
+    "title": "Cylinker 178",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.07702359882417,
+      "longitude": 107.22437401501733
+    }
+  },
+  {
+    "ma": "MA179",
+    "title": "Cylinker 179",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.153777158437231,
+      "longitude": 109.34153739699184
+    }
+  },
+  {
+    "ma": "MA180",
+    "title": "Cylinker 180",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.100978868126193,
+      "longitude": 103.95311822573636
+    }
+  },
+  {
+    "ma": "MA181",
+    "title": "Cylinker 181",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.980512375857753,
+      "longitude": 107.49172788252862
+    }
+  },
+  {
+    "ma": "MA182",
+    "title": "Cylinker 182",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.666678646344504,
+      "longitude": 103.90888214369888
+    }
+  },
+  {
+    "ma": "MA183",
+    "title": "Cylinker 183",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.08943144538568,
+      "longitude": 108.73642369173525
+    }
+  },
+  {
+    "ma": "MA184",
+    "title": "Cylinker 184",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.516796856613954,
+      "longitude": 102.61205648796185
+    }
+  },
+  {
+    "ma": "MA185",
+    "title": "Cylinker 185",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.512694651110962,
+      "longitude": 108.04995769541085
+    }
+  },
+  {
+    "ma": "MA186",
+    "title": "Cylinker 186",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.152461249888812,
+      "longitude": 102.27725884426373
+    }
+  },
+  {
+    "ma": "MA187",
+    "title": "Cylinker 187",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.45049114861829,
+      "longitude": 104.09456966981577
+    }
+  },
+  {
+    "ma": "MA188",
+    "title": "Cylinker 188",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.172244624712292,
+      "longitude": 107.96983794916673
+    }
+  },
+  {
+    "ma": "MA189",
+    "title": "Cylinker 189",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.058912742128665,
+      "longitude": 105.07299209684741
+    }
+  },
+  {
+    "ma": "MA190",
+    "title": "Cylinker 190",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.696188786953172,
+      "longitude": 105.60639525818827
+    }
+  },
+  {
+    "ma": "MA191",
+    "title": "Cylinker 191",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.274196735585825,
+      "longitude": 105.95168276919695
+    }
+  },
+  {
+    "ma": "MA192",
+    "title": "Cylinker 192",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.385435424047913,
+      "longitude": 103.57544367893983
+    }
+  },
+  {
+    "ma": "MA193",
+    "title": "Cylinker 193",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.139341589573917,
+      "longitude": 106.15771434778513
+    }
+  },
+  {
+    "ma": "MA194",
+    "title": "Cylinker 194",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.71852170858271,
+      "longitude": 105.37439912754027
+    }
+  },
+  {
+    "ma": "MA195",
+    "title": "Cylinker 195",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.00494943841025,
+      "longitude": 109.25339227194777
+    }
+  },
+  {
+    "ma": "MA196",
+    "title": "Cylinker 196",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.247497445204655,
+      "longitude": 105.61628010201404
+    }
+  },
+  {
+    "ma": "MA197",
+    "title": "Cylinker 197",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.118126849310531,
+      "longitude": 102.32935165316225
+    }
+  },
+  {
+    "ma": "MA198",
+    "title": "Cylinker 198",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.886991784900763,
+      "longitude": 103.08369480890786
+    }
+  },
+  {
+    "ma": "MA199",
+    "title": "Cylinker 199",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.18653810942845,
+      "longitude": 103.54101590653107
+    }
+  },
+  {
+    "ma": "MA200",
+    "title": "Cylinker 200",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.698119583628646,
+      "longitude": 103.7987484591976
+    }
+  },
+  {
+    "ma": "MA201",
+    "title": "Cylinker 201",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.240874575656111,
+      "longitude": 108.79266373720343
+    }
+  },
+  {
+    "ma": "MA202",
+    "title": "Cylinker 202",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.940234998163094,
+      "longitude": 109.17394579480293
+    }
+  },
+  {
+    "ma": "MA203",
+    "title": "Cylinker 203",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.609862564270927,
+      "longitude": 108.31283228857376
+    }
+  },
+  {
+    "ma": "MA204",
+    "title": "Cylinker 204",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.373559010260974,
+      "longitude": 104.34594499459614
+    }
+  },
+  {
+    "ma": "MA205",
+    "title": "Cylinker 205",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.335087570805374,
+      "longitude": 108.22139588105705
+    }
+  },
+  {
+    "ma": "MA206",
+    "title": "Cylinker 206",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.700944044041385,
+      "longitude": 102.67921574620807
+    }
+  },
+  {
+    "ma": "MA207",
+    "title": "Cylinker 207",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.473218272154803,
+      "longitude": 108.73827728813235
+    }
+  },
+  {
+    "ma": "MA208",
+    "title": "Cylinker 208",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.10155985780112,
+      "longitude": 108.35292305964028
+    }
+  },
+  {
+    "ma": "MA209",
+    "title": "Cylinker 209",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.453650332499159,
+      "longitude": 108.0372802268531
+    }
+  },
+  {
+    "ma": "MA210",
+    "title": "Cylinker 210",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.911173572459077,
+      "longitude": 107.02688901879492
+    }
+  },
+  {
+    "ma": "MA211",
+    "title": "Cylinker 211",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.12520002194686,
+      "longitude": 103.03872640685005
+    }
+  },
+  {
+    "ma": "MA212",
+    "title": "Cylinker 212",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.527845269089507,
+      "longitude": 103.80313539718746
+    }
+  },
+  {
+    "ma": "MA213",
+    "title": "Cylinker 213",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.072780108238902,
+      "longitude": 103.91129670180648
+    }
+  },
+  {
+    "ma": "MA214",
+    "title": "Cylinker 214",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.840629302065377,
+      "longitude": 103.30591720231216
+    }
+  },
+  {
+    "ma": "MA215",
+    "title": "Cylinker 215",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.30154083139196,
+      "longitude": 103.20447253657079
+    }
+  },
+  {
+    "ma": "MA216",
+    "title": "Cylinker 216",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.74798311959351,
+      "longitude": 102.95581666225522
+    }
+  },
+  {
+    "ma": "MA217",
+    "title": "Cylinker 217",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.242311292929546,
+      "longitude": 106.56093886150323
+    }
+  },
+  {
+    "ma": "MA218",
+    "title": "Cylinker 218",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.15439714297046,
+      "longitude": 102.17708485255342
+    }
+  },
+  {
+    "ma": "MA219",
+    "title": "Cylinker 219",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.031019153618345,
+      "longitude": 103.62222813772951
+    }
+  },
+  {
+    "ma": "MA220",
+    "title": "Cylinker 220",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.991265379048974,
+      "longitude": 105.22614313152498
+    }
+  },
+  {
+    "ma": "MA221",
+    "title": "Cylinker 221",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.893433278167237,
+      "longitude": 105.55643261260204
+    }
+  },
+  {
+    "ma": "MA222",
+    "title": "Cylinker 222",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.525543149406367,
+      "longitude": 102.18194608690955
+    }
+  },
+  {
+    "ma": "MA223",
+    "title": "Cylinker 223",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.1985819567873,
+      "longitude": 107.57484812297885
+    }
+  },
+  {
+    "ma": "MA224",
+    "title": "Cylinker 224",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.613250342472547,
+      "longitude": 104.08402339274532
+    }
+  },
+  {
+    "ma": "MA225",
+    "title": "Cylinker 225",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.937604245923747,
+      "longitude": 105.03205210248072
+    }
+  },
+  {
+    "ma": "MA226",
+    "title": "Cylinker 226",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.715679889178563,
+      "longitude": 109.00649497824409
+    }
+  },
+  {
+    "ma": "MA227",
+    "title": "Cylinker 227",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.336413844320115,
+      "longitude": 109.20692921181404
+    }
+  },
+  {
+    "ma": "MA228",
+    "title": "Cylinker 228",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.10364122714691,
+      "longitude": 106.93121001166189
+    }
+  },
+  {
+    "ma": "MA229",
+    "title": "Cylinker 229",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.304015937285044,
+      "longitude": 106.2413684568544
+    }
+  },
+  {
+    "ma": "MA230",
+    "title": "Cylinker 230",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.435598310027292,
+      "longitude": 107.27185551423801
+    }
+  },
+  {
+    "ma": "MA231",
+    "title": "Cylinker 231",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.83768512879229,
+      "longitude": 103.1107382061854
+    }
+  },
+  {
+    "ma": "MA232",
+    "title": "Cylinker 232",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.637400903345107,
+      "longitude": 108.42897619269063
+    }
+  },
+  {
+    "ma": "MA233",
+    "title": "Cylinker 233",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.39397544962295,
+      "longitude": 108.91479335835767
+    }
+  },
+  {
+    "ma": "MA234",
+    "title": "Cylinker 234",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.53980298160731,
+      "longitude": 103.46781521849653
+    }
+  },
+  {
+    "ma": "MA235",
+    "title": "Cylinker 235",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.343773944272131,
+      "longitude": 102.92256253224903
+    }
+  },
+  {
+    "ma": "MA236",
+    "title": "Cylinker 236",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.57185468965027,
+      "longitude": 105.38873020064426
+    }
+  },
+  {
+    "ma": "MA237",
+    "title": "Cylinker 237",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.242909897186024,
+      "longitude": 102.57794795067394
+    }
+  },
+  {
+    "ma": "MA238",
+    "title": "Cylinker 238",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.720836069085117,
+      "longitude": 104.96545398672555
+    }
+  },
+  {
+    "ma": "MA239",
+    "title": "Cylinker 239",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.743576182061297,
+      "longitude": 103.98137135502013
+    }
+  },
+  {
+    "ma": "MA240",
+    "title": "Cylinker 240",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.897782609096296,
+      "longitude": 107.63651844395271
+    }
+  },
+  {
+    "ma": "MA241",
+    "title": "Cylinker 241",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.505324102582298,
+      "longitude": 107.80920861495494
+    }
+  },
+  {
+    "ma": "MA242",
+    "title": "Cylinker 242",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.39781235475891,
+      "longitude": 106.0738973955824
+    }
+  },
+  {
+    "ma": "MA243",
+    "title": "Cylinker 243",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.461122473529947,
+      "longitude": 106.32776538913396
+    }
+  },
+  {
+    "ma": "MA244",
+    "title": "Cylinker 244",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.394347852760776,
+      "longitude": 106.94568469281946
+    }
+  },
+  {
+    "ma": "MA245",
+    "title": "Cylinker 245",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.050507770707316,
+      "longitude": 108.83816170328207
+    }
+  },
+  {
+    "ma": "MA246",
+    "title": "Cylinker 246",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.28531138818921,
+      "longitude": 102.91913899542077
+    }
+  },
+  {
+    "ma": "MA247",
+    "title": "Cylinker 247",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.162929543307765,
+      "longitude": 108.73569213892554
+    }
+  },
+  {
+    "ma": "MA248",
+    "title": "Cylinker 248",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.958920606293795,
+      "longitude": 103.06609854964789
+    }
+  },
+  {
+    "ma": "MA249",
+    "title": "Cylinker 249",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.021937819335083,
+      "longitude": 103.75582043154313
+    }
+  },
+  {
+    "ma": "MA250",
+    "title": "Cylinker 250",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.465391812996216,
+      "longitude": 108.60678349545078
+    }
+  },
+  {
+    "ma": "MA251",
+    "title": "Cylinker 251",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.554416170704062,
+      "longitude": 104.22039124814552
+    }
+  },
+  {
+    "ma": "MA252",
+    "title": "Cylinker 252",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.37850526876522,
+      "longitude": 108.54011849258657
+    }
+  },
+  {
+    "ma": "MA253",
+    "title": "Cylinker 253",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.74964720004979,
+      "longitude": 106.11380668174557
+    }
+  },
+  {
+    "ma": "MA254",
+    "title": "Cylinker 254",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.65865286968067,
+      "longitude": 102.60948713234943
+    }
+  },
+  {
+    "ma": "MA255",
+    "title": "Cylinker 255",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.774363370198744,
+      "longitude": 107.18604325821363
+    }
+  },
+  {
+    "ma": "MA256",
+    "title": "Cylinker 256",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.926398140301607,
+      "longitude": 105.62594380791626
+    }
+  },
+  {
+    "ma": "MA257",
+    "title": "Cylinker 257",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.7172570368195,
+      "longitude": 104.68066539839683
+    }
+  },
+  {
+    "ma": "MA258",
+    "title": "Cylinker 258",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.476703646076334,
+      "longitude": 108.57593491560515
+    }
+  },
+  {
+    "ma": "MA259",
+    "title": "Cylinker 259",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.20258667188931,
+      "longitude": 104.04812902489296
+    }
+  },
+  {
+    "ma": "MA260",
+    "title": "Cylinker 260",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.542502354858065,
+      "longitude": 105.78951004407553
+    }
+  },
+  {
+    "ma": "MA261",
+    "title": "Cylinker 261",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.85132197471963,
+      "longitude": 107.87140590940542
+    }
+  },
+  {
+    "ma": "MA262",
+    "title": "Cylinker 262",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.484157660232375,
+      "longitude": 105.53918006038204
+    }
+  },
+  {
+    "ma": "MA263",
+    "title": "Cylinker 263",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.49747794193386,
+      "longitude": 107.56548080011947
+    }
+  },
+  {
+    "ma": "MA264",
+    "title": "Cylinker 264",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.843660281750445,
+      "longitude": 105.65524568402522
+    }
+  },
+  {
+    "ma": "MA265",
+    "title": "Cylinker 265",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.65493469930352,
+      "longitude": 109.29313164921408
+    }
+  },
+  {
+    "ma": "MA266",
+    "title": "Cylinker 266",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.910049020086328,
+      "longitude": 106.77553551958363
+    }
+  },
+  {
+    "ma": "MA267",
+    "title": "Cylinker 267",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.291347288790101,
+      "longitude": 106.12822416798171
+    }
+  },
+  {
+    "ma": "MA268",
+    "title": "Cylinker 268",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.01656108249142,
+      "longitude": 106.78951483565953
+    }
+  },
+  {
+    "ma": "MA269",
+    "title": "Cylinker 269",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.030185765014135,
+      "longitude": 102.41961081867684
+    }
+  },
+  {
+    "ma": "MA270",
+    "title": "Cylinker 270",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.449942585955663,
+      "longitude": 102.56673530334908
+    }
+  },
+  {
+    "ma": "MA271",
+    "title": "Cylinker 271",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.666979739163686,
+      "longitude": 107.42666389067743
+    }
+  },
+  {
+    "ma": "MA272",
+    "title": "Cylinker 272",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.702692654694811,
+      "longitude": 105.60546665817631
+    }
+  },
+  {
+    "ma": "MA273",
+    "title": "Cylinker 273",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.268903084693298,
+      "longitude": 102.55296703128553
+    }
+  },
+  {
+    "ma": "MA274",
+    "title": "Cylinker 274",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.374950261291046,
+      "longitude": 108.30493627020553
+    }
+  },
+  {
+    "ma": "MA275",
+    "title": "Cylinker 275",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.074291584178052,
+      "longitude": 104.82439341135198
+    }
+  },
+  {
+    "ma": "MA276",
+    "title": "Cylinker 276",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.374047877006348,
+      "longitude": 107.5021496597498
+    }
+  },
+  {
+    "ma": "MA277",
+    "title": "Cylinker 277",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.008137621354471,
+      "longitude": 103.2133422258334
+    }
+  },
+  {
+    "ma": "MA278",
+    "title": "Cylinker 278",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.274394399295026,
+      "longitude": 102.1564977084949
+    }
+  },
+  {
+    "ma": "MA279",
+    "title": "Cylinker 279",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.15487500629128,
+      "longitude": 104.27554412775329
+    }
+  },
+  {
+    "ma": "MA280",
+    "title": "Cylinker 280",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.450077571740486,
+      "longitude": 103.49882911949246
+    }
+  },
+  {
+    "ma": "MA281",
+    "title": "Cylinker 281",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.409191098401163,
+      "longitude": 106.44217735214428
+    }
+  },
+  {
+    "ma": "MA282",
+    "title": "Cylinker 282",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.51056604994576,
+      "longitude": 106.33219210067294
+    }
+  },
+  {
+    "ma": "MA283",
+    "title": "Cylinker 283",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.069781438581188,
+      "longitude": 104.79095066170534
+    }
+  },
+  {
+    "ma": "MA284",
+    "title": "Cylinker 284",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.01353824910205,
+      "longitude": 102.20684638060132
+    }
+  },
+  {
+    "ma": "MA285",
+    "title": "Cylinker 285",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.979984901929164,
+      "longitude": 103.4790913679538
+    }
+  },
+  {
+    "ma": "MA286",
+    "title": "Cylinker 286",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.1770419888467,
+      "longitude": 105.40691490599545
+    }
+  },
+  {
+    "ma": "MA287",
+    "title": "Cylinker 287",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.521491806212026,
+      "longitude": 105.0546710316058
+    }
+  },
+  {
+    "ma": "MA288",
+    "title": "Cylinker 288",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.550689130284796,
+      "longitude": 108.05689970370415
+    }
+  },
+  {
+    "ma": "MA289",
+    "title": "Cylinker 289",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.253151762342705,
+      "longitude": 106.11817273578706
+    }
+  },
+  {
+    "ma": "MA290",
+    "title": "Cylinker 290",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.749835093203366,
+      "longitude": 102.8614734377635
+    }
+  },
+  {
+    "ma": "MA291",
+    "title": "Cylinker 291",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.159339409753123,
+      "longitude": 102.94191828181893
+    }
+  },
+  {
+    "ma": "MA292",
+    "title": "Cylinker 292",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.62841087814924,
+      "longitude": 104.54356251354082
+    }
+  },
+  {
+    "ma": "MA293",
+    "title": "Cylinker 293",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.661187451881247,
+      "longitude": 106.39854992661806
+    }
+  },
+  {
+    "ma": "MA294",
+    "title": "Cylinker 294",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.812620050445396,
+      "longitude": 105.79065602421538
+    }
+  },
+  {
+    "ma": "MA295",
+    "title": "Cylinker 295",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.39448445189713,
+      "longitude": 105.5590813317532
+    }
+  },
+  {
+    "ma": "MA296",
+    "title": "Cylinker 296",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.870992304581131,
+      "longitude": 107.30273142536566
+    }
+  },
+  {
+    "ma": "MA297",
+    "title": "Cylinker 297",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.385525269062633,
+      "longitude": 108.89456413970483
+    }
+  },
+  {
+    "ma": "MA298",
+    "title": "Cylinker 298",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.730901558620626,
+      "longitude": 107.13487132619963
+    }
+  },
+  {
+    "ma": "MA299",
+    "title": "Cylinker 299",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.538549797300856,
+      "longitude": 104.52542448367036
+    }
+  },
+  {
+    "ma": "MA300",
+    "title": "Cylinker 300",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.387717143850736,
+      "longitude": 105.02865420956961
+    }
+  },
+  {
+    "ma": "MA301",
+    "title": "Cylinker 301",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.886964065395805,
+      "longitude": 102.99467538022573
+    }
+  },
+  {
+    "ma": "MA302",
+    "title": "Cylinker 302",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.467238688173108,
+      "longitude": 104.75365215066151
+    }
+  },
+  {
+    "ma": "MA303",
+    "title": "Cylinker 303",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.584178419891245,
+      "longitude": 104.00844374975725
+    }
+  },
+  {
+    "ma": "MA304",
+    "title": "Cylinker 304",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.51612131438244,
+      "longitude": 102.4410461429013
+    }
+  },
+  {
+    "ma": "MA305",
+    "title": "Cylinker 305",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.222538539814268,
+      "longitude": 103.5969458177409
+    }
+  },
+  {
+    "ma": "MA306",
+    "title": "Cylinker 306",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.198046945274392,
+      "longitude": 103.40585350356992
+    }
+  },
+  {
+    "ma": "MA307",
+    "title": "Cylinker 307",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.134310991696804,
+      "longitude": 108.55216058079392
+    }
+  },
+  {
+    "ma": "MA308",
+    "title": "Cylinker 308",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.55932967997555,
+      "longitude": 103.92589384974129
+    }
+  },
+  {
+    "ma": "MA309",
+    "title": "Cylinker 309",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.868049178638223,
+      "longitude": 108.0682229689601
+    }
+  },
+  {
+    "ma": "MA310",
+    "title": "Cylinker 310",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.39303070776876,
+      "longitude": 103.75490794958168
+    }
+  },
+  {
+    "ma": "MA311",
+    "title": "Cylinker 311",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.758381572914285,
+      "longitude": 105.59170942594932
+    }
+  },
+  {
+    "ma": "MA312",
+    "title": "Cylinker 312",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.441049507507994,
+      "longitude": 105.94042932653556
+    }
+  },
+  {
+    "ma": "MA313",
+    "title": "Cylinker 313",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.121034020904442,
+      "longitude": 103.65568801333832
+    }
+  },
+  {
+    "ma": "MA314",
+    "title": "Cylinker 314",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.891507122149697,
+      "longitude": 104.1588261088552
+    }
+  },
+  {
+    "ma": "MA315",
+    "title": "Cylinker 315",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.779220353852327,
+      "longitude": 108.56703411122363
+    }
+  },
+  {
+    "ma": "MA316",
+    "title": "Cylinker 316",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.28069591227739,
+      "longitude": 105.90520626254724
+    }
+  },
+  {
+    "ma": "MA317",
+    "title": "Cylinker 317",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.797668472412749,
+      "longitude": 102.64799221615762
+    }
+  },
+  {
+    "ma": "MA318",
+    "title": "Cylinker 318",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.160146183570305,
+      "longitude": 108.68947659145451
+    }
+  },
+  {
+    "ma": "MA319",
+    "title": "Cylinker 319",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.848198276162321,
+      "longitude": 106.08485416092843
+    }
+  },
+  {
+    "ma": "MA320",
+    "title": "Cylinker 320",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.526191789560855,
+      "longitude": 103.24121882277962
+    }
+  },
+  {
+    "ma": "MA321",
+    "title": "Cylinker 321",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.017297470042617,
+      "longitude": 104.56461691487095
+    }
+  },
+  {
+    "ma": "MA322",
+    "title": "Cylinker 322",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.561951676858612,
+      "longitude": 103.491639017068
+    }
+  },
+  {
+    "ma": "MA323",
+    "title": "Cylinker 323",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.279771826211375,
+      "longitude": 107.04838561586267
+    }
+  },
+  {
+    "ma": "MA324",
+    "title": "Cylinker 324",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.240946367424687,
+      "longitude": 102.4454237716659
+    }
+  },
+  {
+    "ma": "MA325",
+    "title": "Cylinker 325",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.511155657571923,
+      "longitude": 103.47791185296342
+    }
+  },
+  {
+    "ma": "MA326",
+    "title": "Cylinker 326",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.586498395731578,
+      "longitude": 106.26445936839683
+    }
+  },
+  {
+    "ma": "MA327",
+    "title": "Cylinker 327",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.59556016489495,
+      "longitude": 107.10609405340847
+    }
+  },
+  {
+    "ma": "MA328",
+    "title": "Cylinker 328",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.550126514718166,
+      "longitude": 102.71086278055537
+    }
+  },
+  {
+    "ma": "MA329",
+    "title": "Cylinker 329",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.413025010700164,
+      "longitude": 103.34369900816353
+    }
+  },
+  {
+    "ma": "MA330",
+    "title": "Cylinker 330",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.622269581886606,
+      "longitude": 107.52113305368732
+    }
+  },
+  {
+    "ma": "MA331",
+    "title": "Cylinker 331",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.5097796087113,
+      "longitude": 104.3734516311401
+    }
+  },
+  {
+    "ma": "MA332",
+    "title": "Cylinker 332",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.628462680313802,
+      "longitude": 102.74176742244947
+    }
+  },
+  {
+    "ma": "MA333",
+    "title": "Cylinker 333",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.131673872832877,
+      "longitude": 107.98474845179574
+    }
+  },
+  {
+    "ma": "MA334",
+    "title": "Cylinker 334",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.2592701740118,
+      "longitude": 104.41511598207967
+    }
+  },
+  {
+    "ma": "MA335",
+    "title": "Cylinker 335",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.436880329862028,
+      "longitude": 103.95181793939601
+    }
+  },
+  {
+    "ma": "MA336",
+    "title": "Cylinker 336",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.854879749351761,
+      "longitude": 106.19121518064006
+    }
+  },
+  {
+    "ma": "MA337",
+    "title": "Cylinker 337",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.86196267451935,
+      "longitude": 106.85262721570118
+    }
+  },
+  {
+    "ma": "MA338",
+    "title": "Cylinker 338",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.297986169874969,
+      "longitude": 103.76218942567924
+    }
+  },
+  {
+    "ma": "MA339",
+    "title": "Cylinker 339",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.912401313859796,
+      "longitude": 107.11394313988464
+    }
+  },
+  {
+    "ma": "MA340",
+    "title": "Cylinker 340",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.567344668911835,
+      "longitude": 106.97739884578537
+    }
+  },
+  {
+    "ma": "MA341",
+    "title": "Cylinker 341",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.22264687651387,
+      "longitude": 105.96497189995799
+    }
+  },
+  {
+    "ma": "MA342",
+    "title": "Cylinker 342",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.818223349979274,
+      "longitude": 102.77190281578412
+    }
+  },
+  {
+    "ma": "MA343",
+    "title": "Cylinker 343",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.171420492841069,
+      "longitude": 107.41057767209989
+    }
+  },
+  {
+    "ma": "MA344",
+    "title": "Cylinker 344",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.08959737791668,
+      "longitude": 108.99530257066932
+    }
+  },
+  {
+    "ma": "MA345",
+    "title": "Cylinker 345",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.644782324844387,
+      "longitude": 107.08882932780338
+    }
+  },
+  {
+    "ma": "MA346",
+    "title": "Cylinker 346",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.833534706461055,
+      "longitude": 104.57393628528855
+    }
+  },
+  {
+    "ma": "MA347",
+    "title": "Cylinker 347",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.13821796955063,
+      "longitude": 106.59655491685098
+    }
+  },
+  {
+    "ma": "MA348",
+    "title": "Cylinker 348",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.315263178474222,
+      "longitude": 105.69387900173223
+    }
+  },
+  {
+    "ma": "MA349",
+    "title": "Cylinker 349",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.802036058614988,
+      "longitude": 105.30821733761951
+    }
+  },
+  {
+    "ma": "MA350",
+    "title": "Cylinker 350",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.899318388435994,
+      "longitude": 104.02955381274471
+    }
+  },
+  {
+    "ma": "MA351",
+    "title": "Cylinker 351",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.239104471054254,
+      "longitude": 103.87977993415612
+    }
+  },
+  {
+    "ma": "MA352",
+    "title": "Cylinker 352",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.216801742951747,
+      "longitude": 106.41644700428569
+    }
+  },
+  {
+    "ma": "MA353",
+    "title": "Cylinker 353",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.483604690617163,
+      "longitude": 102.80983498265411
+    }
+  },
+  {
+    "ma": "MA354",
+    "title": "Cylinker 354",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.250571658877597,
+      "longitude": 107.17095282087467
+    }
+  },
+  {
+    "ma": "MA355",
+    "title": "Cylinker 355",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.328926320172759,
+      "longitude": 105.223754695277
+    }
+  },
+  {
+    "ma": "MA356",
+    "title": "Cylinker 356",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.35004286775257,
+      "longitude": 104.04880251466071
+    }
+  },
+  {
+    "ma": "MA357",
+    "title": "Cylinker 357",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.387395003383567,
+      "longitude": 102.36150284938809
+    }
+  },
+  {
+    "ma": "MA358",
+    "title": "Cylinker 358",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.05141276140904,
+      "longitude": 106.76042731914677
+    }
+  },
+  {
+    "ma": "MA359",
+    "title": "Cylinker 359",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.410992927798027,
+      "longitude": 108.83953928397888
+    }
+  },
+  {
+    "ma": "MA360",
+    "title": "Cylinker 360",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.125494720456569,
+      "longitude": 104.69498333161832
+    }
+  },
+  {
+    "ma": "MA361",
+    "title": "Cylinker 361",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.26554970335055,
+      "longitude": 107.57463308275409
+    }
+  },
+  {
+    "ma": "MA362",
+    "title": "Cylinker 362",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.12247965240996,
+      "longitude": 105.71403925370187
+    }
+  },
+  {
+    "ma": "MA363",
+    "title": "Cylinker 363",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.165041323214624,
+      "longitude": 105.43939415846746
+    }
+  },
+  {
+    "ma": "MA364",
+    "title": "Cylinker 364",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.080645129067687,
+      "longitude": 109.49030630249123
+    }
+  },
+  {
+    "ma": "MA365",
+    "title": "Cylinker 365",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.5304776586253,
+      "longitude": 109.05886454240365
+    }
+  },
+  {
+    "ma": "MA366",
+    "title": "Cylinker 366",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.064527073673334,
+      "longitude": 108.24865104175338
+    }
+  },
+  {
+    "ma": "MA367",
+    "title": "Cylinker 367",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.874404432538476,
+      "longitude": 106.64367588474025
+    }
+  },
+  {
+    "ma": "MA368",
+    "title": "Cylinker 368",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.211439736647645,
+      "longitude": 108.0371004414942
+    }
+  },
+  {
+    "ma": "MA369",
+    "title": "Cylinker 369",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.80249988907713,
+      "longitude": 102.26203494441624
+    }
+  },
+  {
+    "ma": "MA370",
+    "title": "Cylinker 370",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.294109479329432,
+      "longitude": 105.81621487334738
+    }
+  },
+  {
+    "ma": "MA371",
+    "title": "Cylinker 371",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.144217206970556,
+      "longitude": 106.23693419833323
+    }
+  },
+  {
+    "ma": "MA372",
+    "title": "Cylinker 372",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.38592021224549,
+      "longitude": 108.76178483285268
+    }
+  },
+  {
+    "ma": "MA373",
+    "title": "Cylinker 373",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.71871138354259,
+      "longitude": 104.45398327765021
+    }
+  },
+  {
+    "ma": "MA374",
+    "title": "Cylinker 374",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.71678796346569,
+      "longitude": 103.94524951752766
+    }
+  },
+  {
+    "ma": "MA375",
+    "title": "Cylinker 375",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.215890272186684,
+      "longitude": 106.45388275228963
+    }
+  },
+  {
+    "ma": "MA376",
+    "title": "Cylinker 376",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.149195547119735,
+      "longitude": 108.15709580643765
+    }
+  },
+  {
+    "ma": "MA377",
+    "title": "Cylinker 377",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.439814907870925,
+      "longitude": 104.28034984428466
+    }
+  },
+  {
+    "ma": "MA378",
+    "title": "Cylinker 378",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.943603509027469,
+      "longitude": 104.01120013896357
+    }
+  },
+  {
+    "ma": "MA379",
+    "title": "Cylinker 379",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.793963705777262,
+      "longitude": 106.32082231516976
+    }
+  },
+  {
+    "ma": "MA380",
+    "title": "Cylinker 380",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.805868733886385,
+      "longitude": 104.22957717635644
+    }
+  },
+  {
+    "ma": "MA381",
+    "title": "Cylinker 381",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.299540362486136,
+      "longitude": 104.1932403516016
+    }
+  },
+  {
+    "ma": "MA382",
+    "title": "Cylinker 382",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.991499524730834,
+      "longitude": 102.25131078088128
+    }
+  },
+  {
+    "ma": "MA383",
+    "title": "Cylinker 383",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.470118313108486,
+      "longitude": 104.29226974352268
+    }
+  },
+  {
+    "ma": "MA384",
+    "title": "Cylinker 384",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.32386618131393,
+      "longitude": 102.78813456522467
+    }
+  },
+  {
+    "ma": "MA385",
+    "title": "Cylinker 385",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.733917900454973,
+      "longitude": 105.33075040515799
+    }
+  },
+  {
+    "ma": "MA386",
+    "title": "Cylinker 386",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.628212603840131,
+      "longitude": 104.41129270586978
+    }
+  },
+  {
+    "ma": "MA387",
+    "title": "Cylinker 387",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.863668444147727,
+      "longitude": 102.81218318279619
+    }
+  },
+  {
+    "ma": "MA388",
+    "title": "Cylinker 388",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.81567507006597,
+      "longitude": 107.63612579361181
+    }
+  },
+  {
+    "ma": "MA389",
+    "title": "Cylinker 389",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.000830753718443,
+      "longitude": 102.28463430970505
+    }
+  },
+  {
+    "ma": "MA390",
+    "title": "Cylinker 390",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.87507798647143,
+      "longitude": 102.7023416563703
+    }
+  },
+  {
+    "ma": "MA391",
+    "title": "Cylinker 391",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.059596595485704,
+      "longitude": 105.94019456111987
+    }
+  },
+  {
+    "ma": "MA392",
+    "title": "Cylinker 392",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.03718839557169,
+      "longitude": 102.33999285864444
+    }
+  },
+  {
+    "ma": "MA393",
+    "title": "Cylinker 393",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.456151987981379,
+      "longitude": 106.8014531205637
+    }
+  },
+  {
+    "ma": "MA394",
+    "title": "Cylinker 394",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.93781755707449,
+      "longitude": 107.26087246039688
+    }
+  },
+  {
+    "ma": "MA395",
+    "title": "Cylinker 395",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.03632294412221,
+      "longitude": 105.23164681680497
+    }
+  },
+  {
+    "ma": "MA396",
+    "title": "Cylinker 396",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.481968043763857,
+      "longitude": 102.20917721486309
+    }
+  },
+  {
+    "ma": "MA397",
+    "title": "Cylinker 397",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.622974424933268,
+      "longitude": 108.8933530007391
+    }
+  },
+  {
+    "ma": "MA398",
+    "title": "Cylinker 398",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.028168467963608,
+      "longitude": 103.69785238243716
+    }
+  },
+  {
+    "ma": "MA399",
+    "title": "Cylinker 399",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.264344121497876,
+      "longitude": 104.7187238628275
+    }
+  },
+  {
+    "ma": "MA400",
+    "title": "Cylinker 400",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.550667931418054,
+      "longitude": 106.43989168909312
+    }
+  },
+  {
+    "ma": "MA401",
+    "title": "Cylinker 401",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.405867515619903,
+      "longitude": 105.43288165403794
+    }
+  },
+  {
+    "ma": "MA402",
+    "title": "Cylinker 402",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.619350354712093,
+      "longitude": 103.94052033176706
+    }
+  },
+  {
+    "ma": "MA403",
+    "title": "Cylinker 403",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.059579427164726,
+      "longitude": 104.97354582076785
+    }
+  },
+  {
+    "ma": "MA404",
+    "title": "Cylinker 404",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.64815881491611,
+      "longitude": 102.21119567248745
+    }
+  },
+  {
+    "ma": "MA405",
+    "title": "Cylinker 405",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.2318058753242,
+      "longitude": 102.80462221894547
+    }
+  },
+  {
+    "ma": "MA406",
+    "title": "Cylinker 406",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 11.351181212431467,
+      "longitude": 109.17420645896132
+    }
+  },
+  {
+    "ma": "MA407",
+    "title": "Cylinker 407",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.937588877888867,
+      "longitude": 105.48394981680141
+    }
+  },
+  {
+    "ma": "MA408",
+    "title": "Cylinker 408",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.317562513832861,
+      "longitude": 106.43138436885334
+    }
+  },
+  {
+    "ma": "MA409",
+    "title": "Cylinker 409",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.365093086450145,
+      "longitude": 103.83498314916679
+    }
+  },
+  {
+    "ma": "MA410",
+    "title": "Cylinker 410",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.31031331102316,
+      "longitude": 108.08554501757125
+    }
+  },
+  {
+    "ma": "MA411",
+    "title": "Cylinker 411",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.847249609638077,
+      "longitude": 104.42205476408027
+    }
+  },
+  {
+    "ma": "MA412",
+    "title": "Cylinker 412",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.294760544110225,
+      "longitude": 107.62226701552764
+    }
+  },
+  {
+    "ma": "MA413",
+    "title": "Cylinker 413",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.617410104211658,
+      "longitude": 102.977043494659
+    }
+  },
+  {
+    "ma": "MA414",
+    "title": "Cylinker 414",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.787717393777257,
+      "longitude": 109.0968106543347
+    }
+  },
+  {
+    "ma": "MA415",
+    "title": "Cylinker 415",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.845449771856636,
+      "longitude": 107.51935229208308
+    }
+  },
+  {
+    "ma": "MA416",
+    "title": "Cylinker 416",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.549740652314734,
+      "longitude": 103.66045460705354
+    }
+  },
+  {
+    "ma": "MA417",
+    "title": "Cylinker 417",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.538951548047361,
+      "longitude": 102.6232358820261
+    }
+  },
+  {
+    "ma": "MA418",
+    "title": "Cylinker 418",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.641301128072485,
+      "longitude": 106.7730045113859
+    }
+  },
+  {
+    "ma": "MA419",
+    "title": "Cylinker 419",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.29289024213299,
+      "longitude": 108.57745150969197
+    }
+  },
+  {
+    "ma": "MA420",
+    "title": "Cylinker 420",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.123106697681756,
+      "longitude": 107.26797398455666
+    }
+  },
+  {
+    "ma": "MA421",
+    "title": "Cylinker 421",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.31987432644644,
+      "longitude": 106.00409026679726
+    }
+  },
+  {
+    "ma": "MA422",
+    "title": "Cylinker 422",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.6896380139735,
+      "longitude": 104.85672191266477
+    }
+  },
+  {
+    "ma": "MA423",
+    "title": "Cylinker 423",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.955382991736204,
+      "longitude": 103.60389079683718
+    }
+  },
+  {
+    "ma": "MA424",
+    "title": "Cylinker 424",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.743370079465008,
+      "longitude": 105.20946092479181
+    }
+  },
+  {
+    "ma": "MA425",
+    "title": "Cylinker 425",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.38008052202253,
+      "longitude": 106.1366605578157
+    }
+  },
+  {
+    "ma": "MA426",
+    "title": "Cylinker 426",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.381106665185598,
+      "longitude": 107.23573158829178
+    }
+  },
+  {
+    "ma": "MA427",
+    "title": "Cylinker 427",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.55863292235459,
+      "longitude": 102.3306372053036
+    }
+  },
+  {
+    "ma": "MA428",
+    "title": "Cylinker 428",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.128238617058358,
+      "longitude": 108.82689998662147
+    }
+  },
+  {
+    "ma": "MA429",
+    "title": "Cylinker 429",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.181083606976598,
+      "longitude": 106.72760684351591
+    }
+  },
+  {
+    "ma": "MA430",
+    "title": "Cylinker 430",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.200187505420846,
+      "longitude": 107.03575715115002
+    }
+  },
+  {
+    "ma": "MA431",
+    "title": "Cylinker 431",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.60856086285451,
+      "longitude": 104.21450095578243
+    }
+  },
+  {
+    "ma": "MA432",
+    "title": "Cylinker 432",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.80431222190776,
+      "longitude": 108.05629153372212
+    }
+  },
+  {
+    "ma": "MA433",
+    "title": "Cylinker 433",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.121075135625652,
+      "longitude": 102.70521082420785
+    }
+  },
+  {
+    "ma": "MA434",
+    "title": "Cylinker 434",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.481455517128254,
+      "longitude": 109.04209196924573
+    }
+  },
+  {
+    "ma": "MA435",
+    "title": "Cylinker 435",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.73864237351458,
+      "longitude": 108.13376139835097
+    }
+  },
+  {
+    "ma": "MA436",
+    "title": "Cylinker 436",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.313815597162666,
+      "longitude": 109.08907987116733
+    }
+  },
+  {
+    "ma": "MA437",
+    "title": "Cylinker 437",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.149584122404745,
+      "longitude": 106.34556849469678
+    }
+  },
+  {
+    "ma": "MA438",
+    "title": "Cylinker 438",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.338669411131647,
+      "longitude": 109.4588241456836
+    }
+  },
+  {
+    "ma": "MA439",
+    "title": "Cylinker 439",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.871559369837652,
+      "longitude": 106.19924502641953
+    }
+  },
+  {
+    "ma": "MA440",
+    "title": "Cylinker 440",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.787888398322863,
+      "longitude": 105.27310430769329
+    }
+  },
+  {
+    "ma": "MA441",
+    "title": "Cylinker 441",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.070751264101588,
+      "longitude": 102.84087000205454
+    }
+  },
+  {
+    "ma": "MA442",
+    "title": "Cylinker 442",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.91863326753026,
+      "longitude": 105.15470627755852
+    }
+  },
+  {
+    "ma": "MA443",
+    "title": "Cylinker 443",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.2204366760581,
+      "longitude": 103.39131819912487
+    }
+  },
+  {
+    "ma": "MA444",
+    "title": "Cylinker 444",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.342944765426168,
+      "longitude": 107.20224825567618
+    }
+  },
+  {
+    "ma": "MA445",
+    "title": "Cylinker 445",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.643435702278346,
+      "longitude": 107.5699783475498
+    }
+  },
+  {
+    "ma": "MA446",
+    "title": "Cylinker 446",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.981151263585723,
+      "longitude": 102.412188362535
+    }
+  },
+  {
+    "ma": "MA447",
+    "title": "Cylinker 447",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.423539016689489,
+      "longitude": 108.29152468510992
+    }
+  },
+  {
+    "ma": "MA448",
+    "title": "Cylinker 448",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.929808657426754,
+      "longitude": 107.24351106244481
+    }
+  },
+  {
+    "ma": "MA449",
+    "title": "Cylinker 449",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.85155098408486,
+      "longitude": 104.17048953431468
+    }
+  },
+  {
+    "ma": "MA450",
+    "title": "Cylinker 450",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.765457368078263,
+      "longitude": 102.83581608686858
+    }
+  },
+  {
+    "ma": "MA451",
+    "title": "Cylinker 451",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.77802609469446,
+      "longitude": 104.39934149719794
+    }
+  },
+  {
+    "ma": "MA452",
+    "title": "Cylinker 452",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.584751142850218,
+      "longitude": 106.27866864430189
+    }
+  },
+  {
+    "ma": "MA453",
+    "title": "Cylinker 453",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.953894235838133,
+      "longitude": 108.04765754587622
+    }
+  },
+  {
+    "ma": "MA454",
+    "title": "Cylinker 454",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.096996305976383,
+      "longitude": 107.05447679847506
+    }
+  },
+  {
+    "ma": "MA455",
+    "title": "Cylinker 455",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.992734030778488,
+      "longitude": 104.38361396097964
+    }
+  },
+  {
+    "ma": "MA456",
+    "title": "Cylinker 456",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.572666491463664,
+      "longitude": 106.03820952726879
+    }
+  },
+  {
+    "ma": "MA457",
+    "title": "Cylinker 457",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.33270842502025,
+      "longitude": 108.78461580389596
+    }
+  },
+  {
+    "ma": "MA458",
+    "title": "Cylinker 458",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.42874026272665,
+      "longitude": 108.31119484459
+    }
+  },
+  {
+    "ma": "MA459",
+    "title": "Cylinker 459",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.11094099308056,
+      "longitude": 103.72239776040658
+    }
+  },
+  {
+    "ma": "MA460",
+    "title": "Cylinker 460",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.53199262072929,
+      "longitude": 108.70567981622733
+    }
+  },
+  {
+    "ma": "MA461",
+    "title": "Cylinker 461",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.87519048260417,
+      "longitude": 109.23833583298585
+    }
+  },
+  {
+    "ma": "MA462",
+    "title": "Cylinker 462",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.716421798020605,
+      "longitude": 104.9361383822241
+    }
+  },
+  {
+    "ma": "MA463",
+    "title": "Cylinker 463",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.106326080316364,
+      "longitude": 108.75716180959733
+    }
+  },
+  {
+    "ma": "MA464",
+    "title": "Cylinker 464",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.26164790709562,
+      "longitude": 103.43679666364179
+    }
+  },
+  {
+    "ma": "MA465",
+    "title": "Cylinker 465",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.64515814513064,
+      "longitude": 106.12690579466947
+    }
+  },
+  {
+    "ma": "MA466",
+    "title": "Cylinker 466",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.445315860523095,
+      "longitude": 107.2758335949377
+    }
+  },
+  {
+    "ma": "MA467",
+    "title": "Cylinker 467",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.860444909298597,
+      "longitude": 106.03447195276378
+    }
+  },
+  {
+    "ma": "MA468",
+    "title": "Cylinker 468",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.793502379063995,
+      "longitude": 107.51970619318905
+    }
+  },
+  {
+    "ma": "MA469",
+    "title": "Cylinker 469",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 21.360527876471963,
+      "longitude": 105.98987976113034
+    }
+  },
+  {
+    "ma": "MA470",
+    "title": "Cylinker 470",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.81208104043633,
+      "longitude": 102.23732138303325
+    }
+  },
+  {
+    "ma": "MA471",
+    "title": "Cylinker 471",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.363145535797324,
+      "longitude": 107.79227197151855
+    }
+  },
+  {
+    "ma": "MA472",
+    "title": "Cylinker 472",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.912046263360125,
+      "longitude": 107.84755384626541
+    }
+  },
+  {
+    "ma": "MA473",
+    "title": "Cylinker 473",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.881666660641095,
+      "longitude": 103.44197184356247
+    }
+  },
+  {
+    "ma": "MA474",
+    "title": "Cylinker 474",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.437987788501225,
+      "longitude": 104.34447137254848
+    }
+  },
+  {
+    "ma": "MA475",
+    "title": "Cylinker 475",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.450395497939741,
+      "longitude": 103.03082860636731
+    }
+  },
+  {
+    "ma": "MA476",
+    "title": "Cylinker 476",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.239169135447224,
+      "longitude": 108.25354726347733
+    }
+  },
+  {
+    "ma": "MA477",
+    "title": "Cylinker 477",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 12.30061122226979,
+      "longitude": 108.317272549783
+    }
+  },
+  {
+    "ma": "MA478",
+    "title": "Cylinker 478",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.814013677400485,
+      "longitude": 108.93970760951977
+    }
+  },
+  {
+    "ma": "MA479",
+    "title": "Cylinker 479",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.5649038992305,
+      "longitude": 109.11982411970996
+    }
+  },
+  {
+    "ma": "MA480",
+    "title": "Cylinker 480",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.673180945988678,
+      "longitude": 108.44793911529345
+    }
+  },
+  {
+    "ma": "MA481",
+    "title": "Cylinker 481",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.0711684114017,
+      "longitude": 103.36483710747866
+    }
+  },
+  {
+    "ma": "MA482",
+    "title": "Cylinker 482",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.167888152730477,
+      "longitude": 103.45820616575152
+    }
+  },
+  {
+    "ma": "MA483",
+    "title": "Cylinker 483",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 10.502371602237078,
+      "longitude": 105.57412972926794
+    }
+  },
+  {
+    "ma": "MA484",
+    "title": "Cylinker 484",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 23.162879857156184,
+      "longitude": 105.4136946829329
+    }
+  },
+  {
+    "ma": "MA485",
+    "title": "Cylinker 485",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 16.0619563866479,
+      "longitude": 108.08856926844508
+    }
+  },
+  {
+    "ma": "MA486",
+    "title": "Cylinker 486",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 20.457566345808495,
+      "longitude": 102.44007984483042
+    }
+  },
+  {
+    "ma": "MA487",
+    "title": "Cylinker 487",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.637707180083195,
+      "longitude": 103.49081876730526
+    }
+  },
+  {
+    "ma": "MA488",
+    "title": "Cylinker 488",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 8.907821717590757,
+      "longitude": 105.07804361421404
+    }
+  },
+  {
+    "ma": "MA489",
+    "title": "Cylinker 489",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 13.401923028159947,
+      "longitude": 104.69535959298733
+    }
+  },
+  {
+    "ma": "MA490",
+    "title": "Cylinker 490",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 15.908654656500875,
+      "longitude": 107.28425709019423
+    }
+  },
+  {
+    "ma": "MA491",
+    "title": "Cylinker 491",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.937480828473824,
+      "longitude": 107.49122887431568
+    }
+  },
+  {
+    "ma": "MA492",
+    "title": "Cylinker 492",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 17.356154061635095,
+      "longitude": 108.10732966902195
+    }
+  },
+  {
+    "ma": "MA493",
+    "title": "Cylinker 493",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.092294477913557,
+      "longitude": 106.63604179213588
+    }
+  },
+  {
+    "ma": "MA494",
+    "title": "Cylinker 494",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.59206776828336,
+      "longitude": 108.34958622664738
+    }
+  },
+  {
+    "ma": "MA495",
+    "title": "Cylinker 495",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 14.518585222225624,
+      "longitude": 106.51852529393608
+    }
+  },
+  {
+    "ma": "MA496",
+    "title": "Cylinker 496",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 18.98952048032828,
+      "longitude": 105.21214690753649
+    }
+  },
+  {
+    "ma": "MA497",
+    "title": "Cylinker 497",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.571114086605974,
+      "longitude": 106.95741574621842
+    }
+  },
+  {
+    "ma": "MA498",
+    "title": "Cylinker 498",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 19.814969514972894,
+      "longitude": 106.90571328995375
+    }
+  },
+  {
+    "ma": "MA499",
+    "title": "Cylinker 499",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 22.106001823541554,
+      "longitude": 107.80984847398064
+    }
+  },
+  {
+    "ma": "MA500",
+    "title": "Cylinker 500",
+    "image": "/III.GISSTUDY/myMap/Image/gasFire.png",
+    "location": {
+      "latitude": 9.048012878611614,
+      "longitude": 105.04758770895121
+    }
+  }
+]
