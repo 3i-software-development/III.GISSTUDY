@@ -4,16 +4,46 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/III.GISSTUDY/myMap/Image/";
+var link = "/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
 var fromMarker = null;
 var endMarker = null;
 var isSelectingFrom = true;
-const container = document.getElementById("popup");  
-const closer = document.getElementById("popup-closer");
+var selectedPoint = null;
+var routeLayer = null;
+//Thuộc tính Popup
+var ShowPopup = false;
+var container = document.getElementById("popup");
+var closer = document.getElementById("popup-closer");
+var popupElement = document.getElementById('popup');
+var popupContentElement = document.getElementById('popup-content');
+//hệ tọa độ
+const PIXEL = "EPSG:3857"
+const LONLAT = "EPSG:4326"
 
+var popup = new ol.Overlay({
+    element: popupElement,
+    positioning: 'bottom-center',
+    stopEvent: false,
+    offset: [0, -15],
+});
+closer.onclick = function (event) {
+    event.stopPropagation(); // Ngăn chặn sự kiện click lan toả
+    popup.setPosition(undefined);
+    map.removeOverlay(popup); // Loại bỏ overlay khi đóng popup
+    ShowPopup = false;
+    closer.blur();
+    return false;
+};
+// Tạo polygon ban đầu
+var polygonCoordinates = [
+    [102.1400, 23.4000],
+    [109.4600, 23.4000],
+    [109.4600, 8.1800],
+    [102.1400, 8.1800],
+];
 function readJson() {
     fetch('./VN_Huyen.geojson')
         .then(response => response.json())
@@ -27,14 +57,53 @@ function readJson() {
             console.error('Error:', error);
         });
 }
+function CongNghiepAPolygon() {
+    fetch('../JS/CongNghiepA.json')
+        .then(response => response.json())
+        .then(data => {
+            // Use the 'data' variable which now contains the JSON data
+            var data2 = data;
+            console.log(data2);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+function DrawRandomMarkersInSidePolygon(numberOfMarkers, poligon) {
+    for (var i = 0; i < numberOfMarkers; i++) {
+        do {
+            var randomCoord = generateRandomCoordinates(poligon.getGeometry().getExtent());
+        } while (!checkPointInsidePolygon(randomCoord, poligon))
 
-function CheckPosion(point)
-{
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 0.5],
+                src: link + "gasFire.png",
+                scale: 0.7,
+            }),
+        });
+        drawMarker(iconStyle, randomCoord, i);
+    }
+}
+function DrawCylinder() {
+    DrawRandomMarkersInSidePolygon(100, getPolygonByName("Vinh Chau"))
+}
+
+function generateRandomCoordinates(extent) {
+    var minX = extent[0];
+    var minY = extent[1];
+    var maxX = extent[2];
+    var maxY = extent[3];
+    var randomX = minX + (maxX - minX) * Math.random();
+    var randomY = minY + (maxY - minY) * Math.random();
+    return [randomX, randomY];
+}
+function CheckPosion(point) {
     var features = new ol.format.GeoJSON().readFeatures(geojson, {
         featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
     });
 
-    result=features.find(poligon=>checkPointInsidePolygon(point,poligon));
+    result = features.find(poligon => checkPointInsidePolygon(point, poligon));
     return result;
 }
 function addPolygon() {
@@ -55,7 +124,8 @@ function addPolygon() {
     map.getView().fit(extent, map.getSize());
 }
 
-function addPolygonByName(name) {
+function getPolygonByName(name) {
+    var listLonLat = []
     // Kiểm tra xem vectorSource đã được tạo hay chưa
     if (!vectorSource) {
         vectorSource = new ol.source.Vector();
@@ -74,10 +144,10 @@ function addPolygonByName(name) {
 
     // Tạo phong cách chỉ với đường viền màu đen
     var style = new ol.style.Style({
-            stroke: new ol.style.Stroke({
-            color: 'black', // Màu đen cho đường viền
+        stroke: new ol.style.Stroke({
+            color: 'blue', // Màu đen cho đường viền
             width: 2 // Độ rộng của đường viền
-        })                                              
+        })
     });
 
     // Gán phong cách cho các đối tượng trong filteredFeatures
@@ -98,8 +168,8 @@ function addPolygonByName(name) {
 }
 
 
-    // khởi tạo bản đồ =================================
-    function createMap() {
+// khởi tạo bản đồ =================================
+function createMap() {
     // Create a source for the features
     vectorSource = new ol.source.Vector();
 
@@ -121,9 +191,9 @@ function addPolygonByName(name) {
 
     // Google Maps Layer
     googleLayer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-        url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
-    })
+        source: new ol.source.XYZ({
+            url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+        })
     });
     // OpenStreetMap Layer
     osmLayer = new ol.layer.Tile({
@@ -146,6 +216,52 @@ function addPolygonByName(name) {
         }),
     });
 
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0.5, 0.5],
+            src: link + "gasFire.png",
+            scale: 0.7,
+        }),
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'black',
+                width: 3
+            })
+        })
+    });
+    // Tạo một sự kiện lắng nghe cho bản đồ
+    map.on('dblclick', function (event) {
+        var lonlat = ol.proj.transform(event.coordinate, PIXEL, LONLAT);
+
+        if (selectedPoint === null) {
+            A = lonlat;
+            drawMarker(iconStyle, event.coordinate);
+            selectedPoint = 'A';
+        } else {
+            B = lonlat;
+            drawMarker(iconStyle, event.coordinate);
+            selectedPoint = 'B';
+
+            // Kiểm tra nếu đã có đối tượng đường tìm kiếm, thì xóa nó trước khi tạo đường mới
+            if (routeLayer) {
+                map.removeLayer(routeLayer);
+            }
+
+            routeLayer = loadFindWay(A, B);
+        }
+    });
+
+    defaultPolygon = new ol.Feature({
+        geometry: new ol.geom.Polygon([polygonCoordinates]).transform('EPSG:4326', 'EPSG:3857'),
+    });
+
+    vectorSource.addFeature(defaultPolygon);
+
+}
+//======================================================
+
+function loadFindWay(A, B) {
+    // Kiểm tra và xóa tất cả các tính năng trên lớp Vector hiện tại
     var vectorLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
             format: new ol.format.GeoJSON(),
@@ -158,105 +274,127 @@ function addPolygonByName(name) {
         })
     });
 
+    vectorLayer.getSource().clear(); // Xóa tất cả các tính năng trên lớp Vector
+
     map.addLayer(vectorLayer);
 
-    // Tạo polygon ban đầu
-    var polygonCoordinates = [
-    [102.1400, 23.4000],
-    [109.4600, 23.4000],
-    [109.4600, 8.1800],
-    [102.1400, 8.1800],
-    ];
+    // Gửi yêu cầu lấy đường đi từ OpenRouteService
+    var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+    var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+    var requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apiKey,
+        },
+        body: JSON.stringify({
+            'coordinates': [A, B],
+        })
+    };
 
-    defaultPolygon = new ol.Feature({
-        geometry: new ol.geom.Polygon([polygonCoordinates]).transform('EPSG:4326', 'EPSG:3857'),
+    fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            // Lấy đường đi từ dữ liệu trả về
+            var route = data.features[0];
+            console.log(route);
+            // Thêm đường đi vào lớp Vector
+            vectorLayer.getSource().addFeature(new ol.Feature({
+                geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
+            }));
+
+            // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
+            // var extent = vectorLayer.getSource().getExtent();
+            // map.getView().fit(extent, map.getSize());
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
+
+// Kiểm tra xem có thuộc polygon không và hiển thị thuộc tỉnh nào
+function checkPointAndAddIcon(evt) {
+    if (isDrawing) {
+        return;
+    }
+    const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
+        if (feature.getGeometry() instanceof ol.geom.Point) {
+            console.log(feature)
+
+            return feature; // Đây là một marker
+        }
+    });
+    if (marker) {
+        ShowPopup = false;
+    }
+    if (ShowPopup) {
+        return;
+    }
+    var selectedPoint = evt.coordinate;
+    //List điạ chỉ
+    var features = new ol.format.GeoJSON().readFeatures(geojson, {
+        featureProjection: PIXEL, // Chuyển đổi hệ tọa độ sang EPSG:3857
     });
 
-    vectorSource.addFeature(defaultPolygon);
-    }
-    //======================================================
-
-    
-
-    // Kiểm tra xem có thuộc polygon không và hiển thị thuộc tỉnh nào
-    function checkPointAndAddIcon(evt) {
-        if (isDrawing) {
-            return;
-        }
-        var selectedPoint = evt.coordinate;
-        //List điạ chỉ
-        var features = new ol.format.GeoJSON().readFeatures(geojson, {
-            featureProjection: 'EPSG:3857', // Chuyển đổi hệ tọa độ sang EPSG:3857
-        });
-
-        var a=CheckPosion(selectedPoint, features);
-        var address=selectedPoint;
-        //Lấy điạ chỉ
-        if(a!=undefined){
-            a=a.values_;
-            address=a.NAME_0+','+a.NAME_1+','+a.NAME_2;
-        }
-        
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 0.5],
-                src: link + "gasFire.png",
-                scale: 0.7,
-            }),
-        });
-
-        var iconFeature = new ol.Feature({
-            geometry: new ol.geom.Point(selectedPoint),
-        });
-
-        const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
-            if (feature.getGeometry() instanceof ol.geom.Point) {
-                return feature; // Đây là một marker
-            }
-        });
-        if (marker) {
-            showPopup(selectedPoint, address);
-        } else {
-            showPopup(selectedPoint, address);
-            // Add a point to the vector source at the clicked coordinates
-            iconFeature.setStyle(iconStyle);
-            vectorSource.addFeature(iconFeature);
-        }
+    var a = CheckPosion(selectedPoint, features);
+    var address = ol.proj.transform(selectedPoint, PIXEL, LONLAT);
+    //Lấy điạ chỉ
+    if (a != undefined) {
+        a = a.values_;
+        address = a.NAME_0 + ',' + a.NAME_1 + ',' + a.NAME_2;
     }
 
-    function showPopup(coordinate, content) {
-        var popupElement = document.getElementById('popup');
-        var popupContentElement = document.getElementById('popup-content');
-        var closer=document.getElementById('popup-closer');
-        if (popupElement && popupContentElement) {
-            popupContentElement.innerHTML = content;
-    
-            var popup = new ol.Overlay({
-                element: popupElement,
-                positioning: 'bottom-center',
-                stopEvent: false,
-                offset: [0, -15],
-            });
-            closer.onclick = function (event) {
-                event.stopPropagation(); // Ngăn chặn sự kiện click lan toả
-                popup.setPosition(undefined);
-                map.removeOverlay(popup); // Loại bỏ overlay khi đóng popup
-                closer.blur();
-                return false;
-            };
-            
-            
-            map.addOverlay(popup);
-            popup.setPosition(coordinate);
-        }  
-    }
-    function checkPointInsidePolygon(point, polygon){
-        return polygon.getGeometry().intersectsCoordinate(point);
-        }
-    //=======================================================
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0.5, 0.5],
+            src: link + "gasFire.png",
+            scale: 0.7,
+        }),
+    });
 
-    // vẽ và lưu tọa độ polygon vào tọa độ ==================
-    function startDrawing() {
+    if (marker) {
+        showPopup(selectedPoint, address);
+        selectedFeature = marker;
+    } else {
+        drawMarker(iconStyle, selectedPoint, undefined);
+        showPopup(selectedPoint, address);
+    }
+}
+
+function drawMarker(markerStyle, coordinate, id) {
+    var iconFeature = new ol.Feature({
+        geometry: new ol.geom.Point(coordinate),
+        id: id
+    });
+
+    iconFeature.setStyle(markerStyle);
+    vectorSource.addFeature(iconFeature);
+
+    console.log(coordinate)
+}
+
+function showPopup(coordinate, content) {
+    ShowPopup = true;
+    popupContentElement.innerHTML = content;
+    map.addOverlay(popup);
+    popup.setPosition(coordinate);
+
+    var popupCloser = document.getElementById('popup-closer-marker');
+
+
+    popupCloser.addEventListener('click', function () {
+        overlay.setPosition(undefined); // Đóng popup bằng cách thiết lập vị trí là undefined
+    });
+}
+function checkPointInsidePolygon(point, polygon) {
+    return polygon.getGeometry().intersectsCoordinate(point);
+}
+//=======================================================
+
+// vẽ và lưu tọa độ polygon vào tọa độ ==================
+function startDrawing() {
     if (!isDrawing) {
         draw = new ol.interaction.Draw({
             source: vectorSource,
@@ -272,9 +410,9 @@ function addPolygonByName(name) {
             savePolygonsToGeoJSONFile();
         });
     }
-    }
+}
 
-    function savePolygonsToGeoJSONFile() {
+function savePolygonsToGeoJSONFile() {
     // Tạo một đối tượng GeoJSON
     var geojsonObject = {
         type: "FeatureCollection",
@@ -282,7 +420,7 @@ function addPolygonByName(name) {
     };
 
     // Lặp qua mảng polygons và chuyển đổi chúng thành đối tượng GeoJSON
-    polygons.forEach(function(polygon) {
+    polygons.forEach(function (polygon) {
         var format = new ol.format.GeoJSON();
         var geojsonFeature = format.writeFeature(polygon);
         geojsonObject.features.push(geojsonFeature);
@@ -302,90 +440,90 @@ function addPolygonByName(name) {
     a.href = url;
     a.download = "polygons.geojson"; // Tên file GeoJSON
     a.click();
+}
+
+
+function stopDrawing() {
+    if (isDrawing) {
+        map.removeInteraction(draw);
+        isDrawing = false;
     }
+}
+// =======================================================
 
+// đổi bản đồ ============================================
+function switchMap() {
+    // Kiểm tra lớp nền hiện tại và chuyển đổi
 
-    function stopDrawing() {
-        if (isDrawing) {
-            map.removeInteraction(draw);
-            isDrawing = false;
-        }
+    if (map.getLayers().getArray()[0] === googleLayer) {
+        map.getLayers().setAt(0, osmLayer); // Chuyển sang OpenStreetMap
     }
-    // =======================================================
-    
-    // đổi bản đồ ============================================
-    function switchMap() {
-        // Kiểm tra lớp nền hiện tại và chuyển đổi
-        
-        if (map.getLayers().getArray()[0] === googleLayer) {
-            map.getLayers().setAt(0, osmLayer); // Chuyển sang OpenStreetMap
-        }
-        else if (map.getLayers().getArray()[0] === osmLayer) {
-            map.getLayers().setAt(0, googleLayer); // Chuyển sang OpenStreetMap
-        } else {
-            map.getLayers().setAt(0, googleLayer); // Chuyển sang Google Maps
-        }
+    else if (map.getLayers().getArray()[0] === osmLayer) {
+        map.getLayers().setAt(0, googleLayer); // Chuyển sang OpenStreetMap
+    } else {
+        map.getLayers().setAt(0, googleLayer); // Chuyển sang Google Maps
     }
+}
 
-    //========================================================
+//========================================================
 
 
-    // Tính khoảng cách  ======================================
-    function degreesToMeters(degrees) {
-        var radius = 6371000; // Bán kính trái đất ở mức biển (đơn vị: mét)
-        return degrees * (Math.PI / 180) * radius;
+// Tính khoảng cách  ======================================
+function degreesToMeters(degrees) {
+    var radius = 6371000; // Bán kính trái đất ở mức biển (đơn vị: mét)
+    return degrees * (Math.PI / 180) * radius;
+}
+
+function Distance(from, end) {
+    var line = new ol.geom.LineString([from, end]);
+    var distanceInDegrees = line.getLength();
+    var distanceInMeters = degreesToMeters(distanceInDegrees);
+    var distanceInKilometers = distanceInMeters / 1000;
+    return distanceInKilometers;
+}
+
+function handleMapDoubleClick(event) {
+    var coordinates = event.coordinate;
+    var markerStyle = new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 6,
+            fill: new ol.style.Fill({ color: 'blue' }),
+            stroke: new ol.style.Stroke({ color: 'black', width: 3 }),
+        }),
+    });
+
+    if (isSelectingFrom) {
+        fromMarker = createMarker(coordinates, markerStyle);
+        isSelectingFrom = false;
+    } else {
+        endMarker = createMarker(coordinates, markerStyle);
+        var distance = Distance(fromMarker.getGeometry().getCoordinates(), endMarker.getGeometry().getCoordinates());
+        var distanceinfo = document.getElementById('distance-info');
+        distanceinfo.innerHTML = 'Distance: ' + distance + " kilometer";
+        isSelectingFrom = true;
     }
-    
-    function Distance(from, end) {
-        var line = new ol.geom.LineString([from, end]);
-        var distanceInDegrees = line.getLength();
-        var distanceInMeters = degreesToMeters(distanceInDegrees);
-        var distanceInKilometers = distanceInMeters / 1000;
-        return distanceInKilometers;
-    }
+}
 
-    function handleMapDoubleClick(event) {
-        var coordinates = event.coordinate;
-        var markerStyle = new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 6,
-                fill: new ol.style.Fill({ color: 'blue' }),
-                stroke: new ol.style.Stroke({ color: 'black', width: 3 }),
-            }),
-        });
-    
-        if (isSelectingFrom) {
-            fromMarker = createMarker(coordinates, markerStyle);
-            isSelectingFrom = false;
-        } else {
-            endMarker = createMarker(coordinates, markerStyle);
-            var distance = Distance(fromMarker.getGeometry().getCoordinates(), endMarker.getGeometry().getCoordinates());
-            var distanceinfo = document.getElementById('distance-info');
-            distanceinfo.innerHTML = 'Distance: ' + distance + " kilometer";
-            isSelectingFrom = true;
-        }
-    }
+function createMarker(coordinates, style) {
+    var marker = new ol.Feature({
+        geometry: new ol.geom.Point(coordinates)
+    });
 
-    function createMarker(coordinates, style) {
-        var marker = new ol.Feature({
-            geometry: new ol.geom.Point(coordinates)
-        });
-    
-        marker.setStyle(style);
-    
-        var markerLayer = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: [marker],
-            }),
-        });
-    
-        map.addLayer(markerLayer);
-    
-        return marker;
-    }
-    //=========================================================
+    marker.setStyle(style);
 
-    // Định nghĩa hàm mô phỏng chuyển động của marker
+    var markerLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [marker],
+        }),
+    });
+
+    map.addLayer(markerLayer);
+
+    return marker;
+}
+//=========================================================
+
+// Định nghĩa hàm mô phỏng chuyển động của marker
 function simulateMarkerMovement() {
     var markers = [];
     var time = 0;
@@ -393,161 +531,157 @@ function simulateMarkerMovement() {
 
     var listLonLat = [
         [-43.19821603433218, -22.906235579377366],
-            [-43.19787271157827, -22.90637393840575],
-            [-43.1976795925292, -22.906907607621335],
-            [-43.197228981414696, -22.906966904071183],
-            [-43.19664962426748, -22.906729718116182],
-            [-43.1962204708251, -22.906630890512474],
-            [-43.19564111367788, -22.906433235088983],
-            [-43.19529779092398, -22.906413469530776],
-            [-43.19480426446524, -22.90625534496148],
-            [-43.1942034496459, -22.906097220207812],
-            [-43.1936455501708, -22.905978626521517],
-            [-43.19330222741689, -22.905860032731525],
-            [-43.19295890466299, -22.90576120449397],
-            [-43.1926370395812, -22.905642610513823],
-            [-43.192207886138824, -22.905464719349112],
-            [-43.191478325286774, -22.90528682795103],
-            [-43.19031961099233, -22.904950810229067],
-            [-43.18984754220571, -22.904713620747557],
-            [-43.18909652368154, -22.904515962529388],
-            [-43.18832404748526, -22.904259006415046],
-            [-43.18789489404287, -22.904140411121148],
-            [-43.187530113616845, -22.904061347534252],
-            [-43.187165333190826, -22.903903220222162],
-            [-43.186779095092675, -22.903863688365334],
-            [-43.186457230010895, -22.903745092725714],
-            [-43.18617828027334, -22.903606731015074],
-            [-43.18585641519156, -22.903448603172905],
-            [-43.185556007781884, -22.903468369163264],
-            [-43.185277058044335, -22.903290475146378],
-            [-43.18510539666738, -22.903250943110933],
-            [-43.18493373529043, -22.90319164503616],
-            [-43.184676243225, -22.90319164503616],
-            [-43.18452603952017, -22.903112580896135],
-            [-43.18437583581534, -22.903033516709996],
-            [-43.1841183437499, -22.902954452477786],
-            [-43.18388230935659, -22.90289515427338],
-            [-43.183796478668114, -22.903132346935465],
-            [-43.183667732635406, -22.903428837179675],
-            [-43.183517528930565, -22.903745092725714],
-            [-43.18343169824209, -22.904061347534252],
-            [-43.18330295220938, -22.904259006415046],
-            [-43.1832171215209, -22.904476430851176],
-            [-43.18313129083243, -22.904654323312357],
-            [-43.1831098331603, -22.904792683954156],
-            [-43.18295962945547, -22.905049639057253],
-            [-43.182916714111236, -22.90518799929572],
-            [-43.18280942575064, -22.905444953649734],
-            [-43.1826592220458, -22.905682141852054],
-            [-43.18261630670157, -22.905899564006376],
-            [-43.182530476013085, -22.90611698581209],
-            [-43.18238027230825, -22.90637393840575],
-            [-43.18214423791494, -22.906532062836746],
-            [-43.182015491882225, -22.906887842132278],
-            [-43.181800915161034, -22.907026200495096],
-            [-43.18143613473501, -22.906927373107493],
-            [-43.181243015685936, -22.906828545647855],
-            [-43.18102843896475, -22.90686807664035],
-            [-43.18092115060415, -22.90712502781068],
-            [-43.1808567775878, -22.907421509325246],
-            [-43.180770946899315, -22.907698224820592],
-            [-43.180706573882965, -22.90789587840007],
-            [-43.18062074319448, -22.908133062315116],
-            [-43.180513454833886, -22.908409776358283],
-            [-43.180449081817535, -22.90868648983667],
-            [-43.18034179345694, -22.908943437560936],
-            [-43.18021304742422, -22.90920038479821],
-            [-43.18012721673574, -22.909398036187838],
-            [-43.180041386047264, -22.909654982563566],
-            [-43.17993409768667, -22.90991192845233],
-            [-43.17986972467031, -22.910109578804608],
-            [-43.179762436309716, -22.910366523831797],
-            [-43.17965514794912, -22.91062346837198],
-            [-43.17959077493277, -22.910840882602542],
-            [-43.179504944244286, -22.911097826243633],
-            [-43.17939765588369, -22.91149312320212],
-            [-43.17924745217886, -22.911769830387215],
-            [-43.17911870614615, -22.912026772267637],
-            [-43.179011417785546, -22.912244184247584],
-            [-43.178968502441315, -22.912540654567422],
-            [-43.17888267175283, -22.912916182708386],
-            [-43.178732468048004, -22.913232416125425],
-            [-43.17860372201529, -22.913509119760164],
-            [-43.178303314605614, -22.913667235869255],
-            [-43.17815311090078, -22.91386488074626],
-            [-43.177809788146874, -22.913983467534138],
-            [-43.17744500772085, -22.914082289778108],
-            [-43.177058769622704, -22.9141613475214],
-            [-43.176758362213036, -22.91420087637576],
-            [-43.17641503945914, -22.914299698461235],
-            [-43.17611463204946, -22.914299698461235],
-            [-43.17577130929556, -22.9141415830899],
-            [-43.1755996479186, -22.913924174153166],
-            [-43.17540652886953, -22.913746293854643],
-        ];
+        [-43.19787271157827, -22.90637393840575],
+        [-43.1976795925292, -22.906907607621335],
+        [-43.197228981414696, -22.906966904071183],
+        [-43.19664962426748, -22.906729718116182],
+        [-43.1962204708251, -22.906630890512474],
+        [-43.19564111367788, -22.906433235088983],
+        [-43.19529779092398, -22.906413469530776],
+        [-43.19480426446524, -22.90625534496148],
+        [-43.1942034496459, -22.906097220207812],
+        [-43.1936455501708, -22.905978626521517],
+        [-43.19330222741689, -22.905860032731525],
+        [-43.19295890466299, -22.90576120449397],
+        [-43.1926370395812, -22.905642610513823],
+        [-43.192207886138824, -22.905464719349112],
+        [-43.191478325286774, -22.90528682795103],
+        [-43.19031961099233, -22.904950810229067],
+        [-43.18984754220571, -22.904713620747557],
+        [-43.18909652368154, -22.904515962529388],
+        [-43.18832404748526, -22.904259006415046],
+        [-43.18789489404287, -22.904140411121148],
+        [-43.187530113616845, -22.904061347534252],
+        [-43.187165333190826, -22.903903220222162],
+        [-43.186779095092675, -22.903863688365334],
+        [-43.186457230010895, -22.903745092725714],
+        [-43.18617828027334, -22.903606731015074],
+        [-43.18585641519156, -22.903448603172905],
+        [-43.185556007781884, -22.903468369163264],
+        [-43.185277058044335, -22.903290475146378],
+        [-43.18510539666738, -22.903250943110933],
+        [-43.18493373529043, -22.90319164503616],
+        [-43.184676243225, -22.90319164503616],
+        [-43.18452603952017, -22.903112580896135],
+        [-43.18437583581534, -22.903033516709996],
+        [-43.1841183437499, -22.902954452477786],
+        [-43.18388230935659, -22.90289515427338],
+        [-43.183796478668114, -22.903132346935465],
+        [-43.183667732635406, -22.903428837179675],
+        [-43.183517528930565, -22.903745092725714],
+        [-43.18343169824209, -22.904061347534252],
+        [-43.18330295220938, -22.904259006415046],
+        [-43.1832171215209, -22.904476430851176],
+        [-43.18313129083243, -22.904654323312357],
+        [-43.1831098331603, -22.904792683954156],
+        [-43.18295962945547, -22.905049639057253],
+        [-43.182916714111236, -22.90518799929572],
+        [-43.18280942575064, -22.905444953649734],
+        [-43.1826592220458, -22.905682141852054],
+        [-43.18261630670157, -22.905899564006376],
+        [-43.182530476013085, -22.90611698581209],
+        [-43.18238027230825, -22.90637393840575],
+        [-43.18214423791494, -22.906532062836746],
+        [-43.182015491882225, -22.906887842132278],
+        [-43.181800915161034, -22.907026200495096],
+        [-43.18143613473501, -22.906927373107493],
+        [-43.181243015685936, -22.906828545647855],
+        [-43.18102843896475, -22.90686807664035],
+        [-43.18092115060415, -22.90712502781068],
+        [-43.1808567775878, -22.907421509325246],
+        [-43.180770946899315, -22.907698224820592],
+        [-43.180706573882965, -22.90789587840007],
+        [-43.18062074319448, -22.908133062315116],
+        [-43.180513454833886, -22.908409776358283],
+        [-43.180449081817535, -22.90868648983667],
+        [-43.18034179345694, -22.908943437560936],
+        [-43.18021304742422, -22.90920038479821],
+        [-43.18012721673574, -22.909398036187838],
+        [-43.180041386047264, -22.909654982563566],
+        [-43.17993409768667, -22.90991192845233],
+        [-43.17986972467031, -22.910109578804608],
+        [-43.179762436309716, -22.910366523831797],
+        [-43.17965514794912, -22.91062346837198],
+        [-43.17959077493277, -22.910840882602542],
+        [-43.179504944244286, -22.911097826243633],
+        [-43.17939765588369, -22.91149312320212],
+        [-43.17924745217886, -22.911769830387215],
+        [-43.17911870614615, -22.912026772267637],
+        [-43.179011417785546, -22.912244184247584],
+        [-43.178968502441315, -22.912540654567422],
+        [-43.17888267175283, -22.912916182708386],
+        [-43.178732468048004, -22.913232416125425],
+        [-43.17860372201529, -22.913509119760164],
+        [-43.178303314605614, -22.913667235869255],
+        [-43.17815311090078, -22.91386488074626],
+        [-43.177809788146874, -22.913983467534138],
+        [-43.17744500772085, -22.914082289778108],
+        [-43.177058769622704, -22.9141613475214],
+        [-43.176758362213036, -22.91420087637576],
+        [-43.17641503945914, -22.914299698461235],
+        [-43.17611463204946, -22.914299698461235],
+        [-43.17577130929556, -22.9141415830899],
+        [-43.1755996479186, -22.913924174153166],
+        [-43.17540652886953, -22.913746293854643],
+    ];
 
     // Hàm để xóa các marker trước khi thêm marker mới
     function deleteMarkers() {
-        for (var i = 0; i < markers.length; i++) {
-            map.removeLayer(markers[i]);
-        }
-        markers = [];
     }
 
     // Hàm để thêm marker mới và xóa marker cũ
-function addMarkerAndRemovePrevious(locationS, rotationA) {
-    // Xóa marker cũ
-    deleteMarkers();
+    function addMarkerAndRemovePrevious(locationS, rotationA) {
+        // Xóa marker cũ
+        deleteMarkers();
 
-    // Thêm marker mới
-    var marker = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            features: [
-                new ol.Feature({
-                    geometry: new ol.geom.Point(locationS)
+        // Thêm marker mới
+        var marker = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point(locationS)
+                    })
+                ],
+            }),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    crossOrigin: 'anonymous',
+                    src: link + 'car_topview.svg',
+                    rotation: rotationA,
                 })
-            ],
-        }),
-        style: new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 1],
-                crossOrigin: 'anonymous',
-                src: link + 'car_topview.svg',
-                rotation: rotationA,
             })
-        })
-    });
+        });
 
-    markers.push(marker);
-    map.addLayer(marker);
-}
-
-function setPosition() {
-    if (time <= 0) {
-        dr = true;
-    }
-    if (time >= listLonLat.length - 1) {
-        dr = false;
+        markers.push(marker);
+        map.addLayer(marker);
     }
 
-    var locationS, locationE, rotationA;
+    function setPosition() {
+        if (time <= 0) {
+            dr = true;
+        }
+        if (time >= listLonLat.length - 1) {
+            dr = false;
+        }
 
-    if (dr == true) {
-        locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
-        locationE = ol.proj.fromLonLat([listLonLat[time + 1][0], listLonLat[time + 1][1]]);
-        rotationA = setRotation(locationS, locationE);
-        time++;
-    } else {
-        locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
-        locationE = ol.proj.fromLonLat([listLonLat[time - 1][0], listLonLat[time - 1][1]]);
-        rotationA = setRotation(locationS, locationE);
-        time--;
+        var locationS, locationE, rotationA;
+
+        if (dr == true) {
+            locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
+            locationE = ol.proj.fromLonLat([listLonLat[time + 1][0], listLonLat[time + 1][1]]);
+            rotationA = setRotation(locationS, locationE);
+            time++;
+        } else {
+            locationS = ol.proj.fromLonLat([listLonLat[time][0], listLonLat[time][1]]);
+            locationE = ol.proj.fromLonLat([listLonLat[time - 1][0], listLonLat[time - 1][1]]);
+            rotationA = setRotation(locationS, locationE);
+            time--;
+        }
+
+        // Sử dụng hàm addMarkerAndRemovePrevious để thêm marker mới và xóa marker cũ
+        addMarkerAndRemovePrevious(locationS, rotationA);
     }
-
-    // Sử dụng hàm addMarkerAndRemovePrevious để thêm marker mới và xóa marker cũ
-    addMarkerAndRemovePrevious(locationS, rotationA);
-}
 
 
 
@@ -566,4 +700,83 @@ function setPosition() {
 // Gọi hàm simulateMarkerMovement để bắt đầu mô phỏng chuyển động của marker
 simulateMarkerMovement();
 
-    
+function removeMarkerById(featureId) {
+    // Tìm feature theo ID
+    var featureToRemove = vectorLayer.getSource().getFeatureById(featureId);
+
+    if (featureToRemove) {
+        // Xóa feature khỏi lớp vector
+        vectorLayer.getSource().removeFeature(featureToRemove);
+    } else {
+        console.log('Không tìm thấy feature có ID là ' + featureId);
+    }
+}
+function clearAllMarkers() {
+    // Lấy danh sách tất cả các lớp (layers) trên bản đồ
+    var layers = map.getLayers().getArray();
+
+    // Lặp qua các lớp để tìm và xóa lớp marker
+    layers.forEach(function (layer) {
+        if (layer instanceof ol.layer.Vector) {
+            map.removeLayer(layer);
+        }
+    });
+
+    // Sau khi xóa tất cả các lớp marker, bạn có thể tạo một lớp vector mới
+    // để sử dụng cho việc vẽ marker sau này.
+    vectorSource = new ol.source.Vector();
+    var vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+    });
+    map.addLayer(vectorLayer);
+}
+function findAndZoomToMarker() {
+    // Lấy giá trị ID từ thẻ input
+    var markerId = document.getElementById("markerIdInput").value;
+
+    // Duyệt qua tất cả các features trên layer vectorSource để tìm marker có ID tương ứng
+    var foundFeature = null;
+    vectorSource.getFeatures().forEach(function (feature) {
+        if (feature.get("id") == markerId) {
+            foundFeature = feature;
+        }
+    });
+
+    var overlay = new ol.Overlay({
+        element: document.getElementById('popup-marker'),
+        autoPan: true,
+        autoPanAnimation: {
+            duration: 250,
+        },
+    });
+
+    map.addOverlay(overlay);
+    if (foundFeature) {
+        // Tìm thấy marker, lấy tọa độ của marker
+        var markerCoordinate = foundFeature.getGeometry().getCoordinates();
+
+        // Đặt giá trị zoom
+        var zoomLevel = 20;
+        var content = "Marker ID:  " + markerId; // Thay bằng thông tin thực tế của marker
+
+        // Thiết lập nội dung cho popup
+        document.getElementById('popup-content-marker').innerHTML = content;
+
+        // Hiển thị popup tại tọa độ của marker
+        overlay.setPosition(markerCoordinate);
+
+        // Sử dụng OpenLayers để thực hiện zoom vào marker
+        map.getView().setCenter(markerCoordinate);
+        map.getView().setZoom(zoomLevel);
+    } else {
+        alert("Can not find marker with ID:  " + markerId);
+    }
+
+
+    var popupCloser = document.getElementById('popup-closer-marker');
+
+
+    popupCloser.addEventListener('click', function () {
+        overlay.setPosition(undefined); // Đóng popup bằng cách thiết lập vị trí là undefined
+    });
+}
