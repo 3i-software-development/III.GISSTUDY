@@ -4,7 +4,7 @@ var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var defaultPolygon; // Polygon ban đầu
-var link = "/myMap/Image/";
+var link = "/III.GISSTUDY/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
@@ -381,6 +381,12 @@ function showPopup(coordinate, content) {
     map.addOverlay(popup);
     popup.setPosition(coordinate);
 
+    var popupCloser = document.getElementById('popup-closer-marker');
+
+
+    popupCloser.addEventListener('click', function () {
+        overlay.setPosition(undefined); // Đóng popup bằng cách thiết lập vị trí là undefined
+    });
 }
 function checkPointInsidePolygon(point, polygon) {
     return polygon.getGeometry().intersectsCoordinate(point);
