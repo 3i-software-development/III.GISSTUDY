@@ -173,6 +173,7 @@ button, input[type="button"], input[type="submit"] {
             </div>
             <div id="distance-info"></div>
             <div id="coordinate-info"></div>
+            <div id="info"></div>
         </div>
     </div>
     
@@ -187,6 +188,15 @@ button, input[type="button"], input[type="submit"] {
         readJson();
         map.on("click", checkPointAndAddIcon);
         map.on('contextmenu', handleMapDoubleClick);
+        // Lắng nghe sự kiện moveend (kéo chuột hoàn thành)
+        map.on('moveend', function () {
+            updateMap();
+        });
+
+        // Lắng nghe sự kiện wheel (cuộn chuột)
+        map.on('wheel', function () {
+            updateMap();
+        });
         
 
     </script>
