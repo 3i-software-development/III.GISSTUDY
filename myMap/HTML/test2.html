@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Map Example</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.Default.css" />
+    <title>Geocoding Example</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
     <style>
         #map {
             height: 700px;
@@ -13,63 +11,29 @@
 </head>
 <body>
     <div id="map"></div>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.4.0/dist/leaflet.markercluster.js"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
     <script>
-        var map = L.map('map').setView([0, 0], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        // Tạo một đa giác (polygon)
-        var polygonCoordinates = [
-            [0, 0],
-            [0, 10],
-            [10, 10],
-            [10, 0]
-        ];
-        var polygon = L.polygon(polygonCoordinates).addTo(map);
-
-        // Tạo danh sách tọa độ ngẫu nhiên bên trong polygon
-        var markerCoordinates = [];
-        var numberOfMarkers = 1000;
-        var markers = L.markerClusterGroup();
-
-        
-        for (var i = 0; i < numberOfMarkers; i++) {
-            // Tạo tọa độ ngẫu nhiên bên trong polygon
-            var lat = Math.random() * 10;
-            var lng = Math.random() * 10;
-            var randomCoord = [lat, lng];
-
-            // Kiểm tra xem tọa độ nằm trong polygon
-            if (polygon.getBounds().contains(randomCoord)) {
-                markerCoordinates.push(randomCoord);
-            }
-        }
-
-        // Tạo và thêm các marker vào Cluster Group
-        markerCoordinates.forEach(function(coord) {
-            var marker = L.marker(coord);
-            markers.addLayer(marker);
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([0, 0]),
+                zoom: 5
+            })
         });
 
-        map.addLayer(markers);
+        // Lấy tọa độ dựa trên tên địa điểm (geocoding)
+        var geocoder = new OpenCageGeocoder({
+            key: 'YOUR_API_KEY' // Thay YOUR_API_KEY bằng khóa API của bạn
+        });
 
-        map.on('zoomend', function() {
-            var currentZoom = map.getZoom();
-
-            // Lọc danh sách marker dựa trên zoom level
-            var filteredMarkers = markerCoordinates.filter(function(coord) {
-                // Thêm điều kiện lọc dựa trên currentZoom nếu cần
-                return true;
-            });
-
-            // Xóa tất cả marker khỏi Cluster Group
-            markers.clearLayers();
-
-            // Thêm lại các marker phù hợp vào Cluster Group
-            filteredMarkers.forEach(function(coord) {
-                var marker = L.marker(coord);
-                markers.addLayer(marker);
-            });
+        geocoder.geocode('Paris', function(response) {
+            var coordinates = response.results[0].geometry;
+            console.log('Tọa độ của Paris:', coordinates);
         });
     </script>
 </body>
