@@ -3,8 +3,9 @@ var vectorSource;
 var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
+var polygon={};
 var defaultPolygon; // Polygon ban đầu
-var link = "/III.GISSTUDY/myMap/Image/";
+var link = "/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
@@ -50,29 +51,35 @@ function readJson() {
         .then(data => {
             // Use the 'data' variable which now contains the JSON data
             geojson = data;
-            console.log(geojson);
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
-function CongNghiepAPolygon() {
-    fetch('../JS/CongNghiepA.json')
-        .then(response => response.json())
-        .then(data => {
-            // Use the 'data' variable which now contains the JSON data
-            var data2 = data;
-            console.log(data2);
-        })
-        .catch(error => {
-            console.error('Error:', error);
+async function GetPolygonJson(Url) {
+    try {
+        const response = await fetch(Url);
+        const data = await response.json();
+        data.features = JSON.parse(data.features);
+        // Lấy tọa độ của polygon từ đối tượng JSON
+        var coordinates = data.features.geometry.coordinates;
+        
+        // Tạo đối tượng geometry OpenLayers từ tọa độ
+        var polygon = new ol.geom.Polygon(coordinates);
+        var feature = new ol.Feature({
+            geometry: polygon
         });
+        
+        return feature
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
-function DrawRandomMarkersInSidePolygon(numberOfMarkers,poligon){
+function DrawRandomMarkersInSidePolygon(numberOfMarkers,feature){
     for (var i = 0; i < numberOfMarkers; i++) {
         do{
-            var randomCoord = generateRandomCoordinates(poligon.getGeometry().getExtent());
-        }while(!checkPointInsidePolygon(randomCoord,poligon))
+            var randomCoord = generateRandomCoordinates(feature.getGeometry().getExtent());
+        }while(!checkPointInsidePolygon(randomCoord,feature))
         
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
@@ -84,8 +91,29 @@ function DrawRandomMarkersInSidePolygon(numberOfMarkers,poligon){
         drawMarker(iconStyle,randomCoord,i);
     }
 }
-function DrawCylinder() {    
-    DrawRandomMarkersInSidePolygon(100,getPolygonByName("Vinh Chau"))
+async function DrawCylinder() {
+    polygon =await GetPolygonJson('./CongNghiepA.json');
+    vectorSource.clear(); // Xóa tất cả các đối tượng trên lớp vector
+    
+    // Tạo phong cách chỉ với đường viền màu đen
+    var style = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'blue', // Màu đen cho đường viền
+            width: 2 // Độ rộng của đường viền
+        })                                              
+    });
+    polygon.setStyle(style);
+    vectorSource.addFeatures(polygon); // Thêm các đối tượng mới vào lớp vector
+    
+    DrawRandomMarkersInSidePolygon(100,polygon)
+    if (polygon!=undefined) {
+        // Nếu có các đối tượng được tìm thấy, tùy chỉnh hiển thị bản đồ để hiển thị chúng.
+        var extent = vectorSource.getExtent();
+        map.getView().fit(extent, map.getSize());
+    } else {
+        // Xử lý trường hợp không tìm thấy đối tượng
+        console.log('Không tìm thấy đối tượng có VARNAME_2 là ' + name);
+    }
 }
 
 function generateRandomCoordinates(extent) {
@@ -125,7 +153,6 @@ function addPolygon() {
 }
 
 function getPolygonByName(name) {
-    var listLonLat=[]
     // Kiểm tra xem vectorSource đã được tạo hay chưa
     if (!vectorSource) {
         vectorSource = new ol.source.Vector();
@@ -365,8 +392,6 @@ function getPolygonByName(name) {
 
         iconFeature.setStyle(markerStyle);
         vectorSource.addFeature(iconFeature);
-        
-        console.log(coordinate)
     }
 
     function showPopup(coordinate, content) {
