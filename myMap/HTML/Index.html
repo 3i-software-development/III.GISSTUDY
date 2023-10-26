@@ -166,7 +166,6 @@ button, input[type="button"], input[type="submit"] {
             <input type="submit" value="Submit">
         </form>
     </div>
-    
     <div id="map" class="map" style="height: 600px;">
         <div>
             <div id="popup" class="ol-popup">
@@ -200,6 +199,80 @@ button, input[type="button"], input[type="submit"] {
             updateMap();
         });
         
+
+
+//         var map;
+//         var vectorLayer = null; // Khai báo biến vectorLayer ở mức toàn cục
+
+// function loadFindWay(A, B) {
+//     if (vectorLayer) {
+//         // Nếu đã có vectorLayer (route trước đó), hãy xóa nó trước khi tạo route mới
+//         map.removeLayer(vectorLayer);
+//     }
+
+//     vectorLayer = new ol.layer.Vector({
+//         source: new ol.source.Vector({
+//             format: new ol.format.GeoJSON(),
+//         }),
+//         style: new ol.style.Style({
+//             stroke: new ol.style.Stroke({
+//                 color: 'black',
+//                 width: 3
+//             })
+//         })
+//     });
+
+//     map.addLayer(vectorLayer);
+
+//     // Gửi yêu cầu lấy đường đi từ OpenRouteService
+//     var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+//     var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+//     var requestOptions = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + apiKey,
+//         },
+//         body: JSON.stringify({
+//             'coordinates': [A, B],
+//         })
+//     };
+
+//     fetch(url, requestOptions)
+//         .then(response => response.json())
+//         .then(data => {
+//             // Lấy đường đi từ dữ liệu trả về
+//             var route = data.features[0];
+//             console.log(route);
+//             // Thêm đường đi vào lớp Vector
+//             vectorLayer.getSource().addFeature(new ol.Feature({
+//                 geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
+//             }));
+
+//             // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
+//             // var extent = vectorLayer.getSource().getExtent();
+//             // map.getView().fit(extent, map.getSize());
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// // Hàm để xóa route hiện tại
+// function clearRoute() {
+//     if (vectorLayer) {
+//         map.removeLayer(vectorLayer);
+//         vectorLayer = null;
+//     }
+// }
+
+// // Tạo nút xóa route
+// var clearButton = document.createElement('button');
+// clearButton.innerHTML = 'Xóa Route';
+// clearButton.addEventListener('click', clearRoute);
+
+// // Thêm nút xóa route vào một phần tử HTML (ví dụ: một div với id "clearButtonDiv")
+// document.getElementById('clearButtonDiv').appendChild(clearButton);
 
     </script>
 </body>

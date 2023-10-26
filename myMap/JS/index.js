@@ -5,7 +5,7 @@ var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var polygon = {};
 var defaultPolygon; // Polygon ban đầu
-var link = "/Image/";
+var link = "/myMap/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
@@ -291,9 +291,70 @@ function createMap() {
 }
 //======================================================
 
+// function loadFindWay(A, B) {
+//     // Kiểm tra và xóa tất cả các tính năng trên lớp Vector hiện tại
+//     var vectorLayer = new ol.layer.Vector({
+//         source: new ol.source.Vector({
+//             format: new ol.format.GeoJSON(),
+//         }),
+//         style: new ol.style.Style({
+//             stroke: new ol.style.Stroke({
+//                 color: 'black',
+//                 width: 3
+//             })
+//         })
+//     });
+
+//     vectorLayer.getSource().clear(); // Xóa tất cả các tính năng trên lớp Vector
+
+//     map.addLayer(vectorLayer);
+
+//     // Gửi yêu cầu lấy đường đi từ OpenRouteService
+//     var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+//     var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+//     var requestOptions = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + apiKey,
+//         },
+//         body: JSON.stringify({
+//             'coordinates': [A, B],
+//         })
+//     };
+
+//     fetch(url, requestOptions)
+//         .then(response => response.json())
+//         .then(data => {
+//             // Lấy đường đi từ dữ liệu trả về
+//             var route = data.features[0];
+//             console.log(route);
+//             // Thêm đường đi vào lớp Vector
+//             vectorLayer.getSource().addFeature(new ol.Feature({
+//                 geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
+//             }));
+
+//             // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
+//             // var extent = vectorLayer.getSource().getExtent();
+//             // map.getView().fit(extent, map.getSize());
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// ==========================
+var vectorLayer = null; // Khai báo biến vectorLayer ở mức toàn cục
+var pointA = null; // Lưu điểm A
+
 function loadFindWay(A, B) {
-    // Kiểm tra và xóa tất cả các tính năng trên lớp Vector hiện tại
-    var vectorLayer = new ol.layer.Vector({
+    if (vectorLayer) {
+        // Nếu đã có vectorLayer (route trước đó), hãy xóa nó trước khi tạo route mới
+        map.removeLayer(vectorLayer);
+        vectorLayer = null; // Xóa vectorLayer hoàn toàn
+    }
+
+    vectorLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
             format: new ol.format.GeoJSON(),
         }),
@@ -305,13 +366,14 @@ function loadFindWay(A, B) {
         })
     });
 
-    vectorLayer.getSource().clear(); // Xóa tất cả các tính năng trên lớp Vector
-
     map.addLayer(vectorLayer);
+
+    // Lưu điểm A
+    pointA = A;
 
     // Gửi yêu cầu lấy đường đi từ OpenRouteService
     var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
-    var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+    var apiKey = '5b3ce3597851110001cf6248c7ab2e60a6324099aef97a0473f22578'; // Thay thế YOUR_API_KEY bằng API key của bạn
     var requestOptions = {
         method: 'POST',
         headers: {
@@ -319,7 +381,7 @@ function loadFindWay(A, B) {
             'Authorization': 'Bearer ' + apiKey,
         },
         body: JSON.stringify({
-            'coordinates': [A, B],
+            'coordinates': [pointA, B],
         })
     };
 
@@ -342,6 +404,28 @@ function loadFindWay(A, B) {
             console.error('Error:', error);
         });
 }
+
+// Xử lý double-click để xóa route hiện tại
+function handleDoubleClick(C) {
+    clearRoute(); // Xóa route hiện tại và các điểm
+    loadFindWay(C, pointA); // Tạo route mới từ A đến C
+}
+
+// Hàm để xóa route hiện tại và các điểm
+function clearRoute() {
+    if (vectorLayer) {
+        map.removeLayer(vectorLayer);
+        vectorLayer = null;
+    }
+    pointA = null; // Xóa điểm A
+}
+
+
+
+
+
+
+// ==========================
 
 
 
