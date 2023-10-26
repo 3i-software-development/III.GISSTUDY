@@ -414,12 +414,12 @@ function loadFindWay(A, B) {
         .then(data => {
             // Lấy đường đi từ dữ liệu trả về
             var route = data.features[0];
-            console.log(route);
+            console.log(route.geometry.coordinates);
             // Thêm đường đi vào lớp Vector
             vectorLayer.getSource().addFeature(new ol.Feature({
                 geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
             }));
-
+            moveMarkerAlongRoute(route.geometry.coordinates)
             // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
             // var extent = vectorLayer.getSource().getExtent();
             // map.getView().fit(extent, map.getSize());
@@ -847,7 +847,7 @@ function simulateMarkerMovement() {
 }
 
 // Gọi hàm simulateMarkerMovement để bắt đầu mô phỏng chuyển động của marker
-simulateMarkerMovement();
+//simulateMarkerMovement();
 var selectedFeature = null; // Biến lưu trạng thái đã chọn
 
 function removeMarkerById(featureId) {
@@ -960,4 +960,76 @@ function addMarker(coordinates, image) {
 
 function CheckPosition() {
     isCheckPosition = !isCheckPosition;
+}
+
+function findMarkerAndZoom(id){
+    target=MarkerListLocation.find(marker=>marker.id==id)
+    if(target!=undefined){
+        // Đặt tọa độ và mức thu phóng mới
+        view.setCenter(target.coordinate);
+        view.setZoom(30);
+        showPopup(target.coordinate,"MarkerID:"+target.id)
+    }
+    else{
+        alert("Không tìm thấy marker có id này");
+    }
+}
+function findMarkerAndZoomHandle() {
+    // Lấy giá trị từ ô input
+    var id = document.getElementById("markerId").value;
+
+    // Gọi hàm findMarkerAndZoom với id là tham số
+    findMarkerAndZoom(id);
+}
+
+function moveMarkerAlongRoute(routeCoordinates) {
+    var marker = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat(routeCoordinates[0]))
+            })]
+        }),
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: link + 'car_topview.svg',
+                rotation: 0, // Góc quay ban đầu
+            })
+        })
+    });
+
+    map.addLayer(marker);
+
+    var currentIndex = 0;
+
+    function animateMarker() {
+        var currentCoord = routeCoordinates[currentIndex];
+        var nextCoord = routeCoordinates[currentIndex + 1];
+
+        if (!currentCoord || !nextCoord) {
+            // Đã di chuyển hết tất cả các điểm trên đường
+            return;
+        }
+
+        var currentLonLat = ol.proj.fromLonLat(currentCoord);
+        var nextLonLat = ol.proj.fromLonLat(nextCoord);
+        var rotation = Math.atan2(nextLonLat[0] - currentLonLat[0], nextLonLat[1] - currentLonLat[1]);
+
+        marker.getSource().getFeatures()[0].getGeometry().setCoordinates(currentLonLat);
+        marker.setStyle(new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: link + 'car_topview.svg',
+                rotation: -rotation, // Sử dụng âm để quay theo chiều kim đồng hồ
+            })
+        }));
+
+        currentIndex++;
+
+        setTimeout(animateMarker, 700); // Thời gian chờ giữa các điểm trên đường (ms)
+    }
+
+    animateMarker();
 }
