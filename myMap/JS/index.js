@@ -73,18 +73,12 @@ function CongNghiepAPolygon() {
 function DrawRandomMarkersInSidePolygon(numberOfMarkers, poligon) {
     for (var i = 0; i < numberOfMarkers; i++) {
         do {
-<<<<<<< HEAD
-            var randomCoord = generateRandomCoordinates(poligon.getGeometry().getExtent());
-        } while (!checkPointInsidePolygon(randomCoord, poligon))
-
-=======
             var randomCoord = generateRandomCoordinates(feature.getGeometry().getExtent());
         } while (!checkPointInsidePolygon(randomCoord, feature))
         var Marker={
             coordinate:randomCoord,
             id:i
         }
->>>>>>> 413e3facb696cfe1d72c888d3e2385c595dd0c9e
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
                 anchor: [0.5, 0.5],
@@ -93,10 +87,7 @@ function DrawRandomMarkersInSidePolygon(numberOfMarkers, poligon) {
             }),
         });
         drawMarker(iconStyle, randomCoord, i);
-<<<<<<< HEAD
-=======
         MarkerListLocation[i]=Marker
->>>>>>> 413e3facb696cfe1d72c888d3e2385c595dd0c9e
     }
 }
 function DrawCylinder() {
@@ -744,69 +735,4 @@ function clearAllMarkers() {
         source: vectorSource,
     });
     map.addLayer(vectorLayer);
-}
-function findAndZoomToMarker() {
-    // Lấy giá trị ID từ thẻ input
-    var markerId = document.getElementById("markerIdInput").value;
-
-    // Duyệt qua tất cả các features trên layer vectorSource để tìm marker có ID tương ứng
-    var foundFeature = null;
-    vectorSource.getFeatures().forEach(function (feature) {
-        if (feature.get("id") == markerId) {
-            foundFeature = feature;
-        }
-    });
-
-    var overlay = new ol.Overlay({
-        element: document.getElementById('popup-marker'),
-        autoPan: true,
-        autoPanAnimation: {
-            duration: 250,
-        },
-    });
-
-<<<<<<< HEAD
-    map.addOverlay(overlay);
-    if (foundFeature) {
-        // Tìm thấy marker, lấy tọa độ của marker
-        var markerCoordinate = foundFeature.getGeometry().getCoordinates();
-
-        // Đặt giá trị zoom
-        var zoomLevel = 20;
-        var content = "Marker ID:  " + markerId; // Thay bằng thông tin thực tế của marker
-
-        // Thiết lập nội dung cho popup
-        document.getElementById('popup-content-marker').innerHTML = content;
-
-        // Hiển thị popup tại tọa độ của marker
-        overlay.setPosition(markerCoordinate);
-
-        // Sử dụng OpenLayers để thực hiện zoom vào marker
-        map.getView().setCenter(markerCoordinate);
-        map.getView().setZoom(zoomLevel);
-    } else {
-        alert("Can not find marker with ID:  " + markerId);
-=======
-    clearMarkersOutsideBounds(extent);
-    // Thêm các marker mới tại các tọa độ tùy chọn
-    for (var i = 0; i < MarkerListLocation.length; i++) {
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 0.5],
-                src: link + "gasFire.png",
-                scale: 0.7,
-            }),
-        });
-        drawMarker(iconStyle, MarkerListLocation[i].coordinate, MarkerListLocation[i].id);
-        // ol.proj.transform(([MarkerListLocation[i][1],MarkerListLocation[i][0]]), PIXEL, LONLAT)
->>>>>>> 413e3facb696cfe1d72c888d3e2385c595dd0c9e
-    }
-
-
-    var popupCloser = document.getElementById('popup-closer-marker');
-
-
-    popupCloser.addEventListener('click', function () {
-        overlay.setPosition(undefined); // Đóng popup bằng cách thiết lập vị trí là undefined
-    });
 }
