@@ -1,5 +1,6 @@
 var map;
 var vectorSource;
+var markerSource;
 var draw;
 var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
@@ -45,6 +46,20 @@ closer.onclick = function (event) {
     closer.blur();
     return false;
 };
+var iconStyleBig = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.5, 0.5],
+        src: link + "gasFire.png",
+        scale: 0.9,
+    }),
+});
+var iconStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.5, 0.5],
+        src: link + "gasFire.png",
+        scale: 0.7,
+    }),
+});
 // Tạo polygon ban đầu
 var polygonCoordinates = [
     [102.1400, 23.4000],
@@ -109,10 +124,10 @@ async function DrawCylinder() {
     polygon.setStyle(style);
     vectorSource.addFeatures(polygon); // Thêm các đối tượng mới vào lớp vector
 
-    DrawRandomMarkersInSidePolygon(100, polygon)
+    DrawRandomMarkersInSidePolygon(1000, polygon)
     if (polygon != undefined) {
         // Nếu có các đối tượng được tìm thấy, tùy chỉnh hiển thị bản đồ để hiển thị chúng.
-        var extent = vectorSource.getExtent();
+        var extent = markerSource.getExtent();
         map.getView().fit(extent, map.getSize());
     } else {
         // Xử lý trường hợp không tìm thấy đối tượng
@@ -202,8 +217,31 @@ function getPolygonByName(name) {
 function createMap() {
     // Create a source for the features
     vectorSource = new ol.source.Vector();
+    markerSource = new ol.source.Vector(); // Tạo một source riêng cho marker
+    var clusterMarkerStyle = function (feature) {
+        var features = feature.get('features');
+        var size = features.length;
+        var style;
+      
+        if (size > 1) {
+          // Cluster có nhiều hơn một marker
+          style = iconStyleBig;
+        } else {
+          // Cluster chỉ có một marker
+          style = iconStyle
+        }
+      
+        return style;
+      };
 
-    // Create a vector layer to display the features
+    var markerLayer = new ol.layer.Vector({
+      source: new ol.source.Cluster({
+        distance: 40,
+        source: markerSource, // Sử dụng source đã tạo cho marker
+      }),
+      style: clusterMarkerStyle
+    });
+        // Create a vector layer to display the features
     var vectorLayer = new ol.layer.Vector({
         source: vectorSource,
     });
@@ -231,7 +269,7 @@ function createMap() {
         source: new ol.source.OSM()
     });
 
-
+    
 
 
     map = new ol.Map({
@@ -240,26 +278,19 @@ function createMap() {
             new ol.layer.Tile({
                 source: source,
             }),
-            vectorLayer, // Add the vector layer to the map
+            vectorLayer, markerLayer// Add the vector layer to the map
         ],
         controls: ol.control.defaults.defaults({ attribution: false }).extend([attribution]),
         view: view,
     });
 
-    var iconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-            anchor: [0.5, 0.5],
-            src: link + "gasFire.png",
-            scale: 0.7,
-        }),
-    });
-    // Tạo một sự kiện lắng nghe cho bản đồ
+        // Tạo một sự kiện lắng nghe cho bản đồ
     map.on('dblclick', function (event) {
         var lonlat = ol.proj.transform(event.coordinate, PIXEL, LONLAT);
 
         if (selectedPoint === null) {
             A = lonlat;
-            drawMarker(iconStyle, event.coordinate);
+            drawMarker(iconStyle, event.coordinate,'');
             selectedPoint = 'A';
         } else {
             B = lonlat;
@@ -435,23 +466,12 @@ function checkPointAndAddIcon(evt) {
             return;
         }
         var isInside = checkPointInsidePolygon(evt.coordinate, polygons[0]);
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 0.5],
-                src: link + "gasFire.png",
-                scale: 0.7,
-            }),
-        });
+        
         drawMarker(iconStyle, evt.coordinate, undefined);
         showPopup(evt.coordinate, isInside ? "Điểm này thuộc polygon" : "Điểm này không thuộc polygon");
     }
-    const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
-        if (feature.getGeometry() instanceof ol.geom.Point) {
-            console.log(feature)
+    const marker = map.getFeaturesAtPixel(evt.pixel);
 
-            return feature; // Đây là một marker
-        }
-    });
     if (marker) {
         ShowPopup = false;
     }
@@ -472,17 +492,23 @@ function checkPointAndAddIcon(evt) {
         address = a.NAME_0 + ',' + a.NAME_1 + ',' + a.NAME_2;
     }
 
-    var iconStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-            anchor: [0.5, 0.5],
-            src: link + "gasFire.png",
-            scale: 0.7,
-        }),
-    });
-
     if (marker) {
-        showPopup(selectedPoint, address);
-        selectedFeature = marker;
+        for (let i = 0; i < marker.length; i++) {
+            const feature = marker[i];
+            if (feature.get('features')) {
+                // Điều này là một cluster
+                const clusterFeatures = feature.get('features');
+                if(clusterFeatures.length>1){
+                    // Thực hiện xử lý cho cluster ở đây
+                    showPopup(selectedPoint, address+";Cluster:"+clusterFeatures.length+"markers");
+                    return;
+                }
+                // Điều này là một marker chi tiết
+                const id = feature.get('id');
+                // Thực hiện xử lý cho marker chi tiết ở đây
+                showPopup(selectedPoint, address+";Marker có id:"+ id);
+            }
+        }
     } else {
         drawMarker(iconStyle, selectedPoint, undefined);
         showPopup(selectedPoint, address);
@@ -496,7 +522,7 @@ function drawMarker(markerStyle, coordinate, id) {
     });
 
     iconFeature.setStyle(markerStyle);
-    vectorSource.addFeature(iconFeature);
+    markerSource.addFeature(iconFeature);
 }
 
 function showPopup(coordinate, content) {
@@ -858,10 +884,10 @@ function clearAllMarkers() {
 
 // kiem soat marker hien thi trong vung
 function clearMarkersOutsideBounds(extent) {
-    vectorSource.getFeatures().forEach(function (feature) {
+    markerSource.getFeatures().forEach(function (feature) {
         var coordinates = feature.getGeometry().getCoordinates();
         if (!ol.extent.containsCoordinate(extent, coordinates)) {
-            vectorSource.removeFeature(feature);
+            markerSource.removeFeature(feature);
         }
     });
 }
@@ -871,20 +897,12 @@ function updateMarkers(extent) {
     clearMarkersOutsideBounds(extent);
     // Thêm các marker mới tại các tọa độ tùy chọn
     for (var i = 0; i < MarkerListLocation.length; i++) {
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 0.5],
-                src: link + "gasFire.png",
-                scale: 0.7,
-            }),
-        });
         drawMarker(iconStyle, MarkerListLocation[i].coordinate, MarkerListLocation[i].id);
         // ol.proj.transform(([MarkerListLocation[i][1],MarkerListLocation[i][0]]), PIXEL, LONLAT)
     }
 
-
     // Cập nhật bản đồ
-    vectorSource.changed();
+    markerSource.changed();
 }
 
 function updateInfo(extent) {
