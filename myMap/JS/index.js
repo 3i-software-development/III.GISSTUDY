@@ -124,7 +124,7 @@ async function DrawCylinder() {
     polygon.setStyle(style);
     vectorSource.addFeatures(polygon); // Thêm các đối tượng mới vào lớp vector
 
-    DrawRandomMarkersInSidePolygon(100, polygon)
+    DrawRandomMarkersInSidePolygon(1000, polygon)
     if (polygon != undefined) {
         // Nếu có các đối tượng được tìm thấy, tùy chỉnh hiển thị bản đồ để hiển thị chúng.
         var extent = markerSource.getExtent();
@@ -269,7 +269,7 @@ function createMap() {
         source: new ol.source.OSM()
     });
 
-
+    
 
 
     map = new ol.Map({
@@ -386,13 +386,8 @@ function checkPointAndAddIcon(evt) {
         drawMarker(iconStyle, evt.coordinate, undefined);
         showPopup(evt.coordinate, isInside ? "Điểm này thuộc polygon" : "Điểm này không thuộc polygon");
     }
-    const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
-        if (feature.getGeometry() instanceof ol.geom.Point) {
-            console.log(feature)
+    const marker = map.getFeaturesAtPixel(evt.pixel);
 
-            return feature; // Đây là một marker
-        }
-    });
     if (marker) {
         ShowPopup = false;
     }
@@ -414,8 +409,22 @@ function checkPointAndAddIcon(evt) {
     }
 
     if (marker) {
-        showPopup(selectedPoint, address);
-        selectedFeature = marker;
+        for (let i = 0; i < marker.length; i++) {
+            const feature = marker[i];
+            if (feature.get('features')) {
+                // Điều này là một cluster
+                const clusterFeatures = feature.get('features');
+                if(clusterFeatures.length>1){
+                    // Thực hiện xử lý cho cluster ở đây
+                    showPopup(selectedPoint, address+";Cluster:"+clusterFeatures.length+"markers");
+                    return;
+                }
+                // Điều này là một marker chi tiết
+                const id = feature.get('id');
+                // Thực hiện xử lý cho marker chi tiết ở đây
+                showPopup(selectedPoint, address+";Marker có id:"+ id);
+            }
+        }
     } else {
         drawMarker(iconStyle, selectedPoint, undefined);
         showPopup(selectedPoint, address);
@@ -794,7 +803,7 @@ function clearMarkersOutsideBounds(extent) {
     markerSource.getFeatures().forEach(function (feature) {
         var coordinates = feature.getGeometry().getCoordinates();
         if (!ol.extent.containsCoordinate(extent, coordinates)) {
-            vectorSource.removeFeature(feature);
+            markerSource.removeFeature(feature);
         }
     });
 }
@@ -808,9 +817,8 @@ function updateMarkers(extent) {
         // ol.proj.transform(([MarkerListLocation[i][1],MarkerListLocation[i][0]]), PIXEL, LONLAT)
     }
 
-
     // Cập nhật bản đồ
-    vectorSource.changed();
+    markerSource.changed();
 }
 
 function updateInfo(extent) {
