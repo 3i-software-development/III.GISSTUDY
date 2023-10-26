@@ -217,6 +217,7 @@ function createMap() {
 
     // Create a map
     const key = "get_your_own_OpIi9ZULNHzrESv6T2vL";
+    
     const source = new ol.source.TileJSON({
         url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${key}`,
         tileSize: 512,
