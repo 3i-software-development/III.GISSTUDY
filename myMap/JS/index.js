@@ -96,7 +96,8 @@ function DrawRandomMarkersInSidePolygon(numberOfMarkers, feature) {
             }),
         });
         drawMarker(iconStyle, randomCoord, i);
-        MarkerListLocation[i] = randomCoord;
+        MarkerListLocation[i].location= randomCoord;
+        MarkerListLocation[i].id= i;
     }
 }
 async function DrawCylinder() {
@@ -790,7 +791,7 @@ function updateMarkers(extent) {
     clearMarkersOutsideBounds(extent);
     // Thêm các marker mới tại các tọa độ tùy chọn
     for (var i = 0; i < MarkerListLocation.length; i++) {
-        var firstLocate = ol.proj.transform(([MarkerListLocation[i][0], MarkerListLocation[i][1]]), PIXEL, LONLAT);
+        var firstLocate = ol.proj.transform((MarkerListLocation[i].location), PIXEL, LONLAT);
         addMarker(ol.proj.fromLonLat(firstLocate), 'gasFire.png');
         // ol.proj.transform(([MarkerListLocation[i][1],MarkerListLocation[i][0]]), PIXEL, LONLAT)
     }
@@ -854,5 +855,5 @@ function addMarker(coordinates, image) {
 //=====================================
 
 function CheckPosition() {
-    isCheckPosition = true;
+    isCheckPosition = !isCheckPosition;
 }
