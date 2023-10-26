@@ -6,7 +6,7 @@ var isDrawing = false;
 var polygons = []; // Mảng chứa các polygon đã vẽ
 var polygon = {};
 var defaultPolygon; // Polygon ban đầu
-var link = "/myMap/Image/";
+var link = "/Image/";
 var googleLayer;
 var osmLayer;
 var geojson = {};
@@ -884,20 +884,15 @@ function clearAllMarkers() {
 
 // kiem soat marker hien thi trong vung
 function clearMarkersOutsideBounds(extent) {
-    markerSource.getFeatures().forEach(function (feature) {
-        var coordinates = feature.getGeometry().getCoordinates();
-        if (!ol.extent.containsCoordinate(extent, coordinates)) {
-            markerSource.removeFeature(feature);
-        }
-    });
+    return MarkerListLocation.filter(x=>ol.extent.containsCoordinate(extent, x.coordinate))
 }
 
 function updateMarkers(extent) {
 
-    clearMarkersOutsideBounds(extent);
+    var Markers=clearMarkersOutsideBounds(extent);
     // Thêm các marker mới tại các tọa độ tùy chọn
-    for (var i = 0; i < MarkerListLocation.length; i++) {
-        drawMarker(iconStyle, MarkerListLocation[i].coordinate, MarkerListLocation[i].id);
+    for (var i = 0; i < Markers.length; i++) {
+        drawMarker(iconStyle, Markers[i].coordinate, Markers[i].id);
         // ol.proj.transform(([MarkerListLocation[i][1],MarkerListLocation[i][0]]), PIXEL, LONLAT)
     }
 
