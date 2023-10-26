@@ -87,7 +87,10 @@ function DrawRandomMarkersInSidePolygon(numberOfMarkers, feature) {
         do {
             var randomCoord = generateRandomCoordinates(feature.getGeometry().getExtent());
         } while (!checkPointInsidePolygon(randomCoord, feature))
-
+        var Marker={
+            coordinate:randomCoord,
+            id:i
+        }
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
                 anchor: [0.5, 0.5],
@@ -96,8 +99,7 @@ function DrawRandomMarkersInSidePolygon(numberOfMarkers, feature) {
             }),
         });
         drawMarker(iconStyle, randomCoord, i);
-        MarkerListLocation[i].location= randomCoord;
-        MarkerListLocation[i].id= i;
+        MarkerListLocation[i]=Marker
     }
 }
 async function DrawCylinder() {
@@ -791,8 +793,14 @@ function updateMarkers(extent) {
     clearMarkersOutsideBounds(extent);
     // Thêm các marker mới tại các tọa độ tùy chọn
     for (var i = 0; i < MarkerListLocation.length; i++) {
-        var firstLocate = ol.proj.transform((MarkerListLocation[i].location), PIXEL, LONLAT);
-        addMarker(ol.proj.fromLonLat(firstLocate), 'gasFire.png');
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 0.5],
+                src: link + "gasFire.png",
+                scale: 0.7,
+            }),
+        });
+        drawMarker(iconStyle, MarkerListLocation[i].coordinate, MarkerListLocation[i].id);
         // ol.proj.transform(([MarkerListLocation[i][1],MarkerListLocation[i][0]]), PIXEL, LONLAT)
     }
 
