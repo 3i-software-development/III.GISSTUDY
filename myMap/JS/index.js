@@ -91,13 +91,6 @@ function DrawRandomMarkersInSidePolygon(numberOfMarkers, feature) {
             coordinate:randomCoord,
             id:i
         }
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-                anchor: [0.5, 0.5],
-                src: link + "gasFire.png",
-                scale: 0.7,
-            }),
-        });
         drawMarker(iconStyle, randomCoord, i);
         MarkerListLocation[i]=Marker
     }
