@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -13,18 +12,21 @@
 </head>
 
 <style>
- #buttonContainer {
-    display: flex;
-    /* justify-content: space-around; */
-    align-items: center;
-    padding: 10px;
-}
+    #buttonContainer {
+        display: flex;
+        /* justify-content: space-around; */
+        align-items: center;
+        padding: 10px;
+    }
 
-button, input[type="button"], input[type="submit"] {
-    padding: 5px 10px;
-    margin-right: 20px; /* Điều chỉnh khoảng cách bên phải của mỗi nút */
-    margin-top: 10px;
-}
+    button,
+    input[type="button"],
+    input[type="submit"] {
+        padding: 5px 10px;
+        margin-right: 20px;
+        /* Điều chỉnh khoảng cách bên phải của mỗi nút */
+        margin-top: 10px;
+    }
 
 
     #buttonContainer {
@@ -81,13 +83,15 @@ button, input[type="button"], input[type="submit"] {
         padding: 10px 20px;
         cursor: pointer;
     }
-    #Draw{
+
+    #Draw {
         padding: 10px 20px;
         margin: 5px;
         border: none;
         border-radius: 10px;
         cursor: pointer;
     }
+
     .ol-popup {
         position: absolute;
         background-color: white;
@@ -99,9 +103,10 @@ button, input[type="button"], input[type="submit"] {
         bottom: 12px;
         left: -50px;
         min-width: 280px;
-      }
-      .ol-popup:after,
-      .ol-popup:before {
+    }
+
+    .ol-popup:after,
+    .ol-popup:before {
         top: 100%;
         border: solid transparent;
         content: " ";
@@ -109,30 +114,56 @@ button, input[type="button"], input[type="submit"] {
         width: 0;
         position: absolute;
         pointer-events: none;
-      }
-      
-      .ol-popup:after {
+    }
+
+    .ol-popup:after {
         border-top-color: white;
         border-width: 10px;
         left: 48px;
         margin-left: -10px;
-      }
-      .ol-popup:before {
+    }
+
+    .ol-popup:before {
         border-top-color: #cccccc;
         border-width: 11px;
         left: 48px;
         margin-left: -11px;
-      }
-      .ol-popup-closer {
+    }
+
+    .ol-popup-closer {
         text-decoration: none;
         position: absolute;
         top: 2px;
         right: 8px;
-      }
-      .ol-popup-closer:after {
+    }
+
+    .ol-popup-closer:after {
         content: "✖";
-      }
-      
+    }
+
+.ol-popup-marker {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 280px;
+}
+
+.ol-popup-closer-marker {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+
+.ol-popup-closer-marker:after {
+    content: "✖";
+}
+
 </style>
 
 
@@ -146,7 +177,7 @@ button, input[type="button"], input[type="submit"] {
         <button id="stopDrawing">Stop Drawing</button>
         <!-- Tìm khoảng cách từ a đến b   -->
         <button id="calculateDistance" onclick="calculateDistance()">Calculate distance</button>
-        
+
         <!-- Tìm đường đi ngắn nhất cho hai điểm trên open street map -->
         <button id="findWay" onclick="findShortestWay()">Find shortest way </button>
         <!-- Vẽ 1000 marker  -->
@@ -166,23 +197,35 @@ button, input[type="button"], input[type="submit"] {
             <input type="submit" value="Submit">
         </form>
     </div>
+    <!-- popup marker -->
+    <div id="popup-marker" class="ol-popup-marker">
+        <a href="#" id="popup-closer-marker" class="ol-popup-closer-marker"></a>
+        <div id="popup-content-marker"></div>
+    </div>
+     <!-- popup marker -->
+     <!-- search marker -->
+    <div>
+        <input type="text" id="markerIdInput">
+        <button onclick="findAndZoomToMarker()">Tìm và Zoom</button>
+    </div>
+    <!-- search marker -->
     <div id="map" class="map" style="height: 600px;">
         <div>
-            <div id="popup" class="ol-popup">
+            <div id="popup"  class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                 <div id="popup-content"></div>
+                <div id="popup-content-marker"></div>
             </div>
             <div id="distance-info"></div>
             <div id="coordinate-info"></div>
-            <div id="info"></div>
         </div>
     </div>
-    
 
-    
+
+
     <script src="../JS/index.js"></script>
     <script>
-       
+
         document.getElementById("startDrawing").addEventListener("click", startDrawing);
         document.getElementById("stopDrawing").addEventListener("click", stopDrawing);
         createMap();
