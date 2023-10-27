@@ -17,7 +17,7 @@ var selectedPoint = null;
 var routeLayer = null;
 var MarkerListLocation = [];
 var isCheckPosition = false;
-//Thuộc tính Popup
+//Thuộc tính Popup  
 var ShowPopup = false;
 var container = document.getElementById("popup");
 var closer = document.getElementById("popup-closer");
