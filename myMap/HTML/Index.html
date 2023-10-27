@@ -1,8 +1,8 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.13.1/build/ol.js"></script>
@@ -14,18 +14,21 @@
 </head>
 
 <style>
- #buttonContainer {
-    display: flex;
-    /* justify-content: space-around; */
-    align-items: center;
-    padding: 10px;
-}
+    #buttonContainer {
+        display: flex;
+        /* justify-content: space-around; */
+        align-items: center;
+        padding: 10px;
+    }
 
-button, input[type="button"], input[type="submit"] {
-    padding: 5px 10px;
-    margin-right: 20px; /* Điều chỉnh khoảng cách bên phải của mỗi nút */
-    margin-top: 10px;
-}
+    button,
+    input[type="button"],
+    input[type="submit"] {
+        padding: 5px 10px;
+        margin-right: 20px;
+        /* Điều chỉnh khoảng cách bên phải của mỗi nút */
+        margin-top: 10px;
+    }
 
 
     #buttonContainer {
@@ -82,13 +85,15 @@ button, input[type="button"], input[type="submit"] {
         padding: 10px 20px;
         cursor: pointer;
     }
-    #Draw{
+
+    #Draw {
         padding: 10px 20px;
         margin: 5px;
         border: none;
         border-radius: 10px;
         cursor: pointer;
     }
+
     .ol-popup {
         position: absolute;
         background-color: white;
@@ -100,9 +105,10 @@ button, input[type="button"], input[type="submit"] {
         bottom: 12px;
         left: -50px;
         min-width: 280px;
-      }
-      .ol-popup:after,
-      .ol-popup:before {
+    }
+
+    .ol-popup:after,
+    .ol-popup:before {
         top: 100%;
         border: solid transparent;
         content: " ";
@@ -110,33 +116,57 @@ button, input[type="button"], input[type="submit"] {
         width: 0;
         position: absolute;
         pointer-events: none;
-      }
-      
-      .ol-popup:after {
+    }
+
+    .ol-popup:after {
         border-top-color: white;
         border-width: 10px;
         left: 48px;
         margin-left: -10px;
-      }
-      .ol-popup:before {
+    }
+
+    .ol-popup:before {
         border-top-color: #cccccc;
         border-width: 11px;
         left: 48px;
         margin-left: -11px;
-      }
-      .ol-popup-closer {
+    }
+
+    .ol-popup-closer {
         text-decoration: none;
         position: absolute;
         top: 2px;
         right: 8px;
-      }
-      .ol-popup-closer:after {
+    }
+
+    .ol-popup-closer:after {
         content: "✖";
-      }
-      
+    }
+
+.ol-popup-marker {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 280px;
+}
+
+.ol-popup-closer-marker {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+
+.ol-popup-closer-marker:after {
+    content: "✖";
+}
+
 </style>
-
-
 
 </style>
 
@@ -147,6 +177,7 @@ button, input[type="button"], input[type="submit"] {
         <button id="stopDrawing">Stop Drawing</button>
         <!-- Tìm khoảng cách từ a đến b   -->
         <button id="calculateDistance" onclick="calculateDistance()">Calculate distance</button>
+        
         <!-- Tìm đường đi ngắn nhất cho hai điểm trên open street map -->
         <button id="findWay" onclick="findShortestWay()">Find shortest way </button>
         <!-- Vẽ 1000 marker  -->
@@ -166,52 +197,109 @@ button, input[type="button"], input[type="submit"] {
             <input type="submit" value="Submit">
         </form>
     </div>
-    <!-- popup marker -->
-    <div id="popup-marker" class="ol-popup-marker">
-        <a href="#" id="popup-closer-marker" class="ol-popup-closer-marker"></a>
-        <div id="popup-content-marker"></div>
-    </div>
-     <!-- popup marker -->
-     <!-- search marker -->
-    <div>
-        <input type="text" id="markerIdInput">
-        <button onclick="findAndZoomToMarker()">Tìm và Zoom</button>
-    </div>
-    <!-- search marker -->
-
+    
     <div id="map" class="map" style="height: 600px;">
         <div>
-            <div id="popup" class="ol-popup">
+            <div id="popup"  class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                 <div id="popup-content"></div>
+                <div id="popup-content-marker"></div>
             </div>
             <div id="distance-info"></div>
             <div id="coordinate-info"></div>
-            <div id="info"></div>
         </div>
     </div>
-    
 
-    
+
+
     <script src="../JS/index.js"></script>
     <script>
-       
+
         document.getElementById("startDrawing").addEventListener("click", startDrawing);
         document.getElementById("stopDrawing").addEventListener("click", stopDrawing);
         createMap();
         readJson();
         map.on("click", checkPointAndAddIcon);
         map.on('contextmenu', handleMapDoubleClick);
-        // Lắng nghe sự kiện moveend (kéo chuột hoàn thành)
-        // map.on('moveend', function () {
-        //     updateMap();
-        // });
-
-        // // Lắng nghe sự kiện wheel (cuộn chuột)
-        // map.on('wheel', function () {
-        //     updateMap();
-        // });
+        //Lắng nghe sự kiện moveend (kéo chuột hoàn thành)
+        map.on('moveend', function () {
+            //updateMap();
+        });
         
+
+
+//         var map;
+//         var vectorLayer = null; // Khai báo biến vectorLayer ở mức toàn cục
+
+// function loadFindWay(A, B) {
+//     if (vectorLayer) {
+//         // Nếu đã có vectorLayer (route trước đó), hãy xóa nó trước khi tạo route mới
+//         map.removeLayer(vectorLayer);
+//     }
+
+//     vectorLayer = new ol.layer.Vector({
+//         source: new ol.source.Vector({
+//             format: new ol.format.GeoJSON(),
+//         }),
+//         style: new ol.style.Style({
+//             stroke: new ol.style.Stroke({
+//                 color: 'black',
+//                 width: 3
+//             })
+//         })
+//     });
+
+//     map.addLayer(vectorLayer);
+
+//     // Gửi yêu cầu lấy đường đi từ OpenRouteService
+//     var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+//     var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+//     var requestOptions = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + apiKey,
+//         },
+//         body: JSON.stringify({
+//             'coordinates': [A, B],
+//         })
+//     };
+
+//     fetch(url, requestOptions)
+//         .then(response => response.json())
+//         .then(data => {
+//             // Lấy đường đi từ dữ liệu trả về
+//             var route = data.features[0];
+//             console.log(route);
+//             // Thêm đường đi vào lớp Vector
+//             vectorLayer.getSource().addFeature(new ol.Feature({
+//                 geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
+//             }));
+
+//             // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
+//             // var extent = vectorLayer.getSource().getExtent();
+//             // map.getView().fit(extent, map.getSize());
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// // Hàm để xóa route hiện tại
+// function clearRoute() {
+//     if (vectorLayer) {
+//         map.removeLayer(vectorLayer);
+//         vectorLayer = null;
+//     }
+// }
+
+// // Tạo nút xóa route
+// var clearButton = document.createElement('button');
+// clearButton.innerHTML = 'Xóa Route';
+// clearButton.addEventListener('click', clearRoute);
+
+// // Thêm nút xóa route vào một phần tử HTML (ví dụ: một div với id "clearButtonDiv")
+// document.getElementById('clearButtonDiv').appendChild(clearButton);
 
     </script>
 </body>

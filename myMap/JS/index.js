@@ -124,7 +124,7 @@ async function DrawCylinder() {
     polygon.setStyle(style);
     vectorSource.addFeatures(polygon); // Thêm các đối tượng mới vào lớp vector
 
-    DrawRandomMarkersInSidePolygon(100, polygon)
+    DrawRandomMarkersInSidePolygon(1000, polygon)
     if (polygon != undefined) {
         // Nếu có các đối tượng được tìm thấy, tùy chỉnh hiển thị bản đồ để hiển thị chúng.
         var extent = markerSource.getExtent();
@@ -269,7 +269,7 @@ function createMap() {
         source: new ol.source.OSM()
     });
 
-
+    
 
 
     map = new ol.Map({
@@ -315,9 +315,70 @@ function createMap() {
 }
 //======================================================
 
+// function loadFindWay(A, B) {
+//     // Kiểm tra và xóa tất cả các tính năng trên lớp Vector hiện tại
+//     var vectorLayer = new ol.layer.Vector({
+//         source: new ol.source.Vector({
+//             format: new ol.format.GeoJSON(),
+//         }),
+//         style: new ol.style.Style({
+//             stroke: new ol.style.Stroke({
+//                 color: 'black',
+//                 width: 3
+//             })
+//         })
+//     });
+
+//     vectorLayer.getSource().clear(); // Xóa tất cả các tính năng trên lớp Vector
+
+//     map.addLayer(vectorLayer);
+
+//     // Gửi yêu cầu lấy đường đi từ OpenRouteService
+//     var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+//     var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+//     var requestOptions = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + apiKey,
+//         },
+//         body: JSON.stringify({
+//             'coordinates': [A, B],
+//         })
+//     };
+
+//     fetch(url, requestOptions)
+//         .then(response => response.json())
+//         .then(data => {
+//             // Lấy đường đi từ dữ liệu trả về
+//             var route = data.features[0];
+//             console.log(route);
+//             // Thêm đường đi vào lớp Vector
+//             vectorLayer.getSource().addFeature(new ol.Feature({
+//                 geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
+//             }));
+
+//             // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
+//             // var extent = vectorLayer.getSource().getExtent();
+//             // map.getView().fit(extent, map.getSize());
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// ==========================
+var vectorLayer = null; // Khai báo biến vectorLayer ở mức toàn cục
+var pointA = null; // Lưu điểm A
+
 function loadFindWay(A, B) {
-    // Kiểm tra và xóa tất cả các tính năng trên lớp Vector hiện tại
-    var vectorLayer = new ol.layer.Vector({
+    if (vectorLayer) {
+        // Nếu đã có vectorLayer (route trước đó), hãy xóa nó trước khi tạo route mới
+        map.removeLayer(vectorLayer);
+        vectorLayer = null; // Xóa vectorLayer hoàn toàn
+    }
+
+    vectorLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
             format: new ol.format.GeoJSON(),
         }),
@@ -329,13 +390,14 @@ function loadFindWay(A, B) {
         })
     });
 
-    vectorLayer.getSource().clear(); // Xóa tất cả các tính năng trên lớp Vector
-
     map.addLayer(vectorLayer);
+
+    // Lưu điểm A
+    pointA = A;
 
     // Gửi yêu cầu lấy đường đi từ OpenRouteService
     var url = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
-    var apiKey = '5b3ce3597851110001cf6248889645833c6d4bfdbb493ecfb3f2590e'; // Thay thế YOUR_API_KEY bằng API key của bạn
+    var apiKey = '5b3ce3597851110001cf6248c7ab2e60a6324099aef97a0473f22578'; // Thay thế YOUR_API_KEY bằng API key của bạn
     var requestOptions = {
         method: 'POST',
         headers: {
@@ -343,7 +405,7 @@ function loadFindWay(A, B) {
             'Authorization': 'Bearer ' + apiKey,
         },
         body: JSON.stringify({
-            'coordinates': [A, B],
+            'coordinates': [pointA, B],
         })
     };
 
@@ -352,12 +414,12 @@ function loadFindWay(A, B) {
         .then(data => {
             // Lấy đường đi từ dữ liệu trả về
             var route = data.features[0];
-            console.log(route);
+            console.log(route.geometry.coordinates);
             // Thêm đường đi vào lớp Vector
             vectorLayer.getSource().addFeature(new ol.Feature({
                 geometry: new ol.format.GeoJSON().readGeometry(route.geometry).transform(LONLAT, PIXEL),
             }));
-
+            moveMarkerAlongRoute(route.geometry.coordinates)
             // Điều chỉnh bản đồ để hiển thị toàn bộ đường đi
             // var extent = vectorLayer.getSource().getExtent();
             // map.getView().fit(extent, map.getSize());
@@ -366,6 +428,28 @@ function loadFindWay(A, B) {
             console.error('Error:', error);
         });
 }
+
+// Xử lý double-click để xóa route hiện tại
+function handleDoubleClick(C) {
+    clearRoute(); // Xóa route hiện tại và các điểm
+    loadFindWay(C, pointA); // Tạo route mới từ A đến C
+}
+
+// Hàm để xóa route hiện tại và các điểm
+function clearRoute() {
+    if (vectorLayer) {
+        map.removeLayer(vectorLayer);
+        vectorLayer = null;
+    }
+    pointA = null; // Xóa điểm A
+}
+
+
+
+
+
+
+// ==========================
 
 
 
@@ -386,13 +470,8 @@ function checkPointAndAddIcon(evt) {
         drawMarker(iconStyle, evt.coordinate, undefined);
         showPopup(evt.coordinate, isInside ? "Điểm này thuộc polygon" : "Điểm này không thuộc polygon");
     }
-    const marker = map.forEachFeatureAtPixel(evt.pixel, (feature) => {
-        if (feature.getGeometry() instanceof ol.geom.Point) {
-            console.log(feature)
+    const marker = map.getFeaturesAtPixel(evt.pixel);
 
-            return feature; // Đây là một marker
-        }
-    });
     if (marker) {
         ShowPopup = false;
     }
@@ -414,8 +493,22 @@ function checkPointAndAddIcon(evt) {
     }
 
     if (marker) {
-        showPopup(selectedPoint, address);
-        selectedFeature = marker;
+        for (let i = 0; i < marker.length; i++) {
+            const feature = marker[i];
+            if (feature.get('features')) {
+                // Điều này là một cluster
+                const clusterFeatures = feature.get('features');
+                if(clusterFeatures.length>1){
+                    // Thực hiện xử lý cho cluster ở đây
+                    showPopup(selectedPoint, address+";Cluster:"+clusterFeatures.length+"markers");
+                    return;
+                }
+                // Điều này là một marker chi tiết
+                const id = feature.get('id');
+                // Thực hiện xử lý cho marker chi tiết ở đây
+                showPopup(selectedPoint, address+";Marker có id:"+ id);
+            }
+        }
     } else {
         drawMarker(iconStyle, selectedPoint, undefined);
         showPopup(selectedPoint, address);
@@ -754,7 +847,7 @@ function simulateMarkerMovement() {
 }
 
 // Gọi hàm simulateMarkerMovement để bắt đầu mô phỏng chuyển động của marker
-simulateMarkerMovement();
+//simulateMarkerMovement();
 var selectedFeature = null; // Biến lưu trạng thái đã chọn
 
 function removeMarkerById(featureId) {
@@ -791,26 +884,20 @@ function clearAllMarkers() {
 
 // kiem soat marker hien thi trong vung
 function clearMarkersOutsideBounds(extent) {
-    markerSource.getFeatures().forEach(function (feature) {
-        var coordinates = feature.getGeometry().getCoordinates();
-        if (!ol.extent.containsCoordinate(extent, coordinates)) {
-            vectorSource.removeFeature(feature);
-        }
-    });
+    return MarkerListLocation.filter(x=>ol.extent.containsCoordinate(extent, x.coordinate))
 }
 
 function updateMarkers(extent) {
 
-    clearMarkersOutsideBounds(extent);
+    var Markers=clearMarkersOutsideBounds(extent);
     // Thêm các marker mới tại các tọa độ tùy chọn
-    for (var i = 0; i < MarkerListLocation.length; i++) {
-        drawMarker(iconStyle, MarkerListLocation[i].coordinate, MarkerListLocation[i].id);
+    for (var i = 0; i < Markers.length; i++) {
+        drawMarker(iconStyle, Markers[i].coordinate, Markers[i].id);
         // ol.proj.transform(([MarkerListLocation[i][1],MarkerListLocation[i][0]]), PIXEL, LONLAT)
     }
 
-
     // Cập nhật bản đồ
-    vectorSource.changed();
+    markerSource.changed();
 }
 
 function updateInfo(extent) {
@@ -865,54 +952,7 @@ function addMarker(coordinates, image) {
     vectorSource.addFeature(vectorSource1);
 }
 //=====================================
-function findAndZoomToMarker() {
-    // Lấy giá trị ID từ thẻ input
-    var markerId = document.getElementById("markerIdInput").value;
 
-    // Duyệt qua tất cả các features trên layer vectorSource để tìm marker có ID tương ứng
-    var foundFeature = null;
-    vectorSource.getFeatures().forEach(function (feature) {
-        if (feature.get("id") == markerId) {
-            foundFeature = feature;
-        }
-    });
-
-    var overlay = new ol.Overlay({
-        element: document.getElementById('popup-marker'),
-        autoPan: true,
-        autoPanAnimation: {
-            duration: 250,
-        },
-    });
-
-    map.addOverlay(overlay);
-    if (foundFeature) {
-        // Tìm thấy marker, lấy tọa độ của marker
-        var markerCoordinate = foundFeature.getGeometry().getCoordinates();
-
-        // Đặt giá trị zoom
-        var zoomLevel = 20;
-        var content = "Marker ID:  " + markerId; // Thay bằng thông tin thực tế của marker
-
-        // Thiết lập nội dung cho popup
-        document.getElementById('popup-content-marker').innerHTML = content;
-
-        // Hiển thị popup tại tọa độ của marker
-        overlay.setPosition(markerCoordinate);
-
-        // Sử dụng OpenLayers để thực hiện zoom vào marker
-        map.getView().setCenter(markerCoordinate);
-        map.getView().setZoom(zoomLevel);
-    } else {
-        alert("Can not find marker with ID:  " + markerId);
-    }
-
-
-    var popupCloser = document.getElementById('popup-closer-marker');
-
-
-    popupCloser.addEventListener('click', function () {
-        overlay.setPosition(undefined); // Đóng popup bằng cách thiết lập vị trí là undefined
-    });
+function CheckPosition() {
+    isCheckPosition = !isCheckPosition;
 }
-
